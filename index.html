@@ -1,0 +1,945 @@
+<title>Simulasi UTS Digital Leadership</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: LMS quiz shell. Sticky top bar with timer, question card on the left, quiz navigation panel on the right (stacks below on phones). */
+:root {
+  --bg: #EDF0F3;
+  --surface: #FFFFFF;
+  --surface-2: #F5F7F9;
+  --ink: #16212B;
+  --muted: #5A6774;
+  --line: #D5DCE3;
+  --accent: #1D5C8F;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E1EBF4;
+  --mark: #B88200;
+  --mark-soft: #FBF0D2;
+  --ok: #1E7A4C;
+  --ok-soft: #DFF1E6;
+  --bad: #B43A27;
+  --bad-soft: #F8E2DC;
+  --shadow: 0 1px 2px rgba(22, 33, 43, .06), 0 4px 16px rgba(22, 33, 43, .05);
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E141A; --surface: #151D25; --surface-2: #1B252F; --ink: #E3E9EF; --muted: #95A3B0; --line: #2A3743;
+    --accent: #7DB3E0; --accent-ink: #0E141A; --accent-soft: #1B3246; --mark: #E8B64C; --mark-soft: #3A2E12;
+    --ok: #5CC48F; --ok-soft: #16332A; --bad: #F08A73; --bad-soft: #3D1F19;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 18px rgba(0, 0, 0, .25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E141A; --surface: #151D25; --surface-2: #1B252F; --ink: #E3E9EF; --muted: #95A3B0; --line: #2A3743;
+  --accent: #7DB3E0; --accent-ink: #0E141A; --accent-soft: #1B3246; --mark: #E8B64C; --mark-soft: #3A2E12;
+  --ok: #5CC48F; --ok-soft: #16332A; --bad: #F08A73; --bad-soft: #3D1F19;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 18px rgba(0, 0, 0, .25);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+button { font: inherit; color: inherit; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.num { font-variant-numeric: tabular-nums; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .45rem;
+  min-height: 42px; padding: .5rem 1rem; border-radius: 8px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); font-weight: 600; cursor: pointer;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+.btn:hover:not(:disabled) { border-color: var(--accent); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover:not(:disabled) { filter: brightness(1.08); }
+.btn-ghost { background: transparent; border-color: transparent; color: var(--muted); }
+.btn-ghost:hover:not(:disabled) { color: var(--ink); border-color: var(--line); }
+.btn-flag[aria-pressed="true"] { background: var(--mark-soft); border-color: var(--mark); color: var(--ink); }
+.btn-danger { background: transparent; border-color: var(--line); color: var(--bad); }
+.btn-danger:hover:not(:disabled) { border-color: var(--bad); }
+.btn .kbd { font-family: var(--font-mono); font-size: .7rem; padding: 0 .3rem; border: 1px solid currentColor; border-radius: 4px; opacity: .6; }
+
+/* ---------- Top bar ---------- */
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+.topbar .wrap { display: flex; align-items: center; gap: 12px 16px; flex-wrap: wrap; padding-block: 10px; }
+.brand { display: flex; flex-direction: column; min-width: 0; margin-right: auto; }
+.brand b { font-family: var(--font-display); font-size: 1.05rem; font-weight: 800; letter-spacing: -0.01em; }
+.brand span { font-size: .8rem; color: var(--muted); }
+.timer {
+  display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--surface-2);
+  font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem; font-variant-numeric: tabular-nums;
+}
+.timer small { font-family: var(--font-body); font-weight: 600; font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.timer.warn { border-color: var(--mark); background: var(--mark-soft); }
+.timer.danger { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
+.progress-pill { font-size: .85rem; color: var(--muted); }
+.progress-pill b { color: var(--ink); }
+.topbar-progress { height: 3px; background: var(--line); }
+.topbar-progress i { display: block; height: 100%; background: var(--accent); transition: width .3s; }
+
+/* ---------- Home ---------- */
+.home { padding-block: 32px 56px; display: grid; gap: 28px; }
+.hero { display: grid; gap: 10px; }
+.hero h1 { font-size: clamp(1.9rem, 4.4vw, 2.8rem); font-weight: 800; }
+.hero p { color: var(--muted); max-width: 62ch; font-size: 1.05rem; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.fact { font-size: .85rem; padding: 4px 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.setup { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 0; }
+.setup > section { padding: 24px; display: grid; gap: 20px; align-content: start; min-width: 0; }
+.setup > section + section { border-left: 1px solid var(--line); }
+.field { display: grid; gap: 10px; }
+.field > label, .field > .label { font-weight: 700; font-size: .95rem; }
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.mode {
+  text-align: left; padding: 16px; border-radius: var(--radius); border: 2px solid var(--line);
+  background: var(--surface); cursor: pointer; display: grid; gap: 6px; align-content: start;
+}
+.mode:hover { border-color: var(--accent); }
+.mode[aria-checked="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.mode h3 { font-size: 1.35rem; font-weight: 800; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.mode h3 small { font-family: var(--font-body); font-size: .78rem; font-weight: 600; color: var(--muted); }
+.mode p { font-size: .9rem; color: var(--muted); }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 600; font-size: .92rem; }
+.seg button[aria-checked="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.topics { display: grid; gap: 6px; }
+.topic-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); cursor: pointer; }
+.topic-row:hover { border-color: var(--accent); }
+.topic-row input { width: 18px; height: 18px; accent-color: var(--accent); flex: none; margin: 0; }
+.topic-row .tname { flex: 1; min-width: 0; font-size: .92rem; }
+.topic-row .tdate { font-family: var(--font-mono); font-size: .75rem; color: var(--muted); }
+.topic-row .tcount { font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.howto { display: grid; gap: 10px; font-size: .92rem; color: var(--muted); padding: 0; margin: 0; list-style: none; counter-reset: step; }
+.howto li { counter-increment: step; display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: start; }
+.howto li::before { content: counter(step); font-family: var(--font-mono); font-weight: 700; font-size: .8rem; color: var(--accent); border: 1px solid var(--accent); border-radius: 6px; height: 24px; display: grid; place-items: center; }
+.start-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.start-row .hint { font-size: .85rem; color: var(--muted); }
+.resume { padding: 16px 20px; display: flex; gap: 12px 20px; align-items: center; flex-wrap: wrap; border-left: 4px solid var(--mark); }
+.resume div { flex: 1 1 260px; min-width: 0; }
+.resume b { font-family: var(--font-display); font-size: 1.1rem; }
+.resume p { color: var(--muted); font-size: .9rem; }
+.history { padding: 20px 24px; display: grid; gap: 14px; }
+.history h2 { font-size: 1.2rem; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 700; }
+td.score { font-family: var(--font-mono); font-weight: 700; }
+.badge { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); }
+.badge.easy { color: var(--ok); border-color: var(--ok); }
+.badge.hard { color: var(--bad); border-color: var(--bad); }
+.empty { color: var(--muted); font-size: .92rem; }
+
+/* ---------- Exam ---------- */
+.exam { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; padding-block: 20px 56px; align-items: start; }
+.qcard { padding: 24px; display: grid; gap: 20px; min-width: 0; }
+.qhead { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; }
+.qhead h2 { font-size: 1.5rem; font-weight: 800; }
+.qhead h2 small { font-family: var(--font-body); font-weight: 600; font-size: .9rem; color: var(--muted); }
+.chip { font-size: .8rem; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); color: var(--muted); }
+.chip b { color: var(--ink); font-weight: 600; }
+.qhead .btn-flag { margin-left: auto; min-height: 36px; padding: .3rem .8rem; font-size: .88rem; }
+.qtext { font-size: 1.12rem; line-height: 1.6; max-width: 72ch; }
+.opts { display: grid; gap: 10px; }
+.opt {
+  display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: start; text-align: left;
+  padding: 12px 14px; border-radius: var(--radius); border: 1.5px solid var(--line); background: var(--surface); cursor: pointer;
+  transition: border-color .12s, background-color .12s;
+}
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt:disabled { cursor: default; }
+.opt .letter {
+  width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center;
+  font-family: var(--font-mono); font-weight: 700; border: 1.5px solid var(--line); background: var(--surface-2);
+}
+.opt .otext { padding-top: 5px; }
+.opt .onote { display: block; margin-top: 6px; font-size: .9rem; color: var(--muted); }
+.opt[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.opt[aria-pressed="true"] .letter { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.opt.is-correct { border-color: var(--ok); background: var(--ok-soft); }
+.opt.is-correct .letter { background: var(--ok); border-color: var(--ok); color: var(--surface); }
+.opt.is-wrong { border-color: var(--bad); background: var(--bad-soft); }
+.opt.is-wrong .letter { background: var(--bad); border-color: var(--bad); color: var(--surface); }
+.opt.is-dim { opacity: .82; }
+.otag { display: inline-block; margin-left: 6px; font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; vertical-align: 1px; }
+.is-correct .otag { color: var(--ok); }
+.is-wrong .otag { color: var(--bad); }
+.verdict { display: flex; gap: 10px; align-items: center; padding: 12px 16px; border-radius: var(--radius); font-weight: 700; }
+.verdict.ok { background: var(--ok-soft); color: var(--ok); }
+.verdict.bad { background: var(--bad-soft); color: var(--bad); }
+.verdict.blank { background: var(--surface-2); color: var(--muted); }
+.verdict span { color: var(--ink); font-weight: 600; }
+.explain { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-2); padding: 16px 18px; display: grid; gap: 8px; }
+.explain h3 { font-size: 1rem; font-weight: 800; }
+.explain p { max-width: 75ch; }
+.qactions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; border-top: 1px solid var(--line); padding-top: 16px; }
+.qactions .spacer { flex: 1; }
+.lockhint { font-size: .85rem; color: var(--muted); }
+
+.side { display: grid; gap: 16px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 84px); min-width: 0; }
+.side .panel { padding: 16px; display: grid; gap: 14px; }
+.side h3 { font-size: 1rem; font-weight: 800; }
+.navgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 6px; }
+.nb {
+  position: relative; height: 40px; border-radius: 7px; border: 1.5px solid var(--line); background: var(--surface);
+  font-family: var(--font-mono); font-weight: 700; font-size: .85rem; cursor: pointer; font-variant-numeric: tabular-nums;
+}
+.nb:hover { border-color: var(--accent); }
+.nb.answered { background: var(--accent-soft); border-color: var(--accent); }
+.nb.correct { background: var(--ok); border-color: var(--ok); color: var(--surface); }
+.nb.wrong { background: var(--bad); border-color: var(--bad); color: var(--surface); }
+.nb.blank-r { background: var(--surface-2); border-style: dashed; color: var(--muted); }
+.nb.current { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--ink); }
+.nb.flag::after { content: ""; position: absolute; top: -1px; right: -1px; width: 0; height: 0; border-top: 12px solid var(--mark); border-left: 12px solid transparent; border-top-right-radius: 6px; }
+.nb.filtered-out { opacity: .25; }
+.legend { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; font-size: .78rem; color: var(--muted); }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend i { width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid var(--line); flex: none; position: relative; }
+.legend i.answered { background: var(--accent-soft); border-color: var(--accent); }
+.legend i.correct { background: var(--ok); border-color: var(--ok); }
+.legend i.wrong { background: var(--bad); border-color: var(--bad); }
+.legend i.flag { border-top: 6px solid var(--mark); }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.stat { padding: 10px; border-radius: 8px; background: var(--surface-2); display: grid; gap: 2px; }
+.stat b { font-family: var(--font-mono); font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .75rem; color: var(--muted); }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filters button { font-size: .82rem; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 600; }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.keys { font-size: .78rem; color: var(--muted); display: grid; gap: 4px; }
+.keys code { font-family: var(--font-mono); font-size: .72rem; padding: 0 4px; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); }
+
+/* ---------- Result ---------- */
+.result { padding-block: 32px 56px; display: grid; gap: 20px; }
+.score-card { padding: 28px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 20px 36px; align-items: center; }
+.score-num { font-family: var(--font-display); font-weight: 800; font-size: clamp(3.4rem, 9vw, 5.2rem); line-height: .9; font-variant-numeric: tabular-nums; }
+.score-num small { display: block; font-family: var(--font-body); font-size: .9rem; font-weight: 600; color: var(--muted); margin-top: 8px; letter-spacing: 0; }
+.score-meta { display: grid; gap: 14px; min-width: 0; }
+.score-meta h1 { font-size: 1.6rem; font-weight: 800; }
+.tally { display: flex; flex-wrap: wrap; gap: 8px; }
+.tally span { padding: 6px 12px; border-radius: 8px; font-weight: 600; font-size: .92rem; background: var(--surface-2); }
+.tally .t-ok { background: var(--ok-soft); color: var(--ok); }
+.tally .t-bad { background: var(--bad-soft); color: var(--bad); }
+.breakdown { padding: 24px; display: grid; gap: 14px; }
+.breakdown h2 { font-size: 1.2rem; }
+.brow { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 4.5rem; gap: 14px; align-items: center; font-size: .92rem; }
+.brow .bname { min-width: 0; }
+.brow .bname small { display: block; font-family: var(--font-mono); font-size: .72rem; color: var(--muted); }
+.bar { height: 10px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--ok); }
+.bar i.mid { background: var(--mark); }
+.bar i.low { background: var(--bad); }
+.brow .bval { font-family: var(--font-mono); font-size: .85rem; text-align: right; font-variant-numeric: tabular-nums; }
+.result-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ---------- Modal & toast ---------- */
+.overlay { position: fixed; inset: 0; z-index: 20; background: rgba(10, 16, 22, .55); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.modal { width: min(460px, 100%); background: var(--surface); border-radius: 14px; border: 1px solid var(--line); padding: 24px; display: grid; gap: 16px; box-shadow: var(--shadow); }
+.modal h2 { font-size: 1.35rem; font-weight: 800; }
+.modal ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.modal li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 12px; border-radius: 8px; background: var(--surface-2); }
+.modal li b { font-family: var(--font-mono); }
+.modal .warnline { color: var(--bad); font-weight: 600; font-size: .92rem; }
+.modal .btns { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 30; background: var(--ink); color: var(--surface); padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: .92rem; max-width: calc(100% - 32px); }
+
+@media (max-width: 920px) {
+  .exam { grid-template-columns: minmax(0, 1fr); }
+  .side { position: static; }
+  .setup { grid-template-columns: minmax(0, 1fr); }
+  .setup > section + section { border-left: 0; border-top: 1px solid var(--line); }
+}
+@media (max-width: 560px) {
+  .modes { grid-template-columns: 1fr; }
+  .qcard { padding: 18px 16px; }
+  .setup > section { padding: 18px 16px; }
+  .score-card { grid-template-columns: minmax(0, 1fr); padding: 22px 18px; }
+  .brow { grid-template-columns: minmax(0, 1fr) 4rem; }
+  .brow .bar { grid-column: 1 / -1; grid-row: 2; }
+  .qactions .btn { flex: 1 1 auto; }
+  .qactions .spacer { display: none; }
+  .timer small { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+</style>
+
+<div id="app"></div>
+<div id="layer"></div>
+
+<script src="questions.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  const TOPICS = {
+    1: { name: "Intro to Digital Leadership", date: "03 Sep" },
+    2: { name: "Servant Leadership in the Digital Era", date: "10 Sep" },
+    3: { name: "Digital Transformation Project", date: "17 Sep" },
+    4: { name: "Understanding Digital Technology", date: "01 Okt" },
+    5: { name: "Critical Thinking", date: "08 Okt" },
+    6: { name: "Design Thinking", date: "15 Okt" }
+  };
+  const MODE_LABEL = { e: "Easy", h: "Hard" };
+  const LETTERS = ["A", "B", "C", "D"];
+  const KEY = { session: "dlsim:v1:session", history: "dlsim:v1:history", settings: "dlsim:v1:settings", seen: "dlsim:v1:seen" };
+
+  // Stable ids: mode + topic + urutan di dalam materi.
+  const BANK = (() => {
+    const counter = {};
+    return (window.QUESTIONS || []).map((q) => {
+      const k = q.d + q.t;
+      counter[k] = (counter[k] || 0) + 1;
+      return Object.assign({ id: k + "-" + counter[k] }, q);
+    });
+  })();
+  const BY_ID = Object.fromEntries(BANK.map((q) => [q.id, q]));
+
+  /* ---------- storage (best effort) ---------- */
+  const store = {
+    get(k, fallback) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } },
+    del(k) { try { localStorage.removeItem(k); } catch (e) { /* storage unavailable */ } }
+  };
+
+  /* ---------- state ---------- */
+  let S = null;
+  const defaultSettings = () => ({ mode: "e", count: 40, time: "120", topics: Object.keys(TOPICS).map(Number) });
+
+  function boot(data) {
+    if (data && data.S) {
+      S = data.S;
+    } else {
+      const session = store.get(KEY.session, null);
+      const validSession = session && session.qids && session.qids.every((id) => BY_ID[id]) ? session : null;
+      S = {
+        view: validSession && !validSession.submitted ? "exam" : "home",
+        settings: Object.assign(defaultSettings(), store.get(KEY.settings, {})),
+        session: validSession,
+        history: store.get(KEY.history, []),
+        filter: "all",
+        modal: null
+      };
+      if (S.view === "exam" && S.session.durationSec && remaining() <= 0) finishExam(true);
+    }
+    render();
+    startTicker();
+  }
+
+  function persist() {
+    store.set(KEY.settings, S.settings);
+    if (S.session) store.set(KEY.session, S.session); else store.del(KEY.session);
+    store.set(KEY.history, S.history.slice(0, 50));
+  }
+
+  /* ---------- helpers ---------- */
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  function fmtClock(sec) {
+    sec = Math.max(0, Math.round(sec));
+    const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+    return (h ? String(h).padStart(2, "0") + ":" : "") + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  }
+  function fmtDuration(sec) {
+    sec = Math.max(0, Math.round(sec));
+    const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60);
+    if (h) return h + " j " + m + " m";
+    if (m) return m + " m " + (sec % 60) + " d";
+    return (sec % 60) + " d";
+  }
+  const fmtScore = (n) => n.toLocaleString("id-ID", { maximumFractionDigits: 1 });
+  const fmtDate = (ts) => new Date(ts).toLocaleString("id-ID", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
+  const poolFor = (mode, topics) => BANK.filter((q) => q.d === mode && topics.includes(q.t));
+
+  /* ---------- session ---------- */
+  function pickQuestions(pool, n) {
+    const seen = store.get(KEY.seen, {});
+    const groups = {};
+    pool.forEach((q) => { (groups[q.t] = groups[q.t] || []).push(q); });
+    // Soal yang paling jarang keluar diprioritaskan, sisanya diacak.
+    Object.values(groups).forEach((g) => { shuffle(g); g.sort((a, b) => (seen[a.id] || 0) - (seen[b.id] || 0)); });
+    if (n >= pool.length) return shuffle(pool.slice());
+    const quotas = Object.keys(groups).map((k) => {
+      const exact = (n * groups[k].length) / pool.length;
+      return { k, base: Math.floor(exact), rem: exact - Math.floor(exact) };
+    });
+    let left = n - quotas.reduce((s, q) => s + q.base, 0);
+    quotas.sort((a, b) => b.rem - a.rem).forEach((q) => { if (left > 0) { q.base++; left--; } });
+    const chosen = [];
+    quotas.forEach((q) => chosen.push(...groups[q.k].slice(0, q.base)));
+    return shuffle(chosen);
+  }
+
+  function createSession(mode, qs, durationSec, label) {
+    const seen = store.get(KEY.seen, {});
+    qs.forEach((q) => { seen[q.id] = (seen[q.id] || 0) + 1; });
+    store.set(KEY.seen, seen);
+    S.session = {
+      mode, label: label || "",
+      qids: qs.map((q) => q.id),
+      perm: Object.fromEntries(qs.map((q) => [q.id, shuffle([0, 1, 2, 3])])),
+      answers: {}, locked: {}, flagged: {},
+      current: 0,
+      startedAt: Date.now(), durationSec,
+      submitted: false, submittedAt: null
+    };
+    S.filter = "all";
+    S.view = "exam";
+    persist();
+    render();
+    window.scrollTo(0, 0);
+  }
+
+  function startFromSettings() {
+    const st = S.settings;
+    const pool = poolFor(st.mode, st.topics);
+    if (!pool.length) return;
+    const n = st.count === "all" ? pool.length : Math.min(st.count, pool.length);
+    const qs = pickQuestions(pool, n);
+    const dur = st.time === "120" ? 7200 : st.time === "per" ? qs.length * 180 : 0;
+    createSession(st.mode, qs, dur);
+  }
+
+  function retryWrong() {
+    const ses = S.session;
+    const wrong = ses.qids.filter((id) => ses.answers[id] !== BY_ID[id].a).map((id) => BY_ID[id]);
+    if (!wrong.length) return;
+    createSession(ses.mode, shuffle(wrong), wrong.length * 180, "Ulang soal salah");
+  }
+
+  function remaining() {
+    const ses = S.session;
+    if (!ses || !ses.durationSec) return Infinity;
+    return ses.durationSec - (Date.now() - ses.startedAt) / 1000;
+  }
+
+  function finishExam(auto) {
+    const ses = S.session;
+    if (!ses || ses.submitted) return;
+    ses.submitted = true;
+    ses.submittedAt = Date.now();
+    if (ses.durationSec) ses.submittedAt = Math.min(ses.submittedAt, ses.startedAt + ses.durationSec * 1000);
+    const r = tally(ses);
+    S.history.unshift({
+      at: ses.submittedAt, mode: ses.mode, label: ses.label,
+      total: r.total, correct: r.correct, wrong: r.wrong, blank: r.blank,
+      score: r.score, used: (ses.submittedAt - ses.startedAt) / 1000
+    });
+    S.view = "result";
+    S.modal = null;
+    S.filter = "all";
+    persist();
+    render();
+    window.scrollTo(0, 0);
+    if (auto) toast("Waktu habis. Jawaban dikumpulkan otomatis.");
+  }
+
+  function tally(ses) {
+    let correct = 0, wrong = 0, blank = 0;
+    const byTopic = {};
+    ses.qids.forEach((id) => {
+      const q = BY_ID[id], ans = ses.answers[id];
+      const t = (byTopic[q.t] = byTopic[q.t] || { total: 0, correct: 0 });
+      t.total++;
+      if (ans === undefined) blank++;
+      else if (ans === q.a) { correct++; t.correct++; }
+      else wrong++;
+    });
+    const total = ses.qids.length;
+    return { total, correct, wrong, blank, byTopic, score: total ? Math.round((correct / total) * 1000) / 10 : 0 };
+  }
+
+  // Status satu soal: untuk grid navigasi dan filter tinjauan.
+  function statusOf(id) {
+    const ses = S.session, q = BY_ID[id], ans = ses.answers[id];
+    const revealed = ses.submitted || ses.locked[id];
+    if (revealed) {
+      if (ans === undefined) return "blank";
+      return ans === q.a ? "correct" : "wrong";
+    }
+    return ans === undefined ? "empty" : "answered";
+  }
+
+  function visibleIndexes() {
+    const ses = S.session;
+    if (!ses.submitted || S.filter === "all") return ses.qids.map((_, i) => i);
+    return ses.qids.map((id, i) => [id, i]).filter(([id]) => {
+      const st = statusOf(id);
+      if (S.filter === "flag") return ses.flagged[id];
+      return st === S.filter;
+    }).map(([, i]) => i);
+  }
+
+  /* ---------- actions ---------- */
+  function choose(displayIdx) {
+    const ses = S.session, id = ses.qids[ses.current];
+    if (ses.submitted || ses.locked[id]) return;
+    const orig = ses.perm[id][displayIdx];
+    if (ses.answers[id] === orig) delete ses.answers[id]; else ses.answers[id] = orig;
+    persist(); render();
+  }
+  function lockCurrent() {
+    const ses = S.session, id = ses.qids[ses.current];
+    if (ses.submitted || ses.locked[id] || ses.answers[id] === undefined) return;
+    ses.locked[id] = true;
+    persist(); render();
+    const fb = document.getElementById("feedback");
+    if (fb && fb.getBoundingClientRect().bottom > window.innerHeight) fb.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" });
+  }
+  function go(idx) {
+    const ses = S.session;
+    if (idx < 0 || idx >= ses.qids.length) return;
+    ses.current = idx;
+    persist(); render();
+    const card = document.querySelector(".qcard");
+    if (card && card.getBoundingClientRect().top < 60) card.scrollIntoView({ block: "start" });
+  }
+  function step(dir) {
+    const vis = visibleIndexes(), cur = S.session.current;
+    if (dir > 0) { const nx = vis.find((i) => i > cur); if (nx !== undefined) go(nx); }
+    else { const pv = vis.filter((i) => i < cur).pop(); if (pv !== undefined) go(pv); }
+  }
+  function toggleFlag() {
+    const ses = S.session, id = ses.qids[ses.current];
+    if (ses.flagged[id]) delete ses.flagged[id]; else ses.flagged[id] = true;
+    persist(); render();
+  }
+
+  let toastTimer = null;
+  function toast(msg) {
+    const el = document.createElement("div");
+    el.className = "toast"; el.setAttribute("role", "status"); el.textContent = msg;
+    document.querySelectorAll(".toast").forEach((t) => t.remove());
+    document.body.appendChild(el);
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.remove(), 3200);
+  }
+
+  /* ---------- views ---------- */
+  function render() {
+    const app = document.getElementById("app");
+    if (S.view === "home") app.innerHTML = viewHome();
+    else if (S.view === "exam") app.innerHTML = viewExam();
+    else app.innerHTML = viewResult();
+    document.getElementById("layer").innerHTML = S.modal ? viewModal() : "";
+    if (S.modal) { const b = document.querySelector("[data-autofocus]"); if (b) b.focus(); }
+    updateTimer();
+  }
+
+  function topbar(inner, progress) {
+    return `<header class="topbar"><div class="wrap">${inner}</div>${progress != null ? `<div class="topbar-progress"><i style="width:${progress}%"></i></div>` : ""}</header>`;
+  }
+
+  function viewHome() {
+    const st = S.settings;
+    const pool = poolFor(st.mode, st.topics);
+    const nAll = pool.length;
+    const ses = S.session && !S.session.submitted ? S.session : null;
+    const counts = [30, 40];
+    const effective = st.count === "all" ? nAll : Math.min(st.count, nAll);
+    const timeText = st.time === "120" ? "120 menit" : st.time === "per" ? (effective * 3) + " menit" : "tanpa batas waktu";
+
+    const resume = ses ? (() => {
+      const answered = Object.keys(ses.answers).length;
+      const rem = remaining();
+      return `<div class="panel resume">
+        <div><b>Ada sesi yang belum dikumpulkan</b>
+        <p>${MODE_LABEL[ses.mode]}${ses.label ? " · " + esc(ses.label) : ""} · ${answered}/${ses.qids.length} dijawab${ses.durationSec ? " · sisa waktu " + fmtClock(rem) : ""}</p></div>
+        <button class="btn btn-danger" data-act="discard">Buang sesi</button>
+        <button class="btn btn-primary" data-act="resume">Lanjutkan</button>
+      </div>`;
+    })() : "";
+
+    const modeCard = (m, title, desc) => {
+      const n = BANK.filter((q) => q.d === m).length;
+      return `<button class="mode" role="radio" aria-checked="${st.mode === m}" data-act="mode" data-v="${m}">
+        <h3>${title}<small class="num">${n} soal di bank</small></h3><p>${desc}</p></button>`;
+    };
+
+    const topicRows = Object.entries(TOPICS).map(([k, t]) => {
+      const n = BANK.filter((q) => q.d === st.mode && q.t === Number(k)).length;
+      return `<label class="topic-row" for="topic-${k}">
+        <input type="checkbox" id="topic-${k}" data-act="topic" data-v="${k}" ${st.topics.includes(Number(k)) ? "checked" : ""}>
+        <span class="tname">${esc(t.name)}</span><span class="tdate">${t.date}</span><span class="tcount">${n}</span></label>`;
+    }).join("");
+
+    const hist = S.history.length ? `<div class="table-wrap"><table>
+      <thead><tr><th>Waktu</th><th>Mode</th><th>Nilai</th><th>Benar</th><th>Durasi</th></tr></thead>
+      <tbody>${S.history.slice(0, 12).map((h) => `<tr>
+        <td>${fmtDate(h.at)}</td>
+        <td><span class="badge ${h.mode === "e" ? "easy" : "hard"}">${MODE_LABEL[h.mode]}</span>${h.label ? ` <span class="empty">${esc(h.label)}</span>` : ""}</td>
+        <td class="score">${fmtScore(h.score)}</td>
+        <td class="num">${h.correct}/${h.total}</td>
+        <td class="num">${fmtDuration(h.used)}</td></tr>`).join("")}</tbody></table></div>`
+      : `<p class="empty">Belum ada percobaan. Nilai setiap sesi yang kamu kumpulkan akan tercatat di sini (tersimpan di browser ini saja).</p>`;
+
+    return topbar(`<div class="brand"><b>Digital Leadership</b><span>Simulasi Ujian Tengah Semester</span></div>`, null) + `
+    <main class="wrap home">
+      <div class="hero">
+        <span class="eyebrow">Latihan UTS · 6 materi</span>
+        <h1>Simulasi UTS Digital Leadership</h1>
+        <p>Pilihan ganda A–D. Setelah memilih jawaban, tekan <b>Kunci jawaban</b> untuk langsung melihat jawaban yang benar dan pembahasan setiap opsi.</p>
+        <div class="facts"><span class="fact">Closed book</span><span class="fact">Durasi UTS 2 jam</span><span class="fact num">${BANK.length} soal di bank</span><span class="fact">Soal & opsi diacak tiap sesi</span></div>
+      </div>
+      ${resume}
+      <div class="panel setup">
+        <section>
+          <div class="field"><span class="label">Mode</span>
+            <div class="modes" role="radiogroup" aria-label="Mode">
+              ${modeCard("e", "Easy", "Konsep inti, definisi, dan istilah kunci. Pengecohnya tetap mirip, bukan soal hafalan asal tebak.")}
+              ${modeCard("h", "Hard", "Studi kasus dan penerapan konsep. Pengecoh sangat dekat, sering beda satu kata kunci.")}
+            </div></div>
+          <div class="field"><span class="label">Jumlah soal</span>
+            <div class="seg" role="radiogroup" aria-label="Jumlah soal">
+              ${counts.map((c) => `<button role="radio" aria-checked="${st.count === c}" data-act="count" data-v="${c}" ${c > nAll ? "disabled" : ""}>${c}</button>`).join("")}
+              <button role="radio" aria-checked="${st.count === "all"}" data-act="count" data-v="all">Semua (${nAll})</button>
+            </div></div>
+          <div class="field"><span class="label">Waktu</span>
+            <div class="seg" role="radiogroup" aria-label="Waktu">
+              <button role="radio" aria-checked="${st.time === "120"}" data-act="time" data-v="120">120 menit (seperti UTS)</button>
+              <button role="radio" aria-checked="${st.time === "per"}" data-act="time" data-v="per">3 menit per soal</button>
+              <button role="radio" aria-checked="${st.time === "none"}" data-act="time" data-v="none">Tanpa batas</button>
+            </div></div>
+          <div class="start-row">
+            <button class="btn btn-primary" data-act="start" ${nAll ? "" : "disabled"}>Mulai ${MODE_LABEL[st.mode]} · ${effective} soal</button>
+            <span class="hint">${nAll ? timeText : "Pilih minimal satu materi."}</span>
+          </div>
+        </section>
+        <section>
+          <div class="field"><span class="label">Materi yang diujikan</span><div class="topics">${topicRows}</div></div>
+          <div class="field"><span class="label">Cara mengerjakan</span>
+            <ol class="howto">
+              <li>Pilih jawaban. Selama belum dikunci, jawaban masih bisa diganti.</li>
+              <li>Tekan <b>Kunci jawaban</b> untuk melihat jawaban benar beserta alasan tiap opsi benar atau salah.</li>
+              <li>Bebas lompat antarsoal lewat panel navigasi. Tandai yang masih ragu-ragu.</li>
+              <li>Tekan <b>Kumpulkan</b> untuk melihat nilai, rekap per materi, dan mengulang soal yang salah.</li>
+            </ol></div>
+        </section>
+      </div>
+      <section class="panel history"><h2>Riwayat percobaan</h2>${hist}</section>
+    </main>`;
+  }
+
+  function examTopbar() {
+    const ses = S.session;
+    const answered = ses.qids.filter((id) => ses.answers[id] !== undefined).length;
+    const pct = Math.round((answered / ses.qids.length) * 100);
+    const brand = `<div class="brand"><b>Digital Leadership</b><span>${ses.submitted ? "Tinjauan hasil" : "Simulasi UTS"} · ${MODE_LABEL[ses.mode]}${ses.label ? " · " + esc(ses.label) : ""}</span></div>`;
+    if (ses.submitted) {
+      return topbar(brand + `<button class="btn" data-act="to-result">Kembali ke hasil</button><button class="btn btn-ghost" data-act="home">Beranda</button>`, null);
+    }
+    const timer = `<div class="timer" id="timer" role="timer" aria-live="off"><small>${ses.durationSec ? "Sisa" : "Berjalan"}</small><span id="timer-val">--:--</span></div>`;
+    return topbar(brand + `<span class="progress-pill num"><b>${answered}</b>/${ses.qids.length} dijawab</span>${timer}<button class="btn btn-primary" data-act="ask-submit">Kumpulkan</button>`, pct);
+  }
+
+  function viewExam() {
+    const ses = S.session;
+    const id = ses.qids[ses.current];
+    const q = BY_ID[id];
+    const perm = ses.perm[id];
+    const ans = ses.answers[id];
+    const revealed = ses.submitted || !!ses.locked[id];
+    const topic = TOPICS[q.t];
+
+    const opts = perm.map((orig, di) => {
+      const [text, note] = q.o[orig];
+      const picked = ans === orig;
+      let cls = "opt", tag = "";
+      if (revealed) {
+        if (orig === q.a) { cls += " is-correct"; tag = picked ? "Jawabanmu · benar" : "Jawaban benar"; }
+        else if (picked) { cls += " is-wrong"; tag = "Jawabanmu"; }
+        else cls += " is-dim";
+      }
+      return `<button class="${cls}" data-act="choose" data-v="${di}" aria-pressed="${!revealed && picked}" ${revealed ? "disabled" : ""}>
+        <span class="letter">${LETTERS[di]}</span>
+        <span class="otext">${esc(text)}${tag ? `<span class="otag">${tag}</span>` : ""}${revealed ? `<span class="onote">${esc(note)}</span>` : ""}</span>
+      </button>`;
+    }).join("");
+
+    let feedback = "";
+    if (revealed) {
+      const correctLetter = LETTERS[perm.indexOf(q.a)];
+      const verdict = ans === undefined
+        ? `<div class="verdict blank">Tidak dijawab. <span>Jawaban benar: ${correctLetter}</span></div>`
+        : ans === q.a
+          ? `<div class="verdict ok">Benar <span>· ${correctLetter}</span></div>`
+          : `<div class="verdict bad">Kurang tepat. <span>Kamu memilih ${LETTERS[perm.indexOf(ans)]}, jawaban benar ${correctLetter}.</span></div>`;
+      feedback = `<div id="feedback" style="display:grid;gap:12px">${verdict}<div class="explain"><h3>Pembahasan</h3><p>${esc(q.x)}</p></div></div>`;
+    }
+
+    const vis = visibleIndexes();
+    const hasPrev = vis.some((i) => i < ses.current), hasNext = vis.some((i) => i > ses.current);
+    const lockBtn = revealed ? "" : `<button class="btn btn-primary" data-act="lock" ${ans === undefined ? "disabled" : ""}>Kunci jawaban <span class="kbd">Enter</span></button>`;
+    const actions = `<div class="qactions">
+      <button class="btn" data-act="prev" ${hasPrev ? "" : "disabled"}>‹ Sebelumnya</button>
+      <span class="spacer"></span>
+      ${lockBtn}
+      <button class="btn${revealed ? " btn-primary" : ""}" data-act="next" ${hasNext ? "" : "disabled"}>Berikutnya ›</button>
+    </div>${!revealed && ans === undefined ? `<p class="lockhint">Pilih salah satu jawaban dulu, lalu kunci untuk melihat pembahasan.</p>` : ""}`;
+
+    const card = `<article class="panel qcard" aria-labelledby="qtitle">
+      <div class="qhead">
+        <h2 id="qtitle">Soal ${ses.current + 1} <small class="num">dari ${ses.qids.length}</small></h2>
+        <span class="chip">Materi ${q.t} · <b>${esc(topic.name)}</b></span>
+        <button class="btn btn-flag" data-act="flag" aria-pressed="${!!ses.flagged[id]}">${ses.flagged[id] ? "Ditandai ragu-ragu" : "Tandai ragu-ragu"}</button>
+      </div>
+      <p class="qtext">${esc(q.q)}</p>
+      <div class="opts" role="group" aria-label="Pilihan jawaban">${opts}</div>
+      ${feedback}
+      ${actions}
+    </article>`;
+
+    return examTopbar() + `<main class="wrap exam">${card}${sidePanel()}</main>`;
+  }
+
+  function sidePanel() {
+    const ses = S.session;
+    const vis = new Set(visibleIndexes());
+    const grid = ses.qids.map((id, i) => {
+      const st = statusOf(id);
+      const cls = ["nb", st === "blank" ? "blank-r" : st === "empty" ? "" : st, i === ses.current ? "current" : "", ses.flagged[id] ? "flag" : "", vis.has(i) ? "" : "filtered-out"].filter(Boolean).join(" ");
+      const label = `Soal ${i + 1}: ${{ empty: "belum dijawab", answered: "dijawab", correct: "benar", wrong: "salah", blank: "tidak dijawab" }[st]}${ses.flagged[id] ? ", ragu-ragu" : ""}`;
+      return `<button class="${cls}" data-act="goto" data-v="${i}" aria-label="${label}" ${i === ses.current ? 'aria-current="true"' : ""}>${i + 1}</button>`;
+    }).join("");
+
+    const lockedIds = ses.qids.filter((id) => ses.locked[id]);
+    const lockedCorrect = lockedIds.filter((id) => ses.answers[id] === BY_ID[id].a).length;
+    const answered = ses.qids.filter((id) => ses.answers[id] !== undefined).length;
+    const flagged = ses.qids.filter((id) => ses.flagged[id]).length;
+
+    let lower;
+    if (ses.submitted) {
+      const r = tally(ses);
+      const f = (k, label, n) => `<button data-act="filter" data-v="${k}" aria-pressed="${S.filter === k}">${label} <span class="num">${n}</span></button>`;
+      lower = `<div class="filters" aria-label="Saring soal">
+        ${f("all", "Semua", r.total)}${f("wrong", "Salah", r.wrong)}${f("correct", "Benar", r.correct)}${f("blank", "Kosong", r.blank)}${f("flag", "Ragu-ragu", flagged)}
+      </div>`;
+    } else {
+      lower = `<div class="stats">
+        <div class="stat"><b>${answered}/${ses.qids.length}</b><span>Dijawab</span></div>
+        <div class="stat"><b>${lockedIds.length}</b><span>Dikunci</span></div>
+        <div class="stat"><b>${lockedCorrect}/${lockedIds.length}</b><span>Benar dari yang dikunci</span></div>
+        <div class="stat"><b>${flagged}</b><span>Ragu-ragu</span></div>
+      </div>`;
+    }
+
+    return `<aside class="side">
+      <div class="panel">
+        <h3>Navigasi soal</h3>
+        <div class="navgrid">${grid}</div>
+        <div class="legend">
+          <span><i></i>Belum dijawab</span><span><i class="answered"></i>Dijawab</span>
+          <span><i class="correct"></i>Benar</span><span><i class="wrong"></i>Salah</span>
+          <span><i class="flag"></i>Ragu-ragu</span>
+        </div>
+        ${lower}
+      </div>
+      <div class="panel keys">
+        <h3>Pintasan keyboard</h3>
+        <span><code>A</code>–<code>D</code> atau <code>1</code>–<code>4</code> pilih jawaban</span>
+        <span><code>Enter</code> kunci jawaban</span>
+        <span><code>←</code> <code>→</code> pindah soal · <code>R</code> ragu-ragu</span>
+      </div>
+    </aside>`;
+  }
+
+  function viewResult() {
+    const ses = S.session;
+    const r = tally(ses);
+    const used = (ses.submittedAt - ses.startedAt) / 1000;
+    const verdict = r.score >= 85 ? "Siap UTS" : r.score >= 70 ? "Sudah bagus, rapikan yang salah" : r.score >= 55 ? "Lumayan, perlu latihan lagi" : "Masih perlu banyak latihan";
+    const rows = Object.keys(TOPICS).map(Number).filter((t) => r.byTopic[t]).map((t) => {
+      const b = r.byTopic[t], pct = Math.round((b.correct / b.total) * 100);
+      return `<div class="brow">
+        <div class="bname">${esc(TOPICS[t].name)}<small>Materi ${t} · ${TOPICS[t].date}</small></div>
+        <div class="bar" role="img" aria-label="${pct}% benar"><i class="${pct >= 75 ? "" : pct >= 50 ? "mid" : "low"}" style="width:${pct}%"></i></div>
+        <div class="bval">${b.correct}/${b.total}</div></div>`;
+    }).join("");
+    const wrongCount = r.wrong + r.blank;
+
+    return topbar(`<div class="brand"><b>Digital Leadership</b><span>Hasil simulasi · ${MODE_LABEL[ses.mode]}${ses.label ? " · " + esc(ses.label) : ""}</span></div><button class="btn btn-ghost" data-act="home">Beranda</button>`, null) + `
+    <main class="wrap result">
+      <section class="panel score-card">
+        <div class="score-num">${fmtScore(r.score)}<small>nilai dari 100</small></div>
+        <div class="score-meta">
+          <h1>${verdict}</h1>
+          <div class="tally">
+            <span class="t-ok num">${r.correct} benar</span>
+            <span class="t-bad num">${r.wrong} salah</span>
+            <span class="num">${r.blank} kosong</span>
+            <span class="num">${fmtDuration(used)}${ses.durationSec ? " dari " + fmtDuration(ses.durationSec) : ""}</span>
+          </div>
+          <div class="result-actions">
+            <button class="btn btn-primary" data-act="review" data-v="${wrongCount ? "wrong" : "all"}">${wrongCount ? "Tinjau soal yang salah" : "Tinjau pembahasan"}</button>
+            <button class="btn" data-act="review" data-v="all">Tinjau semua soal</button>
+            ${wrongCount ? `<button class="btn" data-act="retry">Ulangi ${wrongCount} soal yang salah</button>` : ""}
+            <button class="btn" data-act="new">Sesi baru</button>
+          </div>
+        </div>
+      </section>
+      <section class="panel breakdown">
+        <h2>Rekap per materi</h2>
+        ${rows}
+      </section>
+    </main>`;
+  }
+
+  function viewModal() {
+    const ses = S.session;
+    if (S.modal === "submit") {
+      const answered = ses.qids.filter((id) => ses.answers[id] !== undefined).length;
+      const empty = ses.qids.length - answered;
+      const flagged = ses.qids.filter((id) => ses.flagged[id]).length;
+      return `<div class="overlay" data-act="close-modal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt">
+        <h2 id="mt">Kumpulkan jawaban?</h2>
+        <ul>
+          <li><span>Dijawab</span><b>${answered}</b></li>
+          <li><span>Belum dijawab</span><b>${empty}</b></li>
+          <li><span>Ditandai ragu-ragu</span><b>${flagged}</b></li>
+          ${ses.durationSec ? `<li><span>Sisa waktu</span><b>${fmtClock(remaining())}</b></li>` : ""}
+        </ul>
+        ${empty ? `<p class="warnline">${empty} soal belum dijawab dan akan dihitung salah.</p>` : ""}
+        <p>Jawaban yang belum dikunci akan dinilai apa adanya. Setelah dikumpulkan, jawaban tidak bisa diubah.</p>
+        <div class="btns"><button class="btn" data-act="close-modal" data-autofocus>Kembali ke soal</button><button class="btn btn-primary" data-act="submit">Kumpulkan</button></div>
+      </div></div>`;
+    }
+    if (S.modal === "discard") {
+      return `<div class="overlay" data-act="close-modal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt">
+        <h2 id="mt">Buang sesi ini?</h2>
+        <p>Semua jawaban di sesi yang sedang berjalan akan dihapus dan tidak masuk riwayat.</p>
+        <div class="btns"><button class="btn" data-act="close-modal" data-autofocus>Batal</button><button class="btn btn-danger" data-act="discard-yes">Buang sesi</button></div>
+      </div></div>`;
+    }
+    return "";
+  }
+
+  /* ---------- timer ---------- */
+  function updateTimer() {
+    const el = document.getElementById("timer-val");
+    if (!el || !S.session || S.session.submitted) return;
+    const ses = S.session;
+    const box = document.getElementById("timer");
+    if (ses.durationSec) {
+      const rem = remaining();
+      el.textContent = fmtClock(rem);
+      box.classList.toggle("warn", rem <= 600 && rem > 120);
+      box.classList.toggle("danger", rem <= 120);
+    } else {
+      el.textContent = fmtClock((Date.now() - ses.startedAt) / 1000);
+    }
+  }
+  let ticker = null;
+  function startTicker() {
+    clearInterval(ticker);
+    ticker = setInterval(() => {
+      if (S.view === "exam" && S.session && !S.session.submitted) {
+        if (S.session.durationSec && remaining() <= 0) { finishExam(true); return; }
+        updateTimer();
+      }
+    }, 1000);
+  }
+
+  /* ---------- events ---------- */
+  document.addEventListener("click", (e) => {
+    const el = e.target.closest("[data-act]");
+    if (!el) return;
+    const act = el.dataset.act, v = el.dataset.v;
+    if (act === "close-modal" && el.classList.contains("overlay") && e.target !== el) return;
+    if (act === "topic") return; // handled by change
+    switch (act) {
+      case "mode": S.settings.mode = v; break;
+      case "count": S.settings.count = v === "all" ? "all" : Number(v); break;
+      case "time": S.settings.time = v; break;
+      case "start": startFromSettings(); return;
+      case "resume": S.view = "exam"; break;
+      case "discard": S.modal = "discard"; break;
+      case "discard-yes": S.session = null; S.modal = null; break;
+      case "choose": choose(Number(v)); return;
+      case "lock": lockCurrent(); return;
+      case "prev": step(-1); return;
+      case "next": step(1); return;
+      case "goto": go(Number(v)); return;
+      case "flag": toggleFlag(); return;
+      case "ask-submit": S.modal = "submit"; break;
+      case "submit": finishExam(false); return;
+      case "close-modal": S.modal = null; break;
+      case "filter": {
+        S.filter = v;
+        const vis = visibleIndexes();
+        if (vis.length && !vis.includes(S.session.current)) S.session.current = vis[0];
+        break;
+      }
+      case "review": {
+        S.view = "exam"; S.filter = v;
+        const vis = visibleIndexes();
+        S.session.current = vis.length ? vis[0] : 0;
+        render(); window.scrollTo(0, 0); return;
+      }
+      case "to-result": S.view = "result"; break;
+      case "retry": retryWrong(); return;
+      case "new": S.session = null; S.view = "home"; break;
+      case "home": S.view = "home"; if (S.session && S.session.submitted) S.session = null; break;
+      default: return;
+    }
+    persist(); render();
+    if (act === "resume" || act === "home" || act === "new" || act === "to-result") window.scrollTo(0, 0);
+  });
+
+  document.addEventListener("change", (e) => {
+    const el = e.target;
+    if (el.dataset.act !== "topic") return;
+    const t = Number(el.dataset.v);
+    const set = new Set(S.settings.topics);
+    if (el.checked) set.add(t); else set.delete(t);
+    S.settings.topics = [...set].sort();
+    persist(); render();
+    const again = document.getElementById("topic-" + t);
+    if (again) again.focus();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && S.modal) { S.modal = null; render(); return; }
+    if (S.view !== "exam" || S.modal || e.ctrlKey || e.metaKey || e.altKey) return;
+    const tag = (e.target.tagName || "").toLowerCase();
+    if (tag === "input" || tag === "textarea" || tag === "select") return;
+    const k = e.key.toLowerCase();
+    const map = { a: 0, b: 1, c: 2, d: 3, "1": 0, "2": 1, "3": 2, "4": 3 };
+    if (k in map) { e.preventDefault(); choose(map[k]); }
+    else if (k === "enter") {
+      const ses = S.session, id = ses.qids[ses.current];
+      if (e.target.closest && e.target.closest("button") && !e.target.closest(".opt")) return; // let focused buttons act normally
+      e.preventDefault();
+      if (!ses.submitted && !ses.locked[id] && ses.answers[id] !== undefined) lockCurrent(); else step(1);
+    }
+    else if (k === "arrowright") { e.preventDefault(); step(1); }
+    else if (k === "arrowleft") { e.preventDefault(); step(-1); }
+    else if (k === "r" && !S.session.submitted) { e.preventDefault(); toggleFlag(); }
+  });
+
+  /* ---------- hot reload + start ---------- */
+  const hot = window.claude && window.claude.hot;
+  if (hot && hot.snapshot) hot.snapshot(() => ({ S }));
+  if (hot && hot.ready) hot.ready(boot); else boot((hot && hot.data) || {});
+})();
+</script>
