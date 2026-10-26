@@ -297,15 +297,16 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
     1: { name: "Intro to Digital Leadership", date: "03 Sep" },
     2: { name: "Servant Leadership in the Digital Era", date: "10 Sep" },
     3: { name: "Digital Transformation Project", date: "17 Sep" },
-    4: { name: "Understanding Digital Technology", date: "01 Okt" },
-    5: { name: "Critical Thinking", date: "08 Okt" },
-    6: { name: "Design Thinking", date: "15 Okt" }
+    4: { name: "Digital Competency", date: "24 Sep" },
+    5: { name: "Understanding Digital Technology", date: "01 Okt" },
+    6: { name: "Critical Thinking", date: "08 Okt" },
+    7: { name: "Design Thinking", date: "15 Okt" }
   };
   const MODE_LABEL = { e: "Easy", h: "Hard" };
   const LETTERS = ["A", "B", "C", "D"];
-  const KEY = { session: "dlsim:v1:session", history: "dlsim:v1:history", settings: "dlsim:v1:settings", seen: "dlsim:v1:seen" };
+  const KEY = { session: "dlsim:v2:session", history: "dlsim:v1:history", settings: "dlsim:v1:settings", seen: "dlsim:v2:seen" };
 
-  // Stable ids: mode + topic + urutan di dalam materi.
+  // Stable ids: mode + topic + urutan di dalam materi. Kunci v2 sejak materi 4 disisipkan (id lama tidak lagi cocok).
   const BANK = (() => {
     const counter = {};
     return (window.QUESTIONS || []).map((q) => {
@@ -597,7 +598,7 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
     return topbar(`<div class="brand"><b>Digital Leadership</b><span>Simulasi Ujian Tengah Semester</span></div>`, null) + `
     <main class="wrap home">
       <div class="hero">
-        <span class="eyebrow">Latihan UTS · 6 materi</span>
+        <span class="eyebrow">Latihan UTS · 7 materi</span>
         <h1>Simulasi UTS Digital Leadership</h1>
         <p>Pilihan ganda A–D. Setelah memilih jawaban, tekan <b>Kunci jawaban</b> untuk langsung melihat jawaban yang benar dan pembahasan setiap opsi.</p>
         <div class="facts"><span class="fact">Closed book</span><span class="fact">Durasi UTS 2 jam</span><span class="fact num">${BANK.length} soal di bank</span><span class="fact">Soal & opsi diacak tiap sesi</span></div>
