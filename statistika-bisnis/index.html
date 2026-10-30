@@ -193,7 +193,34 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
 .verdict span { color: var(--ink); font-weight: 600; }
 .explain { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-2); padding: 16px 18px; display: grid; gap: 8px; }
 .explain h3 { font-size: 1rem; font-weight: 800; }
-.explain p { max-width: 75ch; white-space: pre-line; }
+.rich { display: grid; gap: 6px; }
+.rich p { max-width: 75ch; }
+.rich h4 { font-family: var(--font-display); font-size: .95rem; font-weight: 800; margin: 8px 0 0; color: var(--accent); }
+.rich h4:first-child { margin-top: 0; }
+.rich code, .quick code {
+  display: block; font-family: var(--font-mono); font-size: .84rem; line-height: 1.5; padding: 6px 10px; border-radius: 6px;
+  background: var(--surface); border: 1px solid var(--line); white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.quick { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 12px; }
+.quick h3 { font-size: 1rem; font-weight: 800; }
+.quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.quick-grid > div { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.quick .eyebrow { color: var(--muted); }
+.quick code { background: var(--surface-2); }
+.concept { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.concept summary { cursor: pointer; padding: 12px 16px; font-weight: 700; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; list-style-position: inside; }
+.concept summary small { font-weight: 600; color: var(--muted); font-size: .8rem; }
+.concept[open] summary { border-bottom: 1px solid var(--line); }
+.concept .rich { padding: 14px 16px 16px; }
+.concept .rich code { background: var(--surface-2); }
+.copy-area { width: 100%; min-height: 220px; font-family: var(--font-mono); font-size: .82rem; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); }
+.kb { padding-block: 28px 56px; display: grid; gap: 20px; }
+.kb-head { display: grid; gap: 8px; }
+.kb-head h1 { font-size: clamp(1.6rem, 3.6vw, 2.2rem); font-weight: 800; }
+.kb-head p { color: var(--muted); max-width: 65ch; }
+.kb-group { display: grid; gap: 10px; }
+.kb-group h2 { font-size: 1.1rem; font-weight: 800; }
+.kb-group h2 small { font-family: var(--font-mono); font-size: .75rem; font-weight: 500; color: var(--muted); margin-left: 6px; }
 .qactions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; border-top: 1px solid var(--line); padding-top: 16px; }
 .qactions .spacer { flex: 1; }
 .lockhint { font-size: .85rem; color: var(--muted); }
@@ -290,6 +317,7 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
 <div id="app"></div>
 <div id="layer"></div>
 
+<script src="concepts.js"></script>
 <script src="questions.js"></script>
 <script>
 (function () {
@@ -371,6 +399,11 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
     if (m) return m + " m " + (sec % 60) + " d";
     return (sec % 60) + " d";
   }
+  // Format teks pembahasan/konsep: "§Judul" = subjudul, "`kode" = baris rumus, lainnya paragraf.
+  const rich = (s) => `<div class="rich">${String(s).split("\n").map((l) =>
+    l.startsWith("§") ? `<h4>${esc(l.slice(1))}</h4>` : l.startsWith("`") ? `<code>${esc(l.slice(1))}</code>` : `<p>${esc(l)}</p>`).join("")}</div>`;
+  const CONCEPT = Object.fromEntries((window.CONCEPTS || []).map((c) => [c.id, c]));
+  const conceptBox = (c, open) => `<details class="concept"${open ? " open" : ""}><summary>Konsep dasar: ${esc(c.name)}${c.t ? `<small>Materi ${c.t}</small>` : ""}</summary>${rich(c.body)}</details>`;
   const fmtScore = (n) => n.toLocaleString("id-ID", { maximumFractionDigits: 1 });
   const fmtDate = (ts) => new Date(ts).toLocaleString("id-ID", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
   const poolFor = (mode, topics) => BANK.filter((q) => q.d === mode && topics.includes(q.t));
@@ -529,6 +562,27 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
     persist(); render();
   }
 
+  // Teks soal untuk ditempel ke AI lain. Kunci & pembahasan hanya ikut kalau soal sudah dibuka.
+  function copyText() {
+    const ses = S.session, id = ses.qids[ses.current], q = BY_ID[id], perm = ses.perm[id];
+    const revealed = ses.submitted || ses.locked[id];
+    const strip = (s) => s.replace(/^§/gm, "").replace(/^`/gm, "  ");
+    let t = `Soal Statistika Bisnis (${TOPICS[q.t].name}):\n${q.q}\n\n` + perm.map((o, i) => `${LETTERS[i]}. ${q.o[o][0]}`).join("\n");
+    if (revealed) {
+      t += `\n\nJawaban benar: ${LETTERS[perm.indexOf(q.a)]}. ${q.o[q.a][0]}`;
+      if (ses.answers[id] !== undefined && ses.answers[id] !== q.a) t += `\nJawaban saya: ${LETTERS[perm.indexOf(ses.answers[id])]}. ${q.o[ses.answers[id]][0]}`;
+      t += `\n\nPembahasan:\n${strip(q.x)}`;
+    }
+    return t;
+  }
+  function copyQuestion() {
+    const text = copyText();
+    const fallback = () => { S.modal = "copy"; S.copyText = text; render(); const ta = document.getElementById("copy-text"); if (ta) ta.select(); };
+    try {
+      navigator.clipboard.writeText(text).then(() => toast("Soal disalin. Tempel di AI lain."), fallback);
+    } catch (e) { fallback(); }
+  }
+
   let toastTimer = null;
   function toast(msg) {
     const el = document.createElement("div");
@@ -544,9 +598,10 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
     const app = document.getElementById("app");
     if (S.view === "home") app.innerHTML = viewHome();
     else if (S.view === "exam") app.innerHTML = viewExam();
+    else if (S.view === "concepts") app.innerHTML = viewConcepts();
     else app.innerHTML = viewResult();
     document.getElementById("layer").innerHTML = S.modal ? viewModal() : "";
-    if (S.modal) { const b = document.querySelector("[data-autofocus]"); if (b) b.focus(); }
+    if (S.modal) { const b = document.querySelector("[data-autofocus]"); if (b) b.focus(); const ta = document.getElementById("copy-text"); if (ta) ta.select(); }
     updateTimer();
   }
 
@@ -627,6 +682,7 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
           <div class="start-row">
             <button class="btn btn-primary" data-act="start" ${nAll ? "" : "disabled"}>Mulai ${MODE_LABEL[st.mode]} · ${effective} soal</button>
             <span class="hint">${nAll ? timeText : "Pilih minimal satu materi."}</span>
+            <button class="btn" data-act="concepts">Ringkasan konsep</button>
           </div>
         </section>
         <section>
@@ -634,7 +690,7 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
           <div class="field"><span class="label">Cara mengerjakan</span>
             <ol class="howto">
               <li><span>Pilih jawaban. Selama belum dikunci, jawaban masih bisa diganti.</span></li>
-              <li><span>Tekan <b>Kunci jawaban</b> untuk melihat jawaban benar beserta alasan tiap opsi benar atau salah.</span></li>
+              <li><span>Tekan <b>Kunci jawaban</b> untuk melihat jawaban benar, alasan tiap opsi, langkah hitung, rumus Excel, dan ketikan kalkulator. Kalau salah, konsep dasarnya langsung terbuka.</span></li>
               <li><span>Bebas lompat antarsoal lewat panel navigasi. Tandai yang masih ragu-ragu.</span></li>
               <li><span>Tekan <b>Kumpulkan</b> untuk melihat nilai, rekap per materi, dan mengulang soal yang salah.</span></li>
             </ol></div>
@@ -648,6 +704,20 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
         </section>
       </div>
       <section class="panel history"><h2>Riwayat percobaan</h2>${hist}</section>
+    </main>`;
+  }
+
+  function viewConcepts() {
+    const groups = [[0, "Alat bantu"]].concat(Object.entries(TOPICS).map(([k, t]) => [Number(k), `${t.name}<small>${t.date}</small>`]));
+    const body = groups.map(([t, title]) => {
+      const cs = (window.CONCEPTS || []).filter((c) => c.t === t);
+      return cs.length ? `<section class="kb-group"><h2>${title}</h2>${cs.map((c) => conceptBox(c, false)).join("")}</section>` : "";
+    }).join("");
+    return topbar(`<div class="brand"><b>Statistika Bisnis</b><span>Ringkasan konsep</span></div><button class="btn btn-ghost" data-act="home">Beranda</button>`, null) + `
+    <main class="wrap kb">
+      <div class="kb-head"><span class="eyebrow">Ringkasan konsep</span><h1>Konsep dasar per materi</h1>
+        <p>Semua konsep yang dipakai di pembahasan soal, lengkap dengan rumus, contoh, rumus Excel, dan ketikan kalkulator. Bisa juga jadi bahan ringkasan 2 halaman yang boleh dibawa saat UTS.</p></div>
+      ${body}
     </main>`;
   }
 
@@ -695,7 +765,14 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
         : ans === q.a
           ? `<div class="verdict ok">Benar <span>· ${correctLetter}</span></div>`
           : `<div class="verdict bad">Kurang tepat. <span>Kamu memilih ${LETTERS[perm.indexOf(ans)]}, jawaban benar ${correctLetter}.</span></div>`;
-      feedback = `<div id="feedback" style="display:grid;gap:12px">${verdict}<div class="explain"><h3>Pembahasan</h3><p>${esc(q.x)}</p></div></div>`;
+      const lines = (arr) => arr.map((l) => `<code>${esc(l)}</code>`).join("");
+      const quick = q.xl || q.kc ? `<div class="quick"><h3>Cara cepat</h3><div class="quick-grid">
+        ${q.xl ? `<div><span class="eyebrow">Excel</span>${lines(q.xl)}</div>` : ""}
+        ${q.kc ? `<div><span class="eyebrow">Kalkulator</span>${lines(q.kc)}</div>` : ""}
+      </div></div>` : "";
+      // Konsep dasar langsung terbuka kalau jawabannya salah atau kosong.
+      const concepts = (q.c || []).map((k) => CONCEPT[k]).filter(Boolean).map((c) => conceptBox(c, ans !== q.a)).join("");
+      feedback = `<div id="feedback" style="display:grid;gap:12px">${verdict}<div class="explain"><h3>Pembahasan</h3>${rich(q.x)}</div>${quick}${concepts}</div>`;
     }
 
     const vis = visibleIndexes();
@@ -703,6 +780,7 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
     const lockBtn = revealed ? "" : `<button class="btn btn-primary" data-act="lock" ${ans === undefined ? "disabled" : ""}>Kunci jawaban <span class="kbd">Enter</span></button>`;
     const actions = `<div class="qactions">
       <button class="btn" data-act="prev" ${hasPrev ? "" : "disabled"}>‹ Sebelumnya</button>
+      <button class="btn btn-ghost" data-act="copy">${revealed ? "Salin soal + pembahasan" : "Salin soal"}</button>
       <span class="spacer"></span>
       ${lockBtn}
       <button class="btn${revealed ? " btn-primary" : ""}" data-act="next" ${hasNext ? "" : "disabled"}>Berikutnya ›</button>
@@ -834,6 +912,14 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
         <div class="btns"><button class="btn" data-act="close-modal" data-autofocus>Kembali ke soal</button><button class="btn btn-primary" data-act="submit">Kumpulkan</button></div>
       </div></div>`;
     }
+    if (S.modal === "copy") {
+      return `<div class="overlay" data-act="close-modal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt">
+        <h2 id="mt">Salin soal</h2>
+        <p>Browser ini tidak mengizinkan salin otomatis. Teks sudah dipilih; tekan Ctrl+C (atau tahan lalu pilih Salin di HP).</p>
+        <textarea id="copy-text" class="copy-area" readonly>${esc(S.copyText || "")}</textarea>
+        <div class="btns"><button class="btn btn-primary" data-act="close-modal" data-autofocus>Selesai</button></div>
+      </div></div>`;
+    }
     if (S.modal === "discard") {
       return `<div class="overlay" data-act="close-modal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt">
         <h2 id="mt">Buang sesi ini?</h2>
@@ -907,13 +993,15 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
         render(); window.scrollTo(0, 0); return;
       }
       case "to-result": S.view = "result"; break;
+      case "copy": copyQuestion(); return;
+      case "concepts": S.view = "concepts"; break;
       case "retry": retryWrong(); return;
       case "new": S.session = null; S.view = "home"; break;
       case "home": S.view = "home"; if (S.session && S.session.submitted) S.session = null; break;
       default: return;
     }
     persist(); render();
-    if (act === "resume" || act === "home" || act === "new" || act === "to-result") window.scrollTo(0, 0);
+    if (act === "resume" || act === "home" || act === "new" || act === "to-result" || act === "concepts") window.scrollTo(0, 0);
   });
 
   document.addEventListener("change", (e) => {
