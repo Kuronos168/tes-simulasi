@@ -646,7 +646,7 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
       const n = BANK.filter((q) => q.d === st.mode && q.t === Number(k)).length;
       return `<label class="topic-row" for="topic-${k}">
         <input type="checkbox" id="topic-${k}" data-act="topic" data-v="${k}" ${st.topics.includes(Number(k)) ? "checked" : ""}>
-        <span class="tname">${esc(t.name)}</span><span class="tdate">${t.date}</span><span class="tcount">${n}</span></label>`;
+        <span class="tname">${esc(t.name)}</span><span class="tdate">${t.date}</span><span class="tcount">${n} soal</span></label>`;
     }).join("");
 
     const hist = S.history.length ? `<div class="table-wrap"><table>

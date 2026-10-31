@@ -7,3 +7,7 @@ Latihan soal pilihan ganda (A–D) bergaya LMS untuk UTS mata kuliah Digital Lea
 - `tools/check-questions.js`: validasi bank soal, termasuk cek supaya jawaban benar tidak cenderung jadi opsi terpanjang. Jalankan `node tools/check-questions.js`.
 
 Buka `index.html` di browser (file `questions.js` harus berada di folder yang sama).
+
+## Simulasi lain
+
+- [`ppn-ppnbm/`](ppn-ppnbm/): Simulasi UTS PPN & PPnBM (Easy/Hard, 7 materi, aturan per Oktober 2026).

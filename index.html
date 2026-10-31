@@ -61,6 +61,7 @@ p { margin: 0; }
 
 /* ---------- Buttons ---------- */
 .btn {
+  text-decoration: none;
   display: inline-flex; align-items: center; justify-content: center; gap: .45rem;
   min-height: 42px; padding: .5rem 1rem; border-radius: 8px; border: 1px solid var(--line);
   background: var(--surface); color: var(--ink); font-weight: 600; cursor: pointer;
@@ -595,7 +596,7 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
         <td class="num">${fmtDuration(h.used)}</td></tr>`).join("")}</tbody></table></div>`
       : `<p class="empty">Belum ada percobaan. Nilai setiap sesi yang kamu kumpulkan akan tercatat di sini (tersimpan di browser ini saja).</p>`;
 
-    return topbar(`<div class="brand"><b>Digital Leadership</b><span>Simulasi Ujian Tengah Semester</span></div>`, null) + `
+    return topbar(`<div class="brand"><b>Digital Leadership</b><span>Simulasi Ujian Tengah Semester</span></div><a class="btn btn-ghost" href="ppn-ppnbm/index.html">Simulasi PPN &amp; PPnBM</a>`, null) + `
     <main class="wrap home">
       <div class="hero">
         <span class="eyebrow">Latihan UTS · 7 materi</span>

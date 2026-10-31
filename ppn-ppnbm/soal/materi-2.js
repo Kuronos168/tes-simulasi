@@ -5,8 +5,8 @@
 /* ============ EASY ============ */
 {t:2,d:"e",c:["pkp-wajib"],
 q:"Peredaran bruto CV Mawar selama satu tahun buku tepat Rp4.800.000.000. Status CV Mawar menurut ketentuan PKP adalah…",
-o:[["Wajib dikukuhkan sebagai PKP mulai tahun depan","Kewajiban baru muncul bila omzet LEBIH DARI Rp4,8 miliar. Tepat Rp4,8 miliar belum lebih."],
-["Masih pengusaha kecil, boleh memilih jadi PKP","Tepat. Batasnya ‘tidak lebih dari Rp4,8 miliar’, jadi tepat di batas masih pengusaha kecil."],
+o:[["Wajib dikukuhkan sebagai PKP mulai tahun buku depan","Kewajiban baru muncul bila omzet LEBIH DARI Rp4,8 miliar. Tepat Rp4,8 miliar belum lebih."],
+["Masih pengusaha kecil, tapi boleh memilih jadi PKP","Tepat. Batasnya ‘tidak lebih dari Rp4,8 miliar’, jadi tepat di batas masih pengusaha kecil."],
 ["Otomatis dikukuhkan secara jabatan oleh DJP","Pengukuhan jabatan dilakukan bila pengusaha yang wajib tidak melapor. CV Mawar belum wajib."],
 ["Tidak boleh menjadi PKP karena omzetnya kecil","Pengusaha kecil justru boleh memilih menjadi PKP secara sukarela."]],
 a:1,x:"§Aturan batas pengusaha kecil\nPengusaha kecil = peredaran bruto setahun buku TIDAK LEBIH DARI Rp4.800.000.000.\n`Omzet ≤ Rp4,8 M → pengusaha kecil (tidak wajib, boleh memilih PKP)\n`Omzet > Rp4,8 M → wajib melaporkan usaha untuk dikukuhkan PKP\n§Di soal ini\nRp4,8 M tepat = masih ‘tidak lebih dari’ → pengusaha kecil.\n§Kunci ingat\nPerhatikan kata ‘lebih dari’. Rp4.800.000.000 belum lebih; Rp4.800.000.001 sudah lebih."},
@@ -55,7 +55,7 @@ a:1,x:"§Siklus PKP\n1) Pungut PPN dari pembeli sesuai transaksi.\n2) Buat Faktu
 q:"Pernyataan yang benar tentang status WP Nonaktif adalah…",
 o:[["NPWP-nya pasti sudah dihapus dari sistem","Penghapusan NPWP adalah status yang berbeda. WP Nonaktif belum dihapus."],
 ["Status PKP-nya otomatis tercabut","WP Nonaktif bisa menjadi DASAR pencabutan, tetapi tidak otomatis mencabut PKP."],
-["Status administrasi, NPWP belum dihapus","Tepat. WP Nonaktif hanya status administrasi dan dapat diaktifkan kembali."],
+["Status administrasi saja, NPWP belum dihapus","Tepat. WP Nonaktif hanya status administrasi dan dapat diaktifkan kembali."],
 ["Seluruh utang pajaknya dianggap lunas","Status apa pun tidak menghapus kewajiban pajak masa lalu."]],
 a:2,x:"§Empat status yang sering tertukar\n`WP Nonaktif         : status administrasi; NPWP belum dihapus; PKP belum otomatis dicabut\n`Akses faktur nonaktif: tidak bisa membuat faktur; status PKP masih ada\n`Pencabutan PKP      : status PKP berakhir lewat keputusan\n`Penghapusan NPWP    : identitas dihapus; kewajiban lama tetap ada\n§Hubungan nonaktif dan pencabutan\nWP Nonaktif → DJP menilai syarat PKP → penelitian administrasi → bila perlu keputusan pencabutan secara jabatan. Jadi nonaktif bisa jadi ‘pintu’ menuju pencabutan, tapi bukan pencabutan itu sendiri."},
 
@@ -104,7 +104,7 @@ a:0,x:"§Hitung\n`PPN kurang bayar = PK − PM = Rp63 juta − Rp41 juta = Rp22 
 q:"PT Spektrum Digital beromzet Rp5,2 miliar, memakai alamat kantor virtual, tetapi operasionalnya dijalankan dari studio terpisah. Pengurus baru menyiapkan akta dan NIB; foto dan peta studio belum ada. Analisis yang paling tepat adalah…",
 o:[["Belum wajib PKP karena alamat terdaftarnya hanya kantor virtual","Omzet Rp5,2 M > Rp4,8 M. Bentuk alamat tidak menghapus kewajiban."],
 ["Wajib PKP; permohonan bisa langsung dikirim karena akta dan NIB sudah cukup","Permohonan belum lengkap tanpa peta/foto lokasi kegiatan sebenarnya dan dokumen kantor virtual."],
-["Wajib PKP; lengkapi dulu peta dan foto studio serta kontrak kantor virtual","Tepat. Omzet melewati batas; dokumen lokasi nyata wajib; alamat tidak sesuai berisiko ditolak/dicabut."],
+["Wajib PKP; lengkapi dulu peta dan foto studio serta kontrak kantor virtualnya","Tepat. Omzet melewati batas; dokumen lokasi nyata wajib; alamat tidak sesuai berisiko ditolak/dicabut."],
 ["Wajib PKP; cukup cantumkan alamat kantor virtual tanpa menyebut studio","Lokasi kegiatan SEBENARNYA harus dinyatakan. Ketidaksesuaian bisa berujung penolakan atau pencabutan."]],
 a:2,x:"§Analisis\n1) Omzet Rp5,2 miliar > Rp4,8 miliar → wajib dikukuhkan.\n2) Kantor virtual boleh dipakai, dengan syarat: penyedianya PKP dan menyediakan ruang/layanan nyata; pengusaha menyatakan lokasi kegiatan sebenarnya.\n3) Dokumen yang masih kurang: peta dan foto studio (lokasi kegiatan nyata), kontrak kantor virtual aktif, bukti kegiatan.\n§Risiko\nAlamat/kegiatan yang tidak sesuai keadaan sebenarnya → permohonan ditolak, atau setelah penelitian lapangan (dalam 30 hari setelah pengukuhan) menjadi dasar tindakan administrasi, termasuk pencabutan."},
 

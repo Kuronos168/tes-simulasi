@@ -111,7 +111,7 @@ a:0,x:"§Langkah 1: pilih barang yang dianggap diserahkan\n• Persediaan Rp120 
 {t:3,d:"h",c:["bukan-penyerahan"],
 q:"PT Alfa (PKP) bergabung (merger) dengan dua perusahaan dalam transaksi terpisah: (1) mengalihkan mesin kepada PT Beta yang sudah PKP; (2) mengalihkan persediaan kepada PT Gama yang BELUM PKP. Keduanya merupakan penggabungan usaha yang sah. Perlakuan PPN yang tepat adalah…",
 o:[["Keduanya bukan penyerahan karena sama-sama merger","Pengecualian merger mensyaratkan pihak yang mengalihkan DAN yang menerima sama-sama PKP."],
-["(1) bukan penyerahan; (2) penyerahan yang terutang","Tepat. Syarat ‘kedua pihak PKP’ hanya terpenuhi pada transaksi (1)."],
+["(1) bukan penyerahan; (2) tetap penyerahan yang terutang","Tepat. Syarat ‘kedua pihak PKP’ hanya terpenuhi pada transaksi (1)."],
 ["(1) penyerahan; (2) bukan penyerahan","Terbalik. Yang memenuhi syarat pengecualian adalah transaksi ke sesama PKP."],
 ["Keduanya penyerahan karena merger selalu terutang PPN","Merger antara sesama PKP dikecualikan dari pengertian penyerahan."]],
 a:1,x:"§Pasal 1A ayat (2) huruf d\nTidak termasuk penyerahan: pengalihan BKP dalam rangka penggabungan, peleburan, pemekaran, pemecahan, pengambilalihan usaha, serta setoran modal pengganti saham, DENGAN SYARAT pihak yang mengalihkan dan yang menerima adalah PKP.\n§Analisis\n(1) Alfa (PKP) → Beta (PKP): syarat terpenuhi → bukan penyerahan.\n(2) Alfa (PKP) → Gama (bukan PKP): syarat tidak terpenuhi → penyerahan, terutang PPN.\n§Kunci\nLabel ‘merger’ saja tidak cukup. Selalu cek status PKP kedua pihak."},
@@ -127,7 +127,7 @@ a:1,x:"§Jasa kesenian dan hiburan bukan objek PPN (PMK 70/2022) meliputi\nTonto
 {t:3,d:"h",c:["jkp-ekspor","objek"],
 q:"PT Konsulindo (PKP) memberikan empat jasa kepada klien di Singapura. Menurut PMK 32/2019, jasa yang dikenai tarif 0% adalah…",
 o:[["Desain gedung yang akan dibangun di Jakarta untuk klien Singapura","Konsultansi konstruksi 0% hanya untuk bangunan yang berada di luar Daerah Pabean."],
-["Audit laporan keuangan yang hasilnya dimanfaatkan di Singapura","Tepat. Jasa audit laporan keuangan termasuk daftar ekspor JKP 0%."],
+["Jasa audit laporan keuangan yang hasilnya dimanfaatkan di Singapura","Tepat. Jasa audit laporan keuangan termasuk daftar ekspor JKP 0%."],
 ["Jasa perawatan gedung kantor klien yang berlokasi di Surabaya","Jasa melekat pada barang tidak bergerak di Indonesia tidak dimanfaatkan di luar Daerah Pabean."],
 ["Jasa penyewaan mobil untuk staf klien selama di Bali","Jasa dimanfaatkan di dalam Daerah Pabean, sehingga bukan ekspor."]],
 a:1,x:"§Ekspor JKP 0% (PMK 32/2019)\nKelompok 1, melekat pada barang yang dikeluarkan untuk dimanfaatkan di luar negeri: jasa maklon, perbaikan & perawatan, freight forwarding barang ekspor, konsultansi konstruksi untuk bangunan DI LUAR Daerah Pabean.\nKelompok 2, hasilnya dimanfaatkan di luar negeri: teknologi & informasi, R&D, sewa pesawat/kapal untuk penerbangan/pelayaran internasional, konsultansi bisnis/manajemen/hukum/arsitektur & interior/SDM/keinsinyuran/pemasaran, akuntansi/pembukuan, AUDIT LAPORAN KEUANGAN, perpajakan, jasa mencarikan penjual di Indonesia untuk ekspor, interkoneksi/satelit/konektivitas data.\n§Kunci\nYang diuji: apakah jasanya ada di daftar DAN dimanfaatkan di luar Daerah Pabean. Klien asing saja tidak cukup."}
