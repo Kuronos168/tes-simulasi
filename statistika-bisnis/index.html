@@ -194,6 +194,11 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
 .explain { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-2); padding: 16px 18px; display: grid; gap: 8px; }
 .explain h3 { font-size: 1rem; font-weight: 800; }
 .rich { display: grid; gap: 6px; }
+.en { color: var(--muted); font-style: italic; font-size: .92em; }
+.topic-row .tname small, .bname .en-name { display: block; font-size: .78rem; color: var(--muted); font-style: italic; }
+.gloss { width: 100%; }
+.gloss td { white-space: normal; }
+.gloss td:last-child { font-style: italic; color: var(--muted); }
 .rich p { max-width: 75ch; }
 .rich h4 { font-family: var(--font-display); font-size: .95rem; font-weight: 800; margin: 8px 0 0; color: var(--accent); }
 .rich h4:first-child { margin-top: 0; }
@@ -324,13 +329,13 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
   "use strict";
 
   const TOPICS = {
-    1: { name: "Pengantar & Statistika Deskriptif", date: "Quiz 1" },
-    2: { name: "Distribusi Frekuensi", date: "Quiz 2" },
-    3: { name: "Probabilitas Dasar", date: "Quiz 3" },
-    4: { name: "Nilai Harapan & Varians", date: "Quiz 4" },
-    5: { name: "Distribusi Peluang Diskrit", date: "Quiz 5" },
-    6: { name: "Distribusi Normal", date: "Quiz 6" },
-    7: { name: "Estimasi & Interval Kepercayaan", date: "Quiz 7" }
+    1: { name: "Pengantar & Statistika Deskriptif", en: "Introduction & Descriptive Statistics", date: "Quiz 1" },
+    2: { name: "Distribusi Frekuensi", en: "Frequency Distribution", date: "Quiz 2" },
+    3: { name: "Probabilitas Dasar", en: "Basic Probability", date: "Quiz 3" },
+    4: { name: "Nilai Harapan & Varians", en: "Expected Value & Variance", date: "Quiz 4" },
+    5: { name: "Distribusi Peluang Diskrit", en: "Discrete Probability Distributions", date: "Quiz 5" },
+    6: { name: "Distribusi Normal", en: "Normal Distribution", date: "Quiz 6" },
+    7: { name: "Estimasi & Interval Kepercayaan", en: "Estimation & Confidence Intervals", date: "Quiz 7" }
   };
   const MODE_LABEL = { e: "Easy", h: "Hard" };
   const LETTERS = ["A", "B", "C", "D"];
@@ -399,9 +404,34 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
     if (m) return m + " m " + (sec % 60) + " d";
     return (sec % 60) + " d";
   }
+  // Istilah Inggris: kemunculan pertama tiap istilah glosarium dalam satu blok teks diberi padanan Inggris dalam kurung.
+  // `seen` dibagi antarbaris satu blok supaya istilah yang sama tidak diulang. Istilah terpanjang dicocokkan dulu.
+  const GLOSS = (window.GLOSSARY || []).slice().sort((a, b) => b[0].length - a[0].length);
+  const GLOSS_EN = Object.fromEntries(GLOSS.map(([id, en]) => [id.toLowerCase(), en]));
+  const GLOSS_RE = GLOSS.length
+    ? new RegExp("(?<![\\p{L}\\d])(" + GLOSS.map(([id]) => id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")(?![\\p{L}\\d])", "giu")
+    : null;
+  function annotate(text, seen, html) {
+    if (!GLOSS_RE) return text;
+    return text.replace(GLOSS_RE, (m, _g, off, whole) => {
+      const key = m.toLowerCase(), en = GLOSS_EN[key], enKey = "en:" + (en || "").toLowerCase();
+      if (!en || seen.has(key) || seen.has(enKey)) return m;
+      // Istilah yang tercakup dalam frasa ini (mis. "varians" di dalam "varians sampel") dan sinonimnya
+      // (mis. "standar deviasi" setelah "simpangan baku") dianggap sudah dijelaskan.
+      GLOSS.forEach(([id, e]) => { if (key.includes(id.toLowerCase())) { seen.add(id.toLowerCase()); seen.add("en:" + e.toLowerCase()); } });
+      // Lewati kalau padanan Inggrisnya sudah tertulis tepat di sekitar istilah, mis. "Range (jangkauan)".
+      const near = whole.slice(Math.max(0, off - en.length - 3), off + m.length + en.length + 3).toLowerCase();
+      if (key === en.toLowerCase() || near.replace(key, "").includes(en.toLowerCase())) return m;
+      return html ? `${m} <span class="en">(${en})</span>` : `${m} (${en})`;
+    });
+  }
+  const bi = (s, seen) => annotate(esc(s), seen || new Set(), true);
   // Format teks pembahasan/konsep: "§Judul" = subjudul, "`kode" = baris rumus, lainnya paragraf.
-  const rich = (s) => `<div class="rich">${String(s).split("\n").map((l) =>
-    l.startsWith("§") ? `<h4>${esc(l.slice(1))}</h4>` : l.startsWith("`") ? `<code>${esc(l.slice(1))}</code>` : `<p>${esc(l)}</p>`).join("")}</div>`;
+  const rich = (s) => {
+    const seen = new Set();
+    return `<div class="rich">${String(s).split("\n").map((l) =>
+      l.startsWith("§") ? `<h4>${bi(l.slice(1), seen)}</h4>` : l.startsWith("`") ? `<code>${esc(l.slice(1))}</code>` : `<p>${bi(l, seen)}</p>`).join("")}</div>`;
+  };
   const CONCEPT = Object.fromEntries((window.CONCEPTS || []).map((c) => [c.id, c]));
   const conceptBox = (c, open) => `<details class="concept"${open ? " open" : ""}><summary>Konsep dasar: ${esc(c.name)}${c.t ? `<small>Materi ${c.t}</small>` : ""}</summary>${rich(c.body)}</details>`;
   const fmtScore = (n) => n.toLocaleString("id-ID", { maximumFractionDigits: 1 });
@@ -566,8 +596,9 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
   function copyText() {
     const ses = S.session, id = ses.qids[ses.current], q = BY_ID[id], perm = ses.perm[id];
     const revealed = ses.submitted || ses.locked[id];
-    const strip = (s) => s.replace(/^§/gm, "").replace(/^`/gm, "  ");
-    let t = `Soal Statistika Bisnis (${TOPICS[q.t].name}):\n${q.q}\n\n` + perm.map((o, i) => `${LETTERS[i]}. ${q.o[o][0]}`).join("\n");
+    const strip = (s) => s.split("\n").map((l) => l.startsWith("`") ? "  " + l.slice(1) : annotate(l.replace(/^§/, ""), seenX, false)).join("\n");
+    const seenX = new Set();
+    let t = `Soal Statistika Bisnis (${TOPICS[q.t].name} / ${TOPICS[q.t].en}):\n${annotate(q.q, new Set(), false)}\n\n` + perm.map((o, i) => `${LETTERS[i]}. ${q.o[o][0]}`).join("\n");
     if (revealed) {
       t += `\n\nJawaban benar: ${LETTERS[perm.indexOf(q.a)]}. ${q.o[q.a][0]}`;
       if (ses.answers[id] !== undefined && ses.answers[id] !== q.a) t += `\nJawaban saya: ${LETTERS[perm.indexOf(ses.answers[id])]}. ${q.o[ses.answers[id]][0]}`;
@@ -639,7 +670,7 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
       const n = BANK.filter((q) => q.d === st.mode && q.t === Number(k)).length;
       return `<label class="topic-row" for="topic-${k}">
         <input type="checkbox" id="topic-${k}" data-act="topic" data-v="${k}" ${st.topics.includes(Number(k)) ? "checked" : ""}>
-        <span class="tname">${esc(t.name)}</span><span class="tdate">${t.date}</span><span class="tcount">${n}</span></label>`;
+        <span class="tname">${esc(t.name)}<small>${esc(t.en)}</small></span><span class="tdate">${t.date}</span><span class="tcount">${n}</span></label>`;
     }).join("");
 
     const hist = S.history.length ? `<div class="table-wrap"><table>
@@ -708,7 +739,8 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
   }
 
   function viewConcepts() {
-    const groups = [[0, "Alat bantu"]].concat(Object.entries(TOPICS).map(([k, t]) => [Number(k), `${t.name}<small>${t.date}</small>`]));
+    const groups = [[0, "Alat bantu"]].concat(Object.entries(TOPICS).map(([k, t]) => [Number(k), `${esc(t.name)} <span class="en">(${esc(t.en)})</span><small>${t.date}</small>`]));
+    const gloss = (window.GLOSSARY || []).slice().sort((a, b) => a[0].localeCompare(b[0], "id"));
     const body = groups.map(([t, title]) => {
       const cs = (window.CONCEPTS || []).filter((c) => c.t === t);
       return cs.length ? `<section class="kb-group"><h2>${title}</h2>${cs.map((c) => conceptBox(c, false)).join("")}</section>` : "";
@@ -718,6 +750,11 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
       <div class="kb-head"><span class="eyebrow">Ringkasan konsep</span><h1>Konsep dasar per materi</h1>
         <p>Semua konsep yang dipakai di pembahasan soal, lengkap dengan rumus, contoh, rumus Excel, dan ketikan kalkulator. Bisa juga jadi bahan ringkasan 2 halaman yang boleh dibawa saat UTS.</p></div>
       ${body}
+      <section class="kb-group"><h2>Glosarium Indonesia–Inggris</h2>
+        <details class="concept"><summary>Daftar ${gloss.length} istilah</summary>
+          <div class="table-wrap" style="padding:8px 16px 16px"><table class="gloss"><thead><tr><th>Indonesia</th><th>English</th></tr></thead>
+          <tbody>${gloss.map(([id, en]) => `<tr><td>${esc(id)}</td><td>${esc(en)}</td></tr>`).join("")}</tbody></table></div>
+        </details></section>
     </main>`;
   }
 
@@ -742,6 +779,8 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
     const revealed = ses.submitted || !!ses.locked[id];
     const topic = TOPICS[q.t];
 
+    const seenQ = new Set();
+    const qHtml = bi(q.q, seenQ);
     const opts = perm.map((orig, di) => {
       const [text, note] = q.o[orig];
       const picked = ans === orig;
@@ -753,7 +792,7 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
       }
       return `<button class="${cls}" data-act="choose" data-v="${di}" aria-pressed="${!revealed && picked}" ${revealed ? "disabled" : ""}>
         <span class="letter">${LETTERS[di]}</span>
-        <span class="otext">${esc(text)}${tag ? `<span class="otag">${tag}</span>` : ""}${revealed ? `<span class="onote">${esc(note)}</span>` : ""}</span>
+        <span class="otext">${esc(text)}${tag ? `<span class="otag">${tag}</span>` : ""}${revealed ? `<span class="onote">${bi(note, seenQ)}</span>` : ""}</span>
       </button>`;
     }).join("");
 
@@ -789,10 +828,10 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
     const card = `<article class="panel qcard" aria-labelledby="qtitle">
       <div class="qhead">
         <h2 id="qtitle">Soal ${ses.current + 1} <small class="num">dari ${ses.qids.length}</small></h2>
-        <span class="chip">Materi ${q.t} · <b>${esc(topic.name)}</b></span>
+        <span class="chip" title="${esc(topic.en)}">Materi ${q.t} · <b>${esc(topic.name)}</b> <span class="en">(${esc(topic.en)})</span></span>
         <button class="btn btn-flag" data-act="flag" aria-pressed="${!!ses.flagged[id]}">${ses.flagged[id] ? "Ditandai ragu-ragu" : "Tandai ragu-ragu"}</button>
       </div>
-      <p class="qtext">${esc(q.q)}</p>
+      <p class="qtext">${qHtml}</p>
       <div class="opts" role="group" aria-label="Pilihan jawaban">${opts}</div>
       ${feedback}
       ${actions}
@@ -860,7 +899,7 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
     const rows = Object.keys(TOPICS).map(Number).filter((t) => r.byTopic[t]).map((t) => {
       const b = r.byTopic[t], pct = Math.round((b.correct / b.total) * 100);
       return `<div class="brow">
-        <div class="bname">${esc(TOPICS[t].name)}<small>Materi ${t} · ${TOPICS[t].date}</small></div>
+        <div class="bname">${esc(TOPICS[t].name)}<span class="en-name">${esc(TOPICS[t].en)}</span><small>Materi ${t} · ${TOPICS[t].date}</small></div>
         <div class="bar" role="img" aria-label="${pct}% benar"><i class="${pct >= 75 ? "" : pct >= 50 ? "mid" : "low"}" style="width:${pct}%"></i></div>
         <div class="bval">${b.correct}/${b.total}</div></div>`;
     }).join("");

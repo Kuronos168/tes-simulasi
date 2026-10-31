@@ -75,3 +75,36 @@ body:"§Istilah\n• H0 (hipotesis nol) = dugaan awal / status quo.\n• H1 = hi
 {id:"estimator",t:7,name:"Sifat estimator yang baik",
 body:"§Estimator\nRumus/statistik sampel untuk menaksir parameter. Contoh: x̄ menaksir μ.\n§Tiga sifat\n• Tidak bias: nilai harapannya sama dengan parameter yang ditaksir. Tidak meleset ke satu arah secara sistematis.\n• Efisien: variansnya paling kecil di antara estimator yang tidak bias.\n• Konsisten: makin besar n, nilainya makin mendekati parameter.\n§Cara memilih estimator terbaik\n1) Saring yang tidak bias dulu.\n2) Di antara itu, pilih yang variansnya paling kecil."}
 ];
+
+// Glosarium istilah Indonesia → Inggris. Aplikasi menambahkan padanan Inggris dalam kurung pada kemunculan
+// pertama tiap istilah di soal, pembahasan, dan konsep. Frasa yang lebih panjang dicocokkan lebih dulu.
+window.GLOSSARY = [
+["statistika deskriptif","descriptive statistics"],["statistika inferensia","inferential statistics"],
+["populasi","population"],["sampel","sample"],["statistik","statistic"],["mode statistik","STAT mode"],
+["rata-rata sampel","sample mean"],["rata-rata populasi","population mean"],["rata-rata gabungan","combined mean"],["rata-rata","mean"],
+["modus","mode"],["nilai tengah","middle value"],
+["ukuran pemusatan","measure of central tendency"],["ukuran penyebaran","measure of dispersion"],["ukuran letak","measure of position"],
+["jangkauan","range"],["varians sampel","sample variance"],["varians populasi","population variance"],["varians","variance"],["ragam","variance"],
+["simpangan baku sampel","sample standard deviation"],["simpangan baku populasi","population standard deviation"],["simpangan baku","standard deviation"],
+["standar deviasi","standard deviation"],["simpangan rata-rata","mean absolute deviation"],["koefisien variasi","coefficient of variation"],
+["kuartil","quartile"],["desil","decile"],["persentil","percentile"],["pencilan","outlier"],["nilai ekstrem","extreme value"],
+["interpolasi","interpolation"],["nilai mutlak","absolute value"],["menceng","skewed"],["sebaran","spread"],
+["distribusi frekuensi","frequency distribution"],["interval kelas","class interval"],["batas bawah","lower class limit"],["batas atas","upper class limit"],
+["tepi bawah","lower class boundary"],["tepi atas","upper class boundary"],["tepi kelas","class boundary"],["batas nyata","class boundary"],
+["titik tengah","class midpoint"],["tanda kelas","class mark"],["panjang kelas","class width"],["lebar kelas","class width"],["banyak kelas","number of classes"],
+["frekuensi relatif","relative frequency"],["frekuensi kumulatif","cumulative frequency"],["kumulatif kurang dari","less-than cumulative"],
+["kumulatif lebih dari","more-than cumulative"],["data berkelompok","grouped data"],["aturan Sturges","Sturges' rule"],["frekuensi","frequency"],
+["peluang bersyarat","conditional probability"],["peluang bersama","joint probability"],["peluang","probability"],["probabilitas","probability"],
+["komplemen","complement"],["saling lepas","mutually exclusive"],["independen","independent"],["kejadian","event"],["kombinasi","combination"],
+["dengan pengembalian","with replacement"],["tanpa pengembalian","without replacement"],["aturan perkalian","multiplication rule"],["aturan penjumlahan","addition rule"],
+["variabel acak","random variable"],["nilai harapan","expected value"],["ekspektasi","expected value"],
+["distribusi peluang diskrit","discrete probability distribution"],["distribusi diskrit","discrete distribution"],["hipergeometrik","hypergeometric"],
+["distribusi normal standar","standard normal distribution"],["normal standar","standard normal"],["distribusi normal","normal distribution"],
+["aturan empiris","empirical rule"],["standardisasi","standardization"],["luas di bawah kurva","area under the curve"],["pendekatan normal","normal approximation"],
+["distribusi sampling","sampling distribution"],["proporsi","proportion"],
+["estimasi titik","point estimate"],["estimasi interval","interval estimate"],["interval estimasi","interval estimate"],["estimasi","estimation"],
+["interval kepercayaan","confidence interval"],["selang kepercayaan","confidence interval"],["tingkat kepercayaan","confidence level"],["tingkat keyakinan","confidence level"],
+["ukuran sampel","sample size"],["tidak bias","unbiased"],["efisien","efficient"],["konsisten","consistent"],
+["pengujian hipotesis","hypothesis testing"],["uji hipotesis","hypothesis testing"],["hipotesis nol","null hypothesis"],["hipotesis tandingan","alternative hypothesis"],
+["taraf signifikansi","significance level"],["kesalahan tipe I","Type I error"],["kesalahan tipe II","Type II error"],["kuasa uji","power of the test"]
+];
