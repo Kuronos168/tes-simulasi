@@ -11,3 +11,8 @@ Latihan soal pilihan ganda (A–D) bergaya LMS untuk UTS Pajak Pertambahan Nilai
 Buka `index.html` di browser (folder `soal/` dan `concepts.js` harus ikut).
 
 Materi: 1 Pengantar PPN & PPnBM · 2 Pengusaha Kena Pajak · 3 Objek PPN & penyerahan · 4 Saat & tempat terutang, KSO, pemusatan · 5 Faktur Pajak · 6 DPP, tarif & DPP nilai lain · 7 Besaran tertentu, KMS, aktiva Pasal 16D, objek spesifik & pemungut.
+
+## Cheatsheet
+
+- `cheatsheet/Cheatsheet-UTS-PPN-PPnBM.pdf`: 2 halaman A4 (cetak bolak-balik), semua rumus dan ketentuan Bab 1–7.
+- `cheatsheet/cheatsheet.html`: sumbernya. Setelah diedit, buat ulang PDF dengan Chrome/Chromium (Print → Save as PDF, ukuran A4, margin None, background graphics aktif).
