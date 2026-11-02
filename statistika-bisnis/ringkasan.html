@@ -4,7 +4,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* Layout: two sheets of ruled paper (front/back), exactly 38 numbered lines each, so one line on screen = one line on the user's A4 paper. */
+/* Layout: two sheets of ruled paper (front/back), each split into two columns of exactly 38 numbered lines, so one screen line = one line in that column of the user's A4 paper. */
 :root {
   --desk: #E7EBEF;
   --paper: #FFFFFF;
@@ -31,8 +31,8 @@
 }
 *, *::before, *::after { box-sizing: border-box; }
 body { background: var(--desk); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
-.wrap { max-width: 860px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 56px; display: grid; gap: 28px; }
-h1, h2 { margin: 0; line-height: 1.15; text-wrap: balance; }
+.wrap { max-width: 1000px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 56px; display: grid; gap: 28px; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
 p { margin: 0; }
 :focus-visible { outline: 3px solid var(--pen); outline-offset: 2px; border-radius: 4px; }
 
@@ -42,30 +42,34 @@ p { margin: 0; }
 .intro p { color: var(--ink-soft); }
 .key { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .88rem; color: var(--ink-soft); }
 .key b { color: var(--pen); }
-.key i { color: var(--ink-soft); }
+.key em { color: var(--red); font-style: normal; font-weight: 700; }
 .progress { font-weight: 700; font-size: .9rem; }
 
 .sheet { background: var(--paper); border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 1px 2px rgba(0, 0, 0, .06), 0 10px 30px rgba(20, 40, 70, .08); padding: 18px 0 22px; display: grid; gap: 10px; min-width: 0; }
-.sheet-head { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; padding: 0 22px 8px 64px; }
+.sheet-head { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; padding: 0 22px 6px; }
 .sheet-head h2 { font-family: var(--font-hand); font-size: 2rem; font-weight: 700; color: var(--pen); }
 .sheet-head span { font-size: .85rem; color: var(--ink-soft); }
+.cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.col { min-width: 0; }
+.col + .col { border-left: 2px dashed var(--rule); }
+.col h3 { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); padding: 0 12px 6px 48px; }
 
 .lines { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
-.ln { display: grid; grid-template-columns: 48px minmax(0, 1fr); align-items: end; min-height: 32px; border-bottom: 1px solid var(--rule); }
-.ln .no { font-family: var(--font-mono); font-size: .72rem; color: var(--ink-soft); text-align: right; padding: 0 10px 6px 0; border-right: 2px solid var(--margin); align-self: stretch; display: flex; align-items: flex-end; justify-content: flex-end; font-variant-numeric: tabular-nums; }
-.ln .tx { padding: 4px 16px 5px 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
-.ln.h .tx { font-weight: 700; color: var(--pen); display: flex; gap: 8px; align-items: center; }
+.ln { display: grid; grid-template-columns: 38px minmax(0, 1fr); align-items: end; min-height: 30px; border-bottom: 1px solid var(--rule); }
+.ln .no { font-family: var(--font-mono); font-size: .7rem; color: var(--ink-soft); padding: 0 8px 6px 0; border-right: 2px solid var(--margin); align-self: stretch; display: flex; align-items: flex-end; justify-content: flex-end; font-variant-numeric: tabular-nums; }
+.ln .tx { padding: 3px 10px 4px 10px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .94rem; }
+.ln.h .tx { font-weight: 700; color: var(--pen); display: flex; gap: 7px; align-items: center; }
 .ln.h input { width: 15px; height: 15px; accent-color: var(--pen); margin: 0; flex: none; }
 .ln.h.done .tx { color: var(--ink-soft); }
-.ln.k .tx { color: var(--ink-soft); font-size: .93rem; }
-.ln.k .tx b { color: var(--red); font-weight: 700; }
-.ln.e .tx { color: var(--ink-soft); font-style: italic; font-size: .85rem; opacity: .7; }
-.f { font-family: var(--font-mono); font-size: .9em; }
+.ln.k .tx { color: var(--ink-soft); font-size: .88rem; }
+.ln.k .tx b { color: var(--pen); }
+.ln.w .tx { color: var(--red); font-weight: 600; font-size: .9rem; }
+.ln.e .tx { color: var(--ink-soft); font-style: italic; font-size: .8rem; opacity: .7; }
 
-@media (max-width: 560px) {
-  .ln { grid-template-columns: 34px minmax(0, 1fr); }
-  .ln .tx { padding: 4px 8px 5px 10px; font-size: .92rem; }
-  .sheet-head { padding: 0 12px 8px 44px; }
+@media (max-width: 700px) {
+  .cols { grid-template-columns: minmax(0, 1fr); }
+  .col + .col { border-left: 0; margin-top: 18px; }
+  .col h3 { padding-left: 16px; }
 }
 </style>
 
@@ -73,17 +77,17 @@ p { margin: 0; }
   <header class="intro">
     <span class="eyebrow">Statistika Bisnis · Persiapan UTS</span>
     <h1>Ringkasan 2 halaman untuk ditulis tangan</h1>
-    <p>Disesuaikan dengan kertas 38 baris per sisi: satu baris di layar = satu baris di kertasmu, nomornya sama. Setiap bagian ditutup baris “ket:” yang menjelaskan arti simbolnya.</p>
-    <div class="key"><span><b>Biru</b> = judul bagian</span><span><i>Abu-abu “ket:”</i> = arti simbol</span><span>Baris kosong di akhir = catatan sendiri</span></div>
+    <p>Satu lembar A4 bolak-balik. Tiap sisi dibagi 2 kolom (garis tengah kertas), tiap kolom 38 baris. Satu baris di layar = satu baris di kolom yang sama di kertasmu.</p>
+    <div class="key"><span><b>Biru</b> = judul bagian</span><span><b>ket:</b> = arti simbol</span><span><em>!</em> = jangan sampai lupa</span></div>
     <span class="progress" id="progress"></span>
   </header>
   <article class="sheet" aria-label="Halaman 1, sisi depan">
-    <div class="sheet-head"><h2>Halaman 1 · Depan</h2><span>Data, tabel frekuensi, peluang, nilai harapan</span></div>
-    <ol class="lines" id="side1"></ol>
+    <div class="sheet-head"><h2>Halaman 1 · Depan</h2><span>Data, hafalan, tabel frekuensi, peluang, nilai harapan</span></div>
+    <div class="cols"><section class="col"><h3>Kolom kiri</h3><ol class="lines" id="s1l"></ol></section><section class="col"><h3>Kolom kanan</h3><ol class="lines" id="s1r"></ol></section></div>
   </article>
   <article class="sheet" aria-label="Halaman 2, sisi belakang">
-    <div class="sheet-head"><h2>Halaman 2 · Belakang</h2><span>Distribusi, normal, interval kepercayaan, hafalan</span></div>
-    <ol class="lines" id="side2"></ol>
+    <div class="sheet-head"><h2>Halaman 2 · Belakang</h2><span>Distribusi, normal, interval kepercayaan</span></div>
+    <div class="cols"><section class="col"><h3>Kolom kiri</h3><ol class="lines" id="s2l"></ol></section><section class="col"><h3>Kolom kanan</h3><ol class="lines" id="s2r"></ol></section></div>
   </article>
 </main>
 
@@ -91,98 +95,166 @@ p { margin: 0; }
 (function () {
   "use strict";
   const ROWS = 38;
-  // Satu entri = satu baris kertas. h = judul bagian, k = keterangan simbol, teks biasa = rumus.
-  const SIDE1 = [
-    ["h", "1. Rata-rata & sebaran"],
-    ["", "Mean = Σx ÷ n   Range = maks − min"],
-    ["", "Median = data ke-(n + 1) ÷ 2   (urutkan dulu!)"],
-    ["", "Modus = data yang paling sering muncul"],
-    ["", "Varians sampel  s² = Σ(x − x̄)² ÷ (n − 1)"],
-    ["", "Simpangan baku  s = √s²   (kalkulator: sx)"],
-    ["", "Simpangan rata-rata = Σ|x − x̄| ÷ n"],
-    ["", "KV = s ÷ x̄ × 100%   (KV kecil = lebih stabil)"],
-    ["k", "ket: x = tiap data · x̄ = rata-rata · n = banyak data"],
-    ["k", "ket: s = simpangan baku · Σ = jumlahkan · |…| = buang minus"],
-    ["h", "2. Kuartil / desil / persentil   (urutkan dulu!)"],
-    ["", "Letak = i × (n + 1) ÷ k   k: Q = 4 · D = 10 · P = 100"],
-    ["", "Letak 3,3 → x₃ + 0,3 × (x₄ − x₃)"],
-    ["k", "ket: i = nomornya (Q3 → 3, P30 → 30) · x₃ = data ke-3 (urut)"],
-    ["h", "3. Tabel frekuensi   (contoh kelas 40–49)"],
-    ["", "Tepi = 39,5 & 49,5   Titik tengah m = (40 + 49) ÷ 2"],
-    ["", "Panjang kelas p = 49 − 40 + 1 = 10"],
-    ["", "Banyak kelas k = 1 + 3,3 × log n   (log, bukan ln)"],
-    ["", "Kumulatif kurang dari → tepi atas · lebih dari → tepi bawah"],
-    ["", "Rata-rata tabel = Σ(f × m) ÷ Σf"],
-    ["k", "ket: f = frekuensi (banyak data di kelas) · m = titik tengah"],
-    ["h", "4. Peluang   (P = peluang, nilainya 0 sampai 1)"],
-    ["", "“tidak” → 1 − P   “minimal 1” → 1 − P(tidak ada)"],
-    ["", "“dan” → kalikan   “atau” → P(A) + P(B) − P(keduanya)"],
-    ["", "“dari yang B, berapa A” → jumlah A dan B ÷ jumlah B"],
-    ["", "Tanpa pengembalian → nCr yang diminta ÷ nCr total"],
-    ["k", "ket: nCr = cara memilih r dari n (Casio: n SHIFT ÷ r)"],
-    ["h", "5. Nilai harapan"],
-    ["", "E(X) = Σ(x × P)   (rugi ditulis minus)"],
-    ["", "Varians = Σ(x² × P) − E(X)²"],
-    ["", "Jumlah kejadian = n × p   Standar error = σ ÷ √n"],
-    ["k", "ket: x = tiap nilai · P = peluangnya · σ = simp. baku populasi"]
-  ];
-  const SIDE2 = [
-    ["h", "6. Kalau soal bilang… pakai…"],
-    ["", "“n kali / dari n orang, peluang p” → BINOMIAL"],
-    ["", "   P(x) = nCx × pˣ × (1 − p)ⁿ⁻ˣ"],
-    ["", "“rata-rata … per jam / per hari” → POISSON"],
-    ["", "   P(x) = e^(−λ) × λˣ ÷ x!   (λ sesuaikan waktu soal)"],
-    ["", "“dari N barang ada K cacat, ambil n” → HIPERGEOMETRIK"],
-    ["", "   P(x) = KCx × (N − K)C(n − x) ÷ NCn"],
-    ["", "“satu kali, sukses/gagal” → BERNOULLI: E = p, Var = p(1 − p)"],
-    ["k", "ket: n = banyak percobaan/diambil · x = sukses yang ditanya"],
-    ["k", "ket: p = peluang sukses · λ = rata-rata · N = total · K = cacat"],
-    ["h", "7. Binomial lanjutan"],
-    ["", "Rata-rata = n × p   Varians = n × p × (1 − p)"],
-    ["", "“minimal x” → 1 − (P0 + … + P(x − 1))"],
-    ["", "“maksimal x” → P0 + … + Px"],
-    ["", "“lebih dari x” → 1 − (P0 + … + Px)"],
-    ["k", "ket: P0 = peluang tepat 0 sukses, P1 = tepat 1, dan seterusnya"],
-    ["h", "8. Distribusi normal"],
-    ["", "Z = (X − μ) ÷ σ → cari di tabel Z (angka tabel = luas kiri)"],
-    ["", "“kurang dari” → angka tabel · “lebih dari” → 1 − angka tabel"],
-    ["", "“antara” → tabel yang besar − tabel yang kecil"],
-    ["", "Untuk rata-rata sampel → pakai σ ÷ √n sebagai ganti σ"],
-    ["", "Cari X dari persen → X = μ + Z × σ   (10% teratas → Z = 1,28)"],
-    ["", "68% / 95% / 99,7% data ada di μ ± 1σ / 2σ / 3σ"],
-    ["k", "ket: X = nilai ditanya · μ = rata-rata · σ = simpangan baku"],
-    ["h", "9. Interval kepercayaan"],
-    ["", "z: 90% → 1,645   95% → 1,96   99% → 2,58"],
-    ["", "Rata-rata: x̄ ± z × σ ÷ √n"],
-    ["", "Proporsi: p̂ ± z × √(p̂ × (1 − p̂) ÷ n)"],
-    ["", "Ukuran sampel n = (z × σ ÷ E)² → bulatkan ke atas"],
-    ["", "n besar → interval sempit   % kepercayaan tinggi → lebar"],
-    ["k", "ket: x̄ = rata-rata sampel · p̂ = x ÷ n · E = batas error"],
-    ["h", "10. Hafalan"],
-    ["", "Populasi → parameter (μ, σ)   Sampel → statistik (x̄, s)"],
-    ["", "Tipe I (α) = tolak H0 benar · Tipe II (β) = terima H0 salah"],
-    ["", "Tidak bias = rata-rata pas parameter · Efisien = varians kecil"]
-  ];
+  // Satu entri = satu baris kolom kertas. h = judul, k = arti simbol, w = peringatan, "" = rumus.
+  const COLS = {
+    s1l: [
+      ["h", "1. Rata-rata & sebaran"],
+      ["", "Mean = Σx ÷ n"],
+      ["", "Median = data ke-(n + 1) ÷ 2"],
+      ["", "Modus = paling sering muncul"],
+      ["", "Range = maks − min"],
+      ["", "Varians sampel:"],
+      ["", "   s² = Σ(x − x̄)² ÷ (n − 1)"],
+      ["", "Simpangan baku: s = √s²"],
+      ["", "Simpangan rata-rata:"],
+      ["", "   SR = Σ|x − x̄| ÷ n"],
+      ["", "KV = s ÷ x̄ × 100%"],
+      ["w", "! urutkan data dulu"],
+      ["w", "! kalkulator: sx = sampel"],
+      ["k", "ket: x = tiap data"],
+      ["k", "x̄ = rata-rata · n = banyak data"],
+      ["k", "s = simpangan baku"],
+      ["k", "Σ = jumlahkan semua"],
+      ["k", "|…| = buang tanda minus"],
+      ["k", "KV kecil = lebih stabil"],
+      ["h", "2. Kuartil, desil, persentil"],
+      ["", "Letak = i × (n + 1) ÷ k"],
+      ["", "k: Q = 4 · D = 10 · P = 100"],
+      ["", "Letak 3,3 →"],
+      ["", "   x₃ + 0,3 × (x₄ − x₃)"],
+      ["w", "! urutkan data dulu"],
+      ["k", "ket: i = nomornya (Q3 → i = 3)"],
+      ["k", "x₃ = data ke-3 setelah urut"],
+      ["h", "3. Hafalan konsep"],
+      ["", "Populasi → parameter (μ, σ)"],
+      ["", "Sampel → statistik (x̄, s)"],
+      ["", "Tipe I (α): tolak H0 yg benar"],
+      ["", "Tipe II (β): terima H0 yg salah"],
+      ["", "Tidak bias: rata-rata = parameter"],
+      ["", "Efisien: varians paling kecil"],
+      ["k", "ket: H0 = dugaan awal"]
+    ],
+    s1r: [
+      ["h", "4. Tabel frekuensi (40–49)"],
+      ["", "Tepi = 39,5 dan 49,5"],
+      ["", "Titik tengah m = (40 + 49) ÷ 2"],
+      ["", "Panjang kelas p = 49 − 40 + 1"],
+      ["", "Banyak kelas = 1 + 3,3 log n"],
+      ["w", "! log, bukan ln"],
+      ["", "Kum. kurang dari → tepi atas"],
+      ["", "Kum. lebih dari → tepi bawah"],
+      ["", "Rata-rata = Σ(f × m) ÷ Σf"],
+      ["k", "ket: f = frekuensi"],
+      ["k", "(banyak data di kelas itu)"],
+      ["k", "m = titik tengah kelas"],
+      ["h", "5. Peluang (P = 0 sampai 1)"],
+      ["", "“tidak” → 1 − P"],
+      ["", "“minimal 1” → 1 − P(tidak ada)"],
+      ["", "“dan” → kalikan"],
+      ["", "“atau” → P(A) + P(B) − P(A&B)"],
+      ["", "“dari yang B, berapa A”"],
+      ["", "   → jumlah A&B ÷ jumlah B"],
+      ["", "Tanpa pengembalian →"],
+      ["", "   nCr diminta ÷ nCr total"],
+      ["k", "ket: nCr = cara pilih r dari n"],
+      ["k", "Casio: n SHIFT ÷ r"],
+      ["h", "6. Nilai harapan"],
+      ["", "E(X) = Σ(x × P)"],
+      ["", "Varians = Σ(x² × P) − E(X)²"],
+      ["", "Jumlah kejadian = n × p"],
+      ["", "Standar error = σ ÷ √n"],
+      ["w", "! rugi ditulis minus"],
+      ["k", "ket: x = tiap nilai (laba, unit)"],
+      ["k", "P = peluang nilai itu"],
+      ["k", "σ = simp. baku populasi"]
+    ],
+    s2l: [
+      ["h", "7. Kalau soal bilang… pakai…"],
+      ["", "“n kali, peluang p”"],
+      ["", "   → BINOMIAL"],
+      ["", "   P(x) = nCx × pˣ × (1 − p)ⁿ⁻ˣ"],
+      ["", "“rata-rata … per jam/hari”"],
+      ["", "   → POISSON"],
+      ["", "   P(x) = e^(−λ) × λˣ ÷ x!"],
+      ["w", "   ! λ sesuaikan waktu di soal"],
+      ["", "“dari N ada K cacat, ambil n”"],
+      ["", "   → HIPERGEOMETRIK"],
+      ["", "   P(x) = KCx × (N−K)C(n−x)"],
+      ["", "             ÷ NCn"],
+      ["", "“satu kali, sukses/gagal”"],
+      ["", "   → BERNOULLI"],
+      ["", "   E = p · Var = p(1 − p)"],
+      ["k", "ket: n = banyak percobaan"],
+      ["k", "x = banyak sukses yg ditanya"],
+      ["k", "p = peluang sukses"],
+      ["k", "λ = rata-rata kejadian"],
+      ["k", "N = total · K = jumlah cacat"],
+      ["h", "8. Binomial lanjutan"],
+      ["", "Rata-rata = n × p"],
+      ["", "Varians = n × p × (1 − p)"],
+      ["", "“minimal x”"],
+      ["", "   → 1 − (P0 + … + P(x − 1))"],
+      ["", "“maksimal x” → P0 + … + Px"],
+      ["", "“lebih dari x”"],
+      ["", "   → 1 − (P0 + … + Px)"],
+      ["k", "ket: P0 = peluang tepat 0"],
+      ["k", "P1 = tepat 1, dan seterusnya"]
+    ],
+    s2r: [
+      ["h", "9. Distribusi normal"],
+      ["", "Z = (X − μ) ÷ σ"],
+      ["", "   → cari di tabel Z"],
+      ["", "   (angka tabel = luas kiri)"],
+      ["", "“kurang dari” → angka tabel"],
+      ["", "“lebih dari” → 1 − angka tabel"],
+      ["", "“antara” → tabel besar − kecil"],
+      ["", "Rata-rata sampel:"],
+      ["", "   ganti σ dengan σ ÷ √n"],
+      ["", "Cari X dari persen:"],
+      ["", "   X = μ + Z × σ"],
+      ["", "   (10% teratas → Z = 1,28)"],
+      ["", "68% / 95% / 99,7% data"],
+      ["", "   ada di μ ± 1σ / 2σ / 3σ"],
+      ["k", "ket: X = nilai yang ditanya"],
+      ["k", "μ = rata-rata"],
+      ["k", "σ = simpangan baku"],
+      ["h", "10. Interval kepercayaan"],
+      ["", "z: 90% → 1,645"],
+      ["", "   95% → 1,96 · 99% → 2,58"],
+      ["", "Rata-rata: x̄ ± z × σ ÷ √n"],
+      ["", "Proporsi:"],
+      ["", "   p̂ ± z × √(p̂(1 − p̂) ÷ n)"],
+      ["", "Ukuran sampel:"],
+      ["", "   n = (z × σ ÷ E)²"],
+      ["w", "   ! bulatkan ke atas"],
+      ["", "n besar → interval sempit"],
+      ["", "% tinggi → interval lebar"],
+      ["k", "ket: x̄ = rata-rata sampel"],
+      ["k", "p̂ = x ÷ n (proporsi sampel)"],
+      ["k", "E = batas error yang diminta"]
+    ]
+  };
 
-  const KEY = "ringkasan-sb:v3:done";
+  const KEY = "ringkasan-sb:v4:done";
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } };
   const save = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } };
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const done = load();
 
-  function render(id, side, rows) {
-    const out = [];
-    for (let i = 0; i < rows; i++) {
-      const row = side[i], no = `<span class="no">${i + 1}</span>`;
-      if (!row) { out.push(`<li class="ln e">${no}<span class="tx">${i === side.length ? "kosong · untuk catatan sendiri" : ""}</span></li>`); continue; }
+  function render(id) {
+    const col = COLS[id], out = [];
+    for (let i = 0; i < ROWS; i++) {
+      const row = col[i], no = `<span class="no">${i + 1}</span>`;
+      if (!row) { out.push(`<li class="ln e">${no}<span class="tx">${i === col.length ? "kosong · catatan sendiri" : ""}</span></li>`); continue; }
       const [kind, text] = row;
       if (kind === "h") {
         const cid = `${id}-${i + 1}`;
         out.push(`<li class="ln h${done[cid] ? " done" : ""}">${no}<label class="tx"><input type="checkbox" id="${cid}" ${done[cid] ? "checked" : ""}>${esc(text)}</label></li>`);
       } else if (kind === "k") {
-        out.push(`<li class="ln k">${no}<span class="tx"><b>ket:</b>${esc(text.slice(4))}</span></li>`);
+        const t = text.startsWith("ket:") ? `<b>ket:</b>${esc(text.slice(4))}` : esc(text);
+        out.push(`<li class="ln k">${no}<span class="tx">${t}</span></li>`);
       } else {
-        out.push(`<li class="ln">${no}<span class="tx">${esc(text)}</span></li>`);
+        out.push(`<li class="ln${kind ? " " + kind : ""}">${no}<span class="tx">${esc(text)}</span></li>`);
       }
     }
     document.getElementById(id).innerHTML = out.join("");
@@ -190,10 +262,11 @@ p { margin: 0; }
   function paint() {
     const boxes = [...document.querySelectorAll(".ln.h input")];
     const n = boxes.filter((b) => b.checked).length;
-    document.getElementById("progress").textContent = `${n}/${boxes.length} bagian sudah ditulis · Halaman 1: ${SIDE1.length}/${ROWS} baris · Halaman 2: ${SIDE2.length}/${ROWS} baris`;
+    const used = (id) => COLS[id].length;
+    document.getElementById("progress").textContent =
+      `${n}/${boxes.length} bagian sudah ditulis · Hal. 1: kiri ${used("s1l")}, kanan ${used("s1r")} · Hal. 2: kiri ${used("s2l")}, kanan ${used("s2r")} (dari ${ROWS} baris)`;
   }
-  render("side1", SIDE1, ROWS);
-  render("side2", SIDE2, ROWS);
+  Object.keys(COLS).forEach(render);
   paint();
   document.addEventListener("change", (e) => {
     const b = e.target;
