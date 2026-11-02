@@ -1,0 +1,329 @@
+<title>Ringkasan UTS Statistika Bisnis</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: two A4 "sheets" of grid paper (front/back), each split into two columns like the handwritten page; sections never break across columns. */
+:root {
+  --desk: #E7EBEF;
+  --paper: #FFFFFF;
+  --grid: rgba(43, 86, 140, .07);
+  --ink: #1B2A3A;
+  --ink-soft: #4F5F70;
+  --pen: #1F4FA0;
+  --red: #B23A2A;
+  --mark: #FFF0A8;
+  --line: #CBD5DF;
+  --font-hand: "Caveat", "Segoe Print", "Comic Sans MS", cursive;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --desk: #0F151B; --paper: #18212A; --grid: rgba(140, 180, 230, .06); --ink: #E2E8EE; --ink-soft: #9DAAB7;
+    --pen: #8DB6F0; --red: #F08C78; --mark: #4A4114; --line: #2C3946; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --desk: #0F151B; --paper: #18212A; --grid: rgba(140, 180, 230, .06); --ink: #E2E8EE; --ink-soft: #9DAAB7;
+  --pen: #8DB6F0; --red: #F08C78; --mark: #4A4114; --line: #2C3946; color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { background: var(--desk); color: var(--ink); font-family: var(--font-body); font-size: 14.5px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1060px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 56px; display: grid; gap: 28px; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+code { font-family: var(--font-mono); font-size: .9em; color: var(--pen); white-space: normal; }
+:focus-visible { outline: 3px solid var(--pen); outline-offset: 2px; border-radius: 4px; }
+
+/* intro */
+.intro { display: grid; gap: 12px; max-width: 72ch; }
+.intro .eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.intro h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; letter-spacing: -.01em; }
+.intro p { color: var(--ink-soft); }
+.tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 20px; padding: 0; margin: 4px 0 0; list-style: none; font-size: .9rem; color: var(--ink-soft); }
+.tips li { display: grid; grid-template-columns: 22px 1fr; gap: 6px; }
+.tips li::before { content: "✎"; color: var(--pen); font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: .85rem; color: var(--ink-soft); align-items: center; }
+.legend .opt-sample { opacity: .55; text-decoration: underline dotted; }
+.legend mark { background: var(--mark); color: var(--ink); padding: 0 4px; border-radius: 3px; }
+.progress { font-weight: 700; color: var(--ink); }
+
+/* sheet */
+.sheet {
+  background-color: var(--paper);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 18px 18px;
+  border: 1px solid var(--line); border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .06), 0 10px 30px rgba(20, 40, 70, .08);
+  padding: 22px 26px 26px; display: grid; gap: 14px; min-width: 0;
+}
+.sheet-head { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; justify-content: space-between; border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+.sheet-head h2 { font-family: var(--font-hand); font-size: 2rem; font-weight: 700; color: var(--pen); }
+.sheet-head span { font-size: .82rem; color: var(--ink-soft); }
+.cols { columns: 2; column-gap: 30px; column-rule: 1px dashed var(--line); }
+.blk { break-inside: avoid; margin: 0 0 16px; display: grid; gap: 4px; }
+.blk h3 { font-size: 1rem; font-weight: 700; }
+.blk h3 label { display: flex; gap: 8px; align-items: baseline; cursor: pointer; }
+.blk h3 input { width: 16px; height: 16px; accent-color: var(--pen); flex: none; position: relative; top: 2px; margin: 0; }
+.blk h3 .tag { font-family: var(--font-hand); font-size: 1.3rem; color: var(--pen); line-height: 1; }
+.blk h3 small { font-weight: 400; font-style: italic; color: var(--ink-soft); font-size: .78rem; }
+.blk.done h3 { color: var(--ink-soft); }
+.blk.done h3 .tag { text-decoration: line-through; }
+.blk ul { margin: 0; padding-left: 16px; display: grid; gap: 2px; }
+.blk li { padding-left: 2px; }
+.blk li::marker { color: var(--pen); }
+.en { font-style: italic; color: var(--ink-soft); font-size: .9em; }
+.opt { opacity: .58; }
+.opt::after { content: " (boleh dilewati)"; font-size: .78em; font-style: italic; }
+.trap { background: var(--mark); border-radius: 3px; padding: 0 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.warn { color: var(--red); font-weight: 700; }
+table.mini { border-collapse: collapse; width: 100%; font-size: .86rem; margin-top: 2px; }
+.mini th, .mini td { border: 1px solid var(--line); padding: 3px 6px; text-align: left; vertical-align: top; }
+.mini th { font-size: .74rem; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); }
+.tw { overflow-x: auto; }
+.flow { display: grid; gap: 3px; font-size: .92rem; }
+.flow div { display: grid; grid-template-columns: 1fr auto; gap: 8px; border-bottom: 1px dotted var(--line); padding-bottom: 2px; }
+.flow b { color: var(--pen); }
+
+@media (max-width: 760px) {
+  .cols { columns: 1; }
+  .sheet { padding: 18px 16px 20px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<main class="wrap">
+  <header class="intro">
+    <span class="eyebrow">Statistika Bisnis · Persiapan UTS</span>
+    <h1>Ringkasan 2 halaman untuk ditulis tangan</h1>
+    <p>Isi untuk satu lembar A4 bolak-balik, sesuai ketentuan dosen. Halaman 1 berisi Materi 1–4, Halaman 2 berisi Materi 5–7 dan alur memilih rumus. Tabel Z tidak perlu disalin karena boleh dibawa terpisah.</p>
+    <ul class="tips">
+      <li>Lipat kertas jadi 2 kolom per sisi, seperti tata letak di bawah. Tulis kecil tapi tetap terbaca.</li>
+      <li>Pakai pulpen warna untuk judul dan rumus, stabilo untuk jebakan.</li>
+      <li>Kalau tempat habis, lewati baris pudar bertanda “boleh dilewati”.</li>
+      <li>Menulis sendiri sekaligus jadi latihan menghafal. Centang tiap bagian yang sudah ditulis.</li>
+    </ul>
+    <div class="legend"><span><mark>stabilo</mark> = jebakan yang sering bikin salah</span><span class="opt-sample">baris pudar</span><span>= prioritas rendah</span><span class="progress" id="progress">0/14 bagian sudah ditulis</span></div>
+  </header>
+
+  <!-- ================= HALAMAN 1 ================= -->
+  <article class="sheet" aria-label="Halaman 1, sisi depan">
+    <div class="sheet-head"><h2>Halaman 1 · Depan</h2><span>Materi 1–4: deskriptif, frekuensi, peluang, nilai harapan</span></div>
+    <div class="cols">
+
+      <section class="blk" id="b1">
+        <h3><label><input type="checkbox" id="c-b1"><span class="tag">A</span> Istilah dasar <small>(Quiz 1)</small></label></h3>
+        <ul>
+          <li>Deskriptif = meringkas data (tabel, grafik, rata-rata). Inferensia = sampel → simpulkan populasi.</li>
+          <li>Populasi <span class="en">(population)</span> → <b>parameter</b>: μ, σ, p</li>
+          <li>Sampel <span class="en">(sample)</span> → <b>statistik</b>: x̄, s, p̂ <span class="trap">P–P, S–S</span></li>
+          <li class="opt">Statistika = seni mengumpulkan, mengolah, menafsirkan data jadi informasi</li>
+        </ul>
+      </section>
+
+      <section class="blk" id="b2">
+        <h3><label><input type="checkbox" id="c-b2"><span class="tag">B</span> Pemusatan & penyebaran</label></h3>
+        <ul>
+          <li>Mean <code>x̄ = Σx / n</code> · Median: <span class="trap">URUTKAN dulu</span>, letak <code>(n+1)/2</code> · Modus: paling sering (bisa 2: “3 dan 8”)</li>
+          <li>Ada pencilan <span class="en">(outlier)</span> → pakai median</li>
+          <li>Range = maks − min</li>
+          <li>Varians sampel <code>s² = Σ(x − x̄)² / (n − 1)</code> · populasi: bagi <code>n</code></li>
+          <li>Simpangan baku <span class="en">(standard deviation)</span> <code>s = √s²</code></li>
+          <li>Simpangan rata-rata <code>SR = Σ|x − x̄| / n</code> <span class="en">(MAD)</span></li>
+          <li>Koef. variasi <code>KV = s / x̄ × 100%</code> → KV kecil = risiko relatif kecil</li>
+          <li>Mean gabungan <code>(n₁x̄₁ + n₂x̄₂) / (n₁ + n₂)</code></li>
+          <li>Kalkulator: <code>sx</code> = sampel, <code>σx</code> = populasi</li>
+          <li class="opt">Pareto 80/20: 20% pelanggan → 80% omzet</li>
+        </ul>
+      </section>
+
+      <section class="blk" id="b3">
+        <h3><label><input type="checkbox" id="c-b3"><span class="tag">C</span> Kuartil, desil, persentil</label></h3>
+        <ul>
+          <li><span class="trap">URUTKAN dulu</span>. Letak <code>= i(n + 1) / k</code>, k = 4 (Q), 10 (D), 100 (P)</li>
+          <li>Letak pecahan, mis. 3,3 → <code>x₃ + 0,3 × (x₄ − x₃)</code></li>
+          <li>Contoh n = 8: D2 letak 1,8; Q3 letak 6,75</li>
+          <li class="opt">Excel: <code>QUARTILE.EXC</code>, <code>PERCENTILE.EXC</code> (cocok rumus n+1)</li>
+        </ul>
+      </section>
+
+      <section class="blk" id="b4">
+        <h3><label><input type="checkbox" id="c-b4"><span class="tag">D</span> Distribusi frekuensi <small>(Quiz 2)</small></label></h3>
+        <ul>
+          <li>Kelas 40–49: batas bawah/atas = 40 / 49 · tepi = 39,5 / 49,5</li>
+          <li>Titik tengah <code>(40 + 49)/2 = 44,5</code></li>
+          <li>Panjang kelas = tepi atas − tepi bawah = <code>49 − 40 + 1 = 10</code> <span class="trap">bukan 9</span></li>
+          <li>Σf = n · frek. relatif <code>= f/n × 100%</code></li>
+          <li>Kumulatif <b>kurang dari</b> → tepi ATAS (≤) · <b>lebih dari</b> → tepi BAWAH (≥)</li>
+          <li>Sturges <code>k = 1 + 3,3 log n</code> <span class="trap">log, bukan ln</span></li>
+          <li>Panjang kelas = range / k → bulatkan KE ATAS</li>
+          <li>Mean berkelompok <code>Σ(f·m) / Σf</code>, m = titik tengah</li>
+          <li class="opt">Median berkelompok <code>Tb + ((n/2 − F)/f) × p</code>; Tb = tepi bawah, F = kumulatif sebelum kelas median</li>
+        </ul>
+      </section>
+
+      <section class="blk" id="b5">
+        <h3><label><input type="checkbox" id="c-b5"><span class="tag">E</span> Aturan peluang <small>(Quiz 3)</small></label></h3>
+        <ul>
+          <li>Komplemen <code>P(tidak A) = 1 − P(A)</code> · “minimal 1” = <code>1 − P(0)</code></li>
+          <li>DAN (independen) → KALI · bertahap → kali berantai</li>
+          <li>ATAU → <code>P(A) + P(B) − P(A∩B)</code>; saling lepas → irisan = 0</li>
+          <li>Bersyarat <code>P(A|B) = P(A∩B) / P(B)</code> → penyebut = kelompok B saja</li>
+          <li>Kombinasi <code>C(n,r) = n! / (r!(n − r)!)</code> · kalkulator <code>nCr</code> = SHIFT ÷</li>
+          <li>Tanpa pengembalian <span class="en">(without replacement)</span> → <code>C(…) × C(…) / C(total)</code></li>
+        </ul>
+      </section>
+
+      <section class="blk" id="b6">
+        <h3><label><input type="checkbox" id="c-b6"><span class="tag">F</span> Nilai harapan & varians <small>(Quiz 4)</small></label></h3>
+        <ul>
+          <li><code>E(X) = Σ x·P(x)</code> <span class="en">(expected value)</span> · <span class="trap">rugi = negatif</span></li>
+          <li><code>Var(X) = E(X²) − [E(X)]²</code>, <code>E(X²) = Σ x²·P(x)</code></li>
+          <li>Cuma 2 nilai: <code>Var = p(1 − p)(x₁ − x₂)²</code></li>
+          <li>Banyak kejadian: <code>E = n × p</code> (200 × 4% = 8)</li>
+          <li><code>Y = aX + b</code>: <code>E(Y) = aE(X) + b</code>, <code>σY = |a|σX</code> (b tidak ikut)</li>
+          <li>Independen: E dijumlah, <b>Var</b> dijumlah → <span class="trap">σ tidak dijumlah langsung</span></li>
+          <li>Portofolio: <code>Σ bobot × return</code></li>
+          <li>Standar error <code>SE = σ/√n</code> · proporsi <code>√(p(1 − p)/n)</code></li>
+        </ul>
+      </section>
+
+      <section class="blk" id="b7">
+        <h3><label><input type="checkbox" id="c-b7"><span class="tag">G</span> Kamus kata batas</label></h3>
+        <div class="tw"><table class="mini">
+          <thead><tr><th>Kata di soal</th><th>Tanda</th><th>Hitung</th></tr></thead>
+          <tbody>
+            <tr><td>paling sedikit / minimal x</td><td>X ≥ x</td><td><code>1 − P(≤ x−1)</code></td></tr>
+            <tr><td>paling banyak / maksimal x</td><td>X ≤ x</td><td><code>P(0)+…+P(x)</code></td></tr>
+            <tr><td>lebih dari x</td><td>X &gt; x</td><td><code>1 − P(≤ x)</code></td></tr>
+            <tr><td>kurang dari x</td><td>X &lt; x</td><td><code>P(≤ x−1)</code></td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+    </div>
+  </article>
+
+  <!-- ================= HALAMAN 2 ================= -->
+  <article class="sheet" aria-label="Halaman 2, sisi belakang">
+    <div class="sheet-head"><h2>Halaman 2 · Belakang</h2><span>Materi 5–7: distribusi diskrit, normal, estimasi</span></div>
+    <div class="cols">
+
+      <section class="blk" id="b8">
+        <h3><label><input type="checkbox" id="c-b8"><span class="tag">H</span> Pilih distribusi dulu</label></h3>
+        <div class="flow">
+          <div><span>“Rata-rata … per jam/hari”</span><b>Poisson</b></div>
+          <div><span>Ambil tanpa pengembalian dari N kecil</span><b>Hipergeometrik</b></div>
+          <div><span>n percobaan tetap, peluang p sama</span><b>Binomial</b></div>
+          <div><span>Cuma 1 percobaan (1/0)</span><b>Bernoulli</b></div>
+          <div><span>Data kontinu, diketahui μ dan σ</span><b>Normal</b></div>
+        </div>
+      </section>
+
+      <section class="blk" id="b9">
+        <h3><label><input type="checkbox" id="c-b9"><span class="tag">I</span> Distribusi diskrit <small>(Quiz 5)</small></label></h3>
+        <ul>
+          <li><b>Bernoulli</b>: <code>E = p</code>, <code>E(X²) = p</code>, <code>Var = p(1 − p)</code></li>
+          <li><b>Binomial</b>: <code>C(n,x) · pˣ · (1 − p)ⁿ⁻ˣ</code> → “sukses pangkat sukses, gagal pangkat gagal”</li>
+          <li>Binomial: <code>E = np</code>, <code>Var = np(1 − p)</code>, <code>σ = √Var</code></li>
+          <li><b>Hipergeometrik</b>: <code>C(K,x) · C(N−K, n−x) / C(N,n)</code>; N total, K sukses, n diambil</li>
+          <li><b>Poisson</b>: <code>e^(−λ) · λˣ / x!</code>; <code>E = Var = λ</code>; 0! = 1</li>
+          <li><span class="trap">Sesuaikan λ dengan interval</span>: 6/jam → 15 menit λ = 1,5</li>
+          <li>P(0) Poisson = <code>e^(−λ)</code> · kalkulator eˣ = SHIFT ln</li>
+          <li><span class="warn">Casio:</span> setelah pangkat / eˣ tekan ► sebelum ×</li>
+          <li class="opt">Excel: <code>BINOM.DIST(x;n;p;0)</code> · <code>POISSON.DIST(x;λ;0)</code> · <code>HYPGEOM.DIST(x;n;K;N;0)</code> · 0 = tepat, 1 = ≤ x</li>
+        </ul>
+      </section>
+
+      <section class="blk" id="b10">
+        <h3><label><input type="checkbox" id="c-b10"><span class="tag">J</span> Distribusi normal <small>(Quiz 6)</small></label></h3>
+        <ul>
+          <li><code>Z = (X − μ) / σ</code> · rata-rata sampel: <code>Z = (x̄ − μ) / (σ/√n)</code> <span class="trap">pakai SE</span></li>
+          <li>Tabel kumulatif = luas KIRI: <code>P(X &lt; a) = Φ(z)</code></li>
+          <li><code>P(X &gt; a) = 1 − Φ(z)</code> · antara: <code>Φ(z₂) − Φ(z₁)</code> · <code>Φ(−z) = 1 − Φ(z)</code></li>
+          <li>Empiris: μ ± 1σ / 2σ / 3σ = 68% / 95% / 99,7% (0,6826 / 0,9544 / 0,9974)</li>
+          <li>Terbalik: <code>X = μ + z·σ</code>; 10% teratas → luas kiri 0,90 → z = 1,28</li>
+          <li>z penting: 10% → 1,28 · 5% → 1,645 · 2,5% → 1,96 · 0,5% → 2,58</li>
+          <li>σ besar → kurva landai & lebar · simetris, mean = median = modus, luas = 1</li>
+          <li>Normal ≈ binomial jika <code>np ≥ 5</code> DAN <code>n(1 − p) ≥ 5</code></li>
+          <li class="opt">Sketsa kurva & arsir daerah yang ditanya sebelum baca tabel</li>
+          <li class="opt">Excel: <code>NORM.DIST(x;μ;σ;1)</code> · <code>NORM.INV(luas;μ;σ)</code></li>
+        </ul>
+      </section>
+
+      <section class="blk" id="b11">
+        <h3><label><input type="checkbox" id="c-b11"><span class="tag">K</span> Interval kepercayaan <small>(Quiz 7)</small></label></h3>
+        <ul>
+          <li><span class="en">confidence interval</span> = estimasi ± <code>MoE</code>, <code>MoE = z × SE</code></li>
+          <li>Rata-rata: <code>x̄ ± z · σ/√n</code></li>
+          <li>Proporsi: <code>p̂ ± z · √(p̂(1 − p̂)/n)</code>, <code>p̂ = x/n</code></li>
+          <li>Tingkat kepercayaan <span class="en">(confidence level)</span>: 90% → 1,645 · 95% → 1,96 · 99% → 2,58</li>
+          <li>Kepercayaan ↑ → lebar · n ↑ → sempit · σ ↑ → lebar</li>
+          <li>Ukuran sampel <code>n = (z·σ / E)²</code> → <span class="trap">bulatkan KE ATAS</span></li>
+          <li>Dari interval: x̄ = titik tengah, MoE = ½ lebar, <code>SE = MoE/z</code>, <code>σ = SE·√n</code></li>
+          <li>Tafsiran: “95% interval dari sampel berulang memuat μ” (bukan 95% data)</li>
+          <li class="opt">Proporsi: <code>n = z²·p(1 − p)/E²</code>, p belum tahu → 0,5</li>
+          <li class="opt">Excel: <code>CONFIDENCE.NORM(α;σ;n)</code> = MoE</li>
+        </ul>
+      </section>
+
+      <section class="blk" id="b12">
+        <h3><label><input type="checkbox" id="c-b12"><span class="tag">L</span> Hipotesis & estimator</label></h3>
+        <ul>
+          <li>Tipe I: tolak H0 padahal BENAR → peluang α · Tipe II: gagal tolak H0 padahal SALAH → β</li>
+          <li>α = 0,05 ↔ kepercayaan 95% · α ↓ → β ↑ · n ↑ → keduanya ↓</li>
+          <li>Tidak bias <span class="en">(unbiased)</span>: E(estimator) = parameter</li>
+          <li>Efisien: varians terkecil · Konsisten: n ↑ → mendekati parameter</li>
+          <li>Pilih: saring yang tidak bias → ambil varians terkecil</li>
+        </ul>
+      </section>
+
+      <section class="blk" id="b13">
+        <h3><label><input type="checkbox" id="c-b13"><span class="tag">M</span> Jebakan paling sering</label></h3>
+        <ul>
+          <li>Lupa urutkan data (median, kuartil)</li>
+          <li><code>n − 1</code> (sampel) vs <code>n</code> (populasi)</li>
+          <li>Varians vs simpangan baku (lupa akar)</li>
+          <li>σ vs SE untuk rata-rata sampel</li>
+          <li>Luas kiri vs kanan di tabel Z</li>
+          <li>λ Poisson belum disesuaikan</li>
+          <li>“Paling sedikit” vs “lebih dari” (ikut / tidak ikut)</li>
+          <li>Lupa <code>C(n,x)</code> di binomial</li>
+        </ul>
+      </section>
+
+      <section class="blk" id="b14">
+        <h3><label><input type="checkbox" id="c-b14"><span class="tag">N</span> Langkah menjawab</label></h3>
+        <ul>
+          <li>Kenali jenis soal → tulis diketahui (n, p, λ, μ, σ) → pilih rumus → hitung</li>
+          <li>Cocokkan jawaban dengan opsi; opsi lain biasanya hasil salah rumus</li>
+          <li class="opt">Simpan angka antara pakai Ans / STO supaya tidak salah bulat</li>
+        </ul>
+      </section>
+
+    </div>
+  </article>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  const KEY = "ringkasan-sb:v1:done";
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } };
+  const save = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } };
+  const boxes = [...document.querySelectorAll('.blk h3 input[type="checkbox"]')];
+  const done = load();
+  function paint() {
+    let n = 0;
+    boxes.forEach((b) => { b.closest(".blk").classList.toggle("done", b.checked); if (b.checked) n++; });
+    document.getElementById("progress").textContent = n + "/" + boxes.length + " bagian sudah ditulis";
+  }
+  boxes.forEach((b) => {
+    b.checked = !!done[b.id];
+    b.addEventListener("change", () => { done[b.id] = b.checked; save(done); paint(); });
+  });
+  paint();
+})();
+</script>
