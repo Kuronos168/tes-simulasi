@@ -64,6 +64,7 @@ p { margin: 0; }
 .ln.k .tx { color: var(--ink-soft); font-size: .88rem; }
 .ln.k .tx b { color: var(--pen); }
 .ln.en .tx { color: var(--ink-soft); font-style: italic; font-size: .88rem; }
+.ln.b .tx::before { content: "•"; color: var(--pen); font-weight: 700; margin-right: 6px; }
 .ln.w .tx { color: var(--red); font-weight: 600; font-size: .9rem; }
 .ln.e .tx { color: var(--ink-soft); font-style: italic; font-size: .8rem; opacity: .7; }
 
@@ -79,7 +80,7 @@ p { margin: 0; }
     <span class="eyebrow">Statistika Bisnis · Persiapan UTS</span>
     <h1>Ringkasan 2 halaman untuk ditulis tangan</h1>
     <p>Satu lembar A4 bolak-balik. Tiap sisi dibagi 2 kolom (garis tengah kertas), tiap kolom 38 baris. Satu baris di layar = satu baris di kolom yang sama di kertasmu.</p>
-    <div class="key"><span><b>Biru</b> = judul bagian</span><span><b>ket:</b> = arti simbol</span><span><em>!</em> = jangan sampai lupa</span><span><i>(miring)</i> = istilah Inggris</span></div>
+    <div class="key"><span><b>Biru</b> = judul bagian</span><span><b>•</b> = hal/rumus baru</span><span><b>ket:</b> = arti simbol</span><span><em>!</em> = jangan sampai lupa</span><span><i>(miring)</i> = istilah Inggris</span></div>
     <span class="progress" id="progress"></span>
   </header>
   <article class="sheet" aria-label="Halaman 1, sisi depan">
@@ -114,7 +115,7 @@ p { margin: 0; }
       ["", "   Σ|x − x̄| ÷ n"],
       ["", "Koef. variasi (KV) ="],
       ["", "   s ÷ x̄ × 100%"],
-      ["", "Pareto: 20% pelanggan → 80% omzet"],
+      ["", "Pareto: 20% pembeli → 80% omzet"],
       ["w", "! urutkan data · sx = sampel"],
       ["k", "ket: x = tiap data"],
       ["k", "x̄ = rata-rata · n = banyak data"],
@@ -274,7 +275,9 @@ p { margin: 0; }
         const t = text.startsWith("ket:") ? `<b>ket:</b>${esc(text.slice(4))}` : esc(text);
         out.push(`<li class="ln k">${no}<span class="tx">${t}</span></li>`);
       } else {
-        out.push(`<li class="ln${kind ? " " + kind : ""}">${no}<span class="tx">${esc(text)}</span></li>`);
+        // Baris yang memulai hal baru diberi titik; baris lanjutan (diawali spasi) tidak.
+        const bullet = !kind && !text.startsWith(" ");
+        out.push(`<li class="ln${kind ? " " + kind : ""}${bullet ? " b" : ""}">${no}<span class="tx">${esc(text)}</span></li>`);
       }
     }
     document.getElementById(id).innerHTML = out.join("");
