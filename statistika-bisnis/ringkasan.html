@@ -83,7 +83,7 @@ p { margin: 0; }
     <span class="progress" id="progress"></span>
   </header>
   <article class="sheet" aria-label="Halaman 1, sisi depan">
-    <div class="sheet-head"><h2>Halaman 1 · Depan</h2><span>Data, hafalan, tabel frekuensi, peluang, nilai harapan</span></div>
+    <div class="sheet-head"><h2>Halaman 1 · Depan</h2><span>Data, tabel frekuensi, kuartil, peluang, nilai harapan</span></div>
     <div class="cols"><section class="col"><h3>Kolom kiri</h3><ol class="lines" id="s1l"></ol></section><section class="col"><h3>Kolom kanan</h3><ol class="lines" id="s1r"></ol></section></div>
   </article>
   <article class="sheet" aria-label="Halaman 2, sisi belakang">
@@ -114,6 +114,7 @@ p { margin: 0; }
       ["", "   Σ|x − x̄| ÷ n"],
       ["", "Koef. variasi (KV) ="],
       ["", "   s ÷ x̄ × 100%"],
+      ["", "Pareto: 20% pelanggan → 80% omzet"],
       ["w", "! urutkan data · sx = sampel"],
       ["k", "ket: x = tiap data"],
       ["k", "x̄ = rata-rata · n = banyak data"],
@@ -121,7 +122,24 @@ p { margin: 0; }
       ["k", "SR = mean absolute deviation"],
       ["k", "KV = coefficient of variation"],
       ["k", "KV kecil = data lebih stabil"],
-      ["h", "2. Kuartil, desil, persentil"],
+      ["h", "2. Tabel frekuensi (40–49)"],
+      ["en", "(frequency distribution)"],
+      ["", "Tepi (boundary) = 39,5 & 49,5"],
+      ["", "Titik tengah (midpoint) m ="],
+      ["", "   (40 + 49) ÷ 2 = 44,5"],
+      ["", "Panjang kelas (width) p ="],
+      ["", "   49 − 40 + 1 = 10, atau"],
+      ["", "   range ÷ k → bulatkan ke atas"],
+      ["", "Banyak kelas k = 1 + 3,3 log n"],
+      ["w", "! pakai log, bukan ln"],
+      ["", "Kumulatif kurang dari → tepi atas"],
+      ["", "Kumulatif lebih dari → tepi bawah"],
+      ["", "Frek. relatif = f ÷ n × 100%"],
+      ["", "Rata-rata = Σ(f × m) ÷ Σf"],
+      ["k", "ket: f = frekuensi (frequency)"]
+    ],
+    s1r: [
+      ["h", "3. Kuartil, desil, persentil"],
       ["en", "(quartile, decile, percentile)"],
       ["", "Letak = i × (n + 1) ÷ k"],
       ["", "k: Q = 4 · D = 10 · P = 100"],
@@ -130,22 +148,7 @@ p { margin: 0; }
       ["w", "! urutkan data dulu"],
       ["k", "ket: i = nomornya (Q3 → i = 3)"],
       ["k", "x₃ = data ke-3 setelah urut"],
-      ["k", "Q1 = batas 25% data terbawah"]
-    ],
-    s1r: [
-      ["h", "3. Tabel frekuensi (40–49)"],
-      ["en", "(frequency distribution)"],
-      ["", "Tepi (boundary) = 39,5 & 49,5"],
-      ["", "Titik tengah (midpoint) m ="],
-      ["", "   (40 + 49) ÷ 2 = 44,5"],
-      ["", "Panjang kelas (width) p ="],
-      ["", "   49 − 40 + 1 = 10"],
-      ["", "Banyak kelas = 1 + 3,3 log n"],
-      ["w", "! pakai log, bukan ln"],
-      ["", "Kumulatif kurang dari → tepi atas"],
-      ["", "Kumulatif lebih dari → tepi bawah"],
-      ["", "Rata-rata = Σ(f × m) ÷ Σf"],
-      ["k", "ket: f = frekuensi (frequency)"],
+      ["k", "Q1 = batas 25% data terbawah"],
       ["h", "4. Peluang (probability)"],
       ["", "“tidak” → 1 − P · “dan” → kali"],
       ["", "“minimal 1” → 1 − P(tidak ada)"],
@@ -165,10 +168,13 @@ p { margin: 0; }
       ["", "   Σ(x² × P) − E(X)²"],
       ["", "Banyak kejadian: E = n × p"],
       ["", "Standar error (SE) = σ ÷ √n"],
+      ["", "Y = aX + b → E(Y) = aE(X) + b"],
+      ["", "A, B independen: Var(A + B) ="],
+      ["", "   Var(A) + Var(B), baru di-√"],
+      ["w", "! σ tidak dijumlah langsung"],
       ["w", "! rugi ditulis minus (−)"],
       ["k", "ket: x = tiap nilai (laba, unit)"],
-      ["k", "P = peluang nilai itu"],
-      ["k", "σ = simpangan baku populasi"],
+      ["k", "P = peluang · σ = simp. baku"],
       ["k", "SE = standard error: seberapa"],
       ["k", "   jauh x̄ biasanya meleset"]
     ],
@@ -202,6 +208,8 @@ p { margin: 0; }
       ["", "   → P0 + … + Px"],
       ["", "“lebih dari x” (more than)"],
       ["", "   → 1 − (P0 + … + Px)"],
+      ["", "Pakai normal jika np ≥ 5"],
+      ["", "   dan n(1 − p) ≥ 5"],
       ["k", "ket: P0 = peluang tepat 0"],
       ["k", "P1 = tepat 1, dan seterusnya"]
     ],
