@@ -14,6 +14,6 @@ Materi: 1 Pengantar PPN & PPnBM · 2 Pengusaha Kena Pajak · 3 Objek PPN & penye
 
 ## Cheatsheet
 
-- `cheatsheet/Cheatsheet-UTS-PPN-PPnBM.pdf`: 4 halaman A4 (2 lembar bolak-balik), huruf ±9 pt, semua rumus dan ketentuan Bab 1–7. Sumber: `cheatsheet/cheatsheet.html`.
+- `cheatsheet/Cheatsheet-UTS-PPN-PPnBM.pdf`: 8 halaman A4 (4 lembar bolak-balik), satu bab per halaman, huruf ±9,5 pt. Isinya sudah dicocokkan dengan ke-126 soal simulasi. Sumber: `cheatsheet/cheatsheet.html`.
 - `cheatsheet/Cheatsheet-UTS-PPN-PPnBM-ringkas-2hal.pdf`: versi ringkas 2 halaman (1 lembar), huruf ±7 pt. Sumber: `cheatsheet/cheatsheet-2hal.html`.
 - Setelah mengedit HTML, buat ulang PDF dengan Chrome/Chromium (Print → Save as PDF, ukuran A4, margin None, background graphics aktif).
