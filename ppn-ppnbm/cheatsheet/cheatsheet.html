@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
-/* Cetak A4 bolak-balik: 2 halaman, masing-masing 3 kolom. Warna aman untuk cetak hitam-putih. */
+/* Cetak A4 bolak-balik: 4 halaman (2 lembar), 2 kolom per halaman, huruf ±9 pt. Warna aman untuk cetak hitam-putih. */
 :root {
   --ink: #15202B;
   --muted: #4E5B68;
@@ -16,47 +16,42 @@
   --accent: #1D4F7A;
   --warn: #8A2D1C;
   --sans: "IBM Plex Sans Condensed", "Arial Narrow", "Liberation Sans Narrow", Arial, sans-serif;
-  --mono: "JetBrains Mono", "DejaVu Sans Mono", monospace;
 }
 @page { size: A4; margin: 0; }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: #fff; color: var(--ink); }
-body { font-family: var(--sans); font-size: 6.95pt; line-height: 1.2; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-.page { width: 210mm; height: 297mm; padding: 5.5mm 6mm 5mm; display: flex; flex-direction: column; gap: 2mm; page-break-after: always; break-after: page; overflow: hidden; }
+body { font-family: var(--sans); font-size: 9pt; line-height: 1.26; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { width: 210mm; height: 297mm; padding: 9mm 10mm 8mm; display: flex; flex-direction: column; gap: 3mm; page-break-after: always; break-after: page; overflow: hidden; }
 .page:last-child { page-break-after: auto; break-after: auto; }
-.head { display: flex; align-items: baseline; justify-content: space-between; gap: 4mm; border-bottom: 1.4pt solid var(--ink); padding-bottom: 1mm; }
-.head h1 { font-size: 13pt; margin: 0; font-weight: 700; letter-spacing: -0.01em; }
-.head span { font-size: 7pt; color: var(--muted); }
-.cols { flex: 1; column-count: 3; column-gap: 3.2mm; column-fill: auto; column-rule: 0.4pt solid var(--line); min-height: 0; }
-section { break-inside: avoid-column; margin: 0 0 1.6mm; }
-section.flow { break-inside: auto; }
-h2 { font-size: 7.9pt; margin: 0 0 0.6mm; padding: 0.5mm 1.2mm; background: var(--ink); color: #fff; font-weight: 700; letter-spacing: 0.01em; break-after: avoid; }
-h2 small { font-weight: 500; opacity: 0.8; font-size: 6.6pt; margin-left: 1mm; }
-h3 { font-size: 7.1pt; margin: 1.1mm 0 0.3mm; color: var(--accent); font-weight: 700; break-after: avoid; }
-p { margin: 0 0 0.6mm; }
-ul, ol { margin: 0 0 0.6mm; padding-left: 3.2mm; }
-li { margin: 0 0 0.2mm; }
+.head { display: flex; align-items: baseline; justify-content: space-between; gap: 4mm; border-bottom: 1.6pt solid var(--ink); padding-bottom: 1.2mm; }
+.head h1 { font-size: 15pt; margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+.head span { font-size: 8.5pt; color: var(--muted); text-align: right; }
+.cols { flex: 1; column-count: 2; column-gap: 6mm; column-fill: auto; column-rule: 0.5pt solid var(--line); min-height: 0; }
+section { margin: 0 0 2.6mm; }
+h2 { font-size: 10.5pt; margin: 0 0 1mm; padding: 0.7mm 1.8mm; background: var(--ink); color: #fff; font-weight: 700; letter-spacing: 0.01em; break-after: avoid; }
+h2 small { font-weight: 500; opacity: 0.85; font-size: 8.5pt; margin-left: 1.2mm; }
+h3 { font-size: 9.6pt; margin: 2mm 0 0.6mm; color: var(--accent); font-weight: 700; break-after: avoid; }
+p { margin: 0 0 1.1mm; }
+ul, ol { margin: 0 0 1.1mm; padding-left: 4.5mm; }
+li { margin: 0 0 0.45mm; }
 b { font-weight: 700; }
-.f { font-family: var(--sans); font-weight: 500; font-size: 6.8pt; background: var(--soft); border-left: 1.2pt solid var(--accent); padding: 0.5mm 1.1mm; margin: 0.4mm 0 0.7mm; line-height: 1.3; white-space: pre-wrap; }
-.trap { border: 0.6pt solid var(--warn); color: var(--warn); padding: 0.6mm 1.1mm; margin: 0.6mm 0 0.8mm; }
+.f { font-family: var(--sans); font-weight: 500; font-size: 8.8pt; background: var(--soft); border-left: 1.6pt solid var(--accent); padding: 0.9mm 1.8mm; margin: 0.7mm 0 1.3mm; line-height: 1.34; white-space: pre-wrap; break-inside: avoid; }
+.trap { border: 0.8pt solid var(--warn); color: var(--warn); padding: 1mm 1.8mm; margin: 1mm 0 1.4mm; break-inside: avoid; }
 .trap b { color: var(--warn); }
-table { border-collapse: collapse; width: 100%; margin: 0.3mm 0 0.8mm; font-size: 6.6pt; line-height: 1.17; }
-th, td { border: 0.4pt solid var(--line); padding: 0.35mm 0.8mm; text-align: left; vertical-align: top; }
+table { border-collapse: collapse; width: 100%; margin: 0.6mm 0 1.4mm; font-size: 8.6pt; line-height: 1.22; break-inside: avoid; }
+th, td { border: 0.5pt solid var(--line); padding: 0.6mm 1.2mm; text-align: left; vertical-align: top; }
 th { background: var(--soft); font-weight: 700; }
 td.n, th.n { font-weight: 600; }
 .mono { font-weight: 600; }
 .muted { color: var(--muted); }
-.foot { font-size: 6.2pt; color: var(--muted); border-top: 0.4pt solid var(--line); padding-top: 0.6mm; display: flex; justify-content: space-between; }
+.foot { font-size: 7.6pt; color: var(--muted); border-top: 0.5pt solid var(--line); padding-top: 0.9mm; display: flex; justify-content: space-between; gap: 4mm; }
 @media screen { body { background: #d9dee3; } .page { margin: 6mm auto; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,.2); } }
 </style>
 </head>
 <body>
-
-<!-- ======================= HALAMAN 1 ======================= -->
 <div class="page">
-  <div class="head"><h1>Cheatsheet UTS PPN &amp; PPnBM</h1><span>Hal. 1/2 · Rumus inti · Bab 1–4 · pemungut · aturan per Oktober 2026</span></div>
+  <div class="head"><h1>Cheatsheet UTS PPN &amp; PPnBM</h1><span>Hal. 1/4 · Rumus inti · Bab 1 Pengantar · Bab 2 PKP</span></div>
   <div class="cols">
-
 <section>
   <h2>RUMUS INTI 2026</h2>
   <p>Tarif UU: <b>10%</b> (1 Apr 1985–31 Mar 2022) → <b>11%</b> (1 Apr 2022–31 Des 2024) → <b>12%</b> (mulai 1 Jan 2025).</p>
@@ -70,7 +65,6 @@ Kurang bayar = PK − PM yang boleh dikreditkan</div>
   <p>Contoh: HJ Rp12 jt → DPP 11 jt → PPN 1,32 jt (efektif 11%). HJ Rp100 jt → PPN Rp11 jt. Total Rp132 jt mewah PPnBM 20% → harga 100, PPN 12, PPnBM 20.</p>
   <div class="trap"><b>Jebakan:</b> 11/12 cukup SEKALI · 12% penuh hanya barang mewah · besaran tertentu (1,1%, 2,2%…) JANGAN dikali 11/12 lagi · PPnBM dihitung dari DPP, bukan dari harga+PPN · PPh yang dipotong tidak mengurangi DPP.</div>
 </section>
-
 <section>
   <h2>BAB 1 · PENGANTAR <small>karakteristik, UU, PPnBM, hierarki</small></h2>
   <p><b>PPN</b> = pajak atas konsumsi barang/jasa di dalam Daerah Pabean, dipungut bertahap, atas nilai tambah.</p>
@@ -102,7 +96,6 @@ setor 10 + 8 + 7 + 5 = 30 = 10% × 300 (tanpa kredit: 83 → cascading)</div>
   <h3>Hierarki operasional</h3>
   <p><b>UU</b> norma pokok/tarif · <b>PP</b> penerapan umum (44/2022; 49/2022 fasilitas) · <b>PMK</b> DPP, nilai lain (131/2024; 11/2025 jo. 53/2025; 81/2024 Coretax) · <b>PER</b> teknis faktur & lapor (PER-11/PJ/2025). Aturan bawah butuh delegasi, tak boleh ubah norma di atasnya.</p>
 </section>
-
 <section>
   <h2>BAB 2 · PKP <small>pengukuhan, kewajiban, pencabutan</small></h2>
   <div class="f">Pengusaha kecil: omzet setahun buku ≤ Rp4.800.000.000
@@ -127,7 +120,12 @@ Kewajiban mulai Masa Jan tahun berikutnya (kecuali pilih lebih awal)</div>
     <tr><td><b>Pencabutan PKP</b></td><td>lewat keputusan; kewajiban lama TETAP</td></tr>
   </table>
 </section>
-
+  </div>
+  <div class="foot"><span>PK = Pajak Keluaran · PM = Pajak Masukan · HJ = Harga Jual · FP = Faktur Pajak · LN = luar negeri · TB = tidak berwujud</span><span>Simulasi UTS PPN &amp; PPnBM</span></div>
+</div>
+<div class="page">
+  <div class="head"><h1>Cheatsheet UTS PPN &amp; PPnBM</h1><span>Hal. 2/4 · Bab 3 Objek PPN · Bab 4 Saat & tempat terutang, KSO</span></div>
+  <div class="cols">
 <section>
   <h2>BAB 3 · OBJEK PPN</h2>
   <p><b>Ps 4(1)</b>: penyerahan BKP & JKP dalam negeri; impor BKP; pemanfaatan BKP TB & JKP dari LN; ekspor BKP berwujud, BKP TB, JKP oleh PKP (0%). <b>Ps 16C</b> KMS. <b>Ps 16D</b> penyerahan aktiva.</p>
@@ -145,7 +143,6 @@ Kewajiban mulai Masa Jan tahun berikutnya (kecuali pilih lebih awal)</div>
   <p><b>Ekspor JKP 0%</b> (PMK 32/2019): melekat pada barang ke LN (maklon, perbaikan/perawatan, freight forwarding ekspor, konsultansi konstruksi bangunan di LN) + hasil dimanfaatkan di LN (TI, R&amp;D, sewa pesawat/kapal internasional, konsultansi bisnis/hukum/arsitek/SDM/insinyur/pemasaran, akuntansi, audit LK, pajak, cari penjual utk ekspor, interkoneksi/satelit).</p>
   <p><b>Hub. istimewa</b>: penyertaan ≥25%; penguasaan; keluarga sedarah/semenda 1 derajat lurus/ke samping → pakai harga pasar wajar.</p>
 </section>
-
 <section>
   <h2>BAB 4 · SAAT &amp; TEMPAT, KSO, PEMUSATAN</h2>
   <p>Prinsip: <b>peristiwa yang lebih dahulu</b>, diuji per bagian nilai.</p>
@@ -170,42 +167,12 @@ KSO → pelanggan : ketentuan umum; PPnBM di tahap ini
 FP anggota paling lambat saat FP KSO ke pelanggan</div>
   <p>Contoh K–L: proyek 100 M, K 60%: PPN 6,6 M; L 4,4 M; KSO PK 11 M − PM 11 M = 0. Anggota non-PKP & setoran modal tunai: tak ada PPN. PM harus “sealamat” (nama FP = pihak kontrak = pencatat); salah alamat → koreksi faktur, bukan jurnal.</p>
 </section>
-
-<section>
-  <h2>PEMUNGUT PPN (Ps 16A)</h2>
-  <table>
-    <tr><th>Pemungut</th><th>Kecuali bayar</th><th>FP · saat pungut</th></tr>
-    <tr><td>Instansi pemerintah</td><td>≤ Rp2 jt <b>tanpa</b> PPN</td><td>02 · FP saat tagih, pungut saat bayar</td></tr>
-    <tr><td>BUMN, anak &gt;25% <b>yang ditetapkan</b>, migas, panas bumi, IUPK</td><td>≤ Rp10 jt <b>termasuk</b> PPN</td><td>03 · saat FP (serah/DP/termin), tak tunggu lunas</td></tr>
-    <tr><td>Pihak Lain pengadaan (UP)</td><td>tak ada ambang 2 jt</td><td>dokumen tagihan Pihak Lain; LS → instansi (02)</td></tr>
-  </table>
-  <p>Juga dikecualikan: kartu kredit pemerintah, tanah, BBM Pertamina, telekomunikasi, tiket pesawat, fasilitas. Pecah transaksi tetap dipungut. Dikecualikan → rekanan pungut sendiri (04), bukan dibebaskan.</p>
-  <p class="mono">Dinas 1,9 jt→rekanan 209rb · BUMN 9,5 jt (10,545)→BUMN · BUMN 8 jt (8,88)→rekanan · UP 1,5 jt→Pihak Lain 165rb</p>
-  <p><b>PMSE</b>: ditunjuk bila &gt; Rp600 jt/th atau 50 jt/bln, atau traffic &gt; 12.000/th atau 1.000/bln; PPN 11% dipungut saat bayar; pembeli tak setor lagi. Penyedia LN belum ditunjuk → pemanfaat setor sendiri <b>tgl 15</b> bulan berikutnya (15 Agu 2026 Sabtu + 17 libur → 18 Agu).</p>
-</section>
-
-<section>
-  <h2>CEK SEBELUM MENGHITUNG</h2>
-  <ol>
-    <li><b>Objek?</b> BKP/JKP, bukan objek, atau bukan penyerahan (makelar, jaminan, merger PKP).</li>
-    <li><b>Fasilitas?</b> 0% / tidak dipungut / dibebaskan.</li>
-    <li><b>Skema?</b> umum 11/12, mewah penuh, nilai lain, atau besaran tertentu.</li>
-    <li><b>Dasar?</b> HJ/Penggantian ± biaya & potongan; harga termasuk PPN?</li>
-    <li><b>Siapa pungut &amp; kode?</b> penjual / instansi / BUMN / Pihak Lain.</li>
-    <li><b>Kapan?</b> peristiwa paling awal → Masa, upload 20, setor/lapor akhir bulan (KMS &amp; jasa LN tgl 15).</li>
-    <li><b>PM?</b> besaran tertentu, dibebaskan, KMS, tak berhubungan usaha → tidak dikredit.</li>
-  </ol>
-</section>
-
   </div>
-  <div class="foot"><span>PK = Pajak Keluaran · PM = Pajak Masukan · HJ = Harga Jual · FP = Faktur Pajak · LN = luar negeri · TB = tidak berwujud</span><span>Simulasi UTS PPN &amp; PPnBM</span></div>
+  <div class="foot"><span>Saat terutang: pilih peristiwa paling awal untuk setiap bagian nilai transaksi</span><span>Simulasi UTS PPN &amp; PPnBM</span></div>
 </div>
-
-<!-- ======================= HALAMAN 2 ======================= -->
 <div class="page">
-  <div class="head"><h1>Cheatsheet UTS PPN &amp; PPnBM</h1><span>Hal. 2/2 · Faktur · DPP &amp; nilai lain · besaran tertentu · KMS · aktiva</span></div>
+  <div class="head"><h1>Cheatsheet UTS PPN &amp; PPnBM</h1><span>Hal. 3/4 · Bab 5 Faktur Pajak · Bab 6 DPP & nilai lain</span></div>
   <div class="cols">
-
 <section>
   <h2>BAB 5 · FAKTUR PAJAK</h2>
   <p>Dibuat saat: penyerahan · uang muka · termin · ekspor · saat lain. Syarat <b>formal</b> (lengkap, benar, jelas) &amp; <b>material</b> (transaksi nyata).</p>
@@ -239,7 +206,6 @@ Faktur gabungan : 1 pembeli, 1 bulan, ≤ akhir bulan; pisah per kode</div>
   </table>
   <p><b>Prioritas</b>: 07/08 → 02/03 → 06/10 → 09 → 04/05 → 01. Aktiva DPP 11/12 tetap 09; paket ke dinas 02 (bukan 05); mobil bekas pedagang 05.</p>
 </section>
-
 <section>
   <h2>BAB 6 · DPP, TARIF, NILAI LAIN</h2>
   <div class="f">Harga Jual = barang + biaya ditagih penjual − potongan di FP
@@ -278,7 +244,12 @@ Nilai Ekspor= semua biaya yang diminta eksportir; PPN 0%</div>
   </table>
   <div class="trap">Laba kotor, bukan laba bersih/biaya promosi · harga pasar, bukan nilai buku · diskon di FP ≠ cuma-cuma · “pemakaian sendiri produktif tak terutang” sudah dihapus · koefisien 0,825 sudah termasuk 11/12.</div>
 </section>
-
+  </div>
+  <div class="foot"><span>Tenggat: upload e-Faktur tgl 20 · setor & lapor akhir bulan berikutnya · KMS & jasa LN setor tgl 15</span><span>Simulasi UTS PPN &amp; PPnBM</span></div>
+</div>
+<div class="page">
+  <div class="head"><h1>Cheatsheet UTS PPN &amp; PPnBM</h1><span>Hal. 4/4 · Bab 7 Besaran tertentu, KMS, aktiva · Pemungut · cek akhir</span></div>
+  <div class="cols">
 <section>
   <h2>BAB 7 · BESARAN TERTENTU <small>PM terkait tak dapat dikredit · kode 05</small></h2>
   <table>
@@ -313,12 +284,32 @@ Contoh: 222 + 80 + 22,2 = 324,2 jt → 7.132.400 (tanah, meja keluar)</div>
   <h3>Objek spesifik</h3>
   <p><b>Agunan</b>: ambil alih dari debitur → tanpa FP; jual → 1,1% saat <b>bayar diterima</b> (bertahap per penerimaan); KAP 411211 KJS 100; sisa utang/nilai buku bukan dasar. <b>Asuransi</b>: dipungut perusahaan asuransi; agen saat komisi dibayar, pialang saat premi diterima; komisi sebelum PPh. <b>Kripto</b>: jual aset = tak kena PPN; platform 11% × komisi (PM boleh); penambang 2,2%.</p>
 </section>
-
-
-
+<section>
+  <h2>PEMUNGUT PPN (Ps 16A)</h2>
+  <table>
+    <tr><th>Pemungut</th><th>Kecuali bayar</th><th>FP · saat pungut</th></tr>
+    <tr><td>Instansi pemerintah</td><td>≤ Rp2 jt <b>tanpa</b> PPN</td><td>02 · FP saat tagih, pungut saat bayar</td></tr>
+    <tr><td>BUMN, anak &gt;25% <b>yang ditetapkan</b>, migas, panas bumi, IUPK</td><td>≤ Rp10 jt <b>termasuk</b> PPN</td><td>03 · saat FP (serah/DP/termin), tak tunggu lunas</td></tr>
+    <tr><td>Pihak Lain pengadaan (UP)</td><td>tak ada ambang 2 jt</td><td>dokumen tagihan Pihak Lain; LS → instansi (02)</td></tr>
+  </table>
+  <p>Juga dikecualikan: kartu kredit pemerintah, tanah, BBM Pertamina, telekomunikasi, tiket pesawat, fasilitas. Pecah transaksi tetap dipungut. Dikecualikan → rekanan pungut sendiri (04), bukan dibebaskan.</p>
+  <p class="mono">Dinas 1,9 jt→rekanan 209rb · BUMN 9,5 jt (10,545)→BUMN · BUMN 8 jt (8,88)→rekanan · UP 1,5 jt→Pihak Lain 165rb</p>
+  <p><b>PMSE</b>: ditunjuk bila &gt; Rp600 jt/th atau 50 jt/bln, atau traffic &gt; 12.000/th atau 1.000/bln; PPN 11% dipungut saat bayar; pembeli tak setor lagi. Penyedia LN belum ditunjuk → pemanfaat setor sendiri <b>tgl 15</b> bulan berikutnya (15 Agu 2026 Sabtu + 17 libur → 18 Agu).</p>
+</section>
+<section>
+  <h2>CEK SEBELUM MENGHITUNG</h2>
+  <ol>
+    <li><b>Objek?</b> BKP/JKP, bukan objek, atau bukan penyerahan (makelar, jaminan, merger PKP).</li>
+    <li><b>Fasilitas?</b> 0% / tidak dipungut / dibebaskan.</li>
+    <li><b>Skema?</b> umum 11/12, mewah penuh, nilai lain, atau besaran tertentu.</li>
+    <li><b>Dasar?</b> HJ/Penggantian ± biaya & potongan; harga termasuk PPN?</li>
+    <li><b>Siapa pungut &amp; kode?</b> penjual / instansi / BUMN / Pihak Lain.</li>
+    <li><b>Kapan?</b> peristiwa paling awal → Masa, upload 20, setor/lapor akhir bulan (KMS &amp; jasa LN tgl 15).</li>
+    <li><b>PM?</b> besaran tertentu, dibebaskan, KMS, tak berhubungan usaha → tidak dikredit.</li>
+  </ol>
+</section>
   </div>
-  <div class="foot"><span>Sumber: materi kuliah PPN &amp; PPnBM (UU PPN s.t.d.t.d. UU 6/2023; PP 44 &amp; 49/2022; PMK 131/2024, 11/2025 jo. 53/2025, 81/2024; PER-11/PJ/2025)</span><span>Cek ulang angka sebelum dipakai</span></div>
+  <div class="foot"><span>Sumber: materi kuliah PPN &amp; PPnBM (UU PPN s.t.d.t.d. UU 6/2023; PP 44 &amp; 49/2022; PMK 131/2024, 11/2025 jo. 53/2025, 81/2024; PER-11/PJ/2025)</span><span>Simulasi UTS PPN &amp; PPnBM</span></div>
 </div>
-
 </body>
 </html>
