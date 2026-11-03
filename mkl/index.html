@@ -199,6 +199,21 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
 .datatable th { background: var(--surface-2); font-weight: 700; }
 .datatable td:first-child, .datatable th:first-child { text-align: left; font-family: var(--font-body); font-size: .9rem; font-weight: 600; }
 .datatable tr:last-child td { border-bottom: 0; }
+.xlbox { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 12px; min-width: 0; }
+.xlbox h3 { font-size: 1rem; font-weight: 800; }
+.xlsteps { margin: 0; padding-left: 1.3rem; display: grid; gap: 6px; max-width: 75ch; }
+.xlsteps li::marker { font-family: var(--font-mono); font-weight: 700; color: var(--accent); }
+.sheet { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; max-width: 100%; }
+.sheet table { width: auto; min-width: 100%; font-size: .85rem; }
+.sheet th, .sheet td { border: 1px solid var(--line); padding: 5px 9px; white-space: nowrap; vertical-align: top; text-transform: none; letter-spacing: 0; }
+.sheet thead th, .sheet tbody th { background: var(--surface-2); color: var(--muted); font-family: var(--font-mono); font-size: .72rem; font-weight: 700; text-align: center; }
+.sheet tbody th { width: 2.4rem; }
+.sheet td { color: var(--ink); background: var(--surface); }
+.sheet td.n { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.sheet td.fx { background: var(--accent-soft); }
+.sheet td.fx code { display: block; font-family: var(--font-mono); font-size: .8rem; color: var(--accent); font-weight: 700; }
+.sheet td.fx span { display: block; text-align: right; font-family: var(--font-mono); font-size: .8rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+.xlnote { font-size: .82rem; color: var(--muted); max-width: 75ch; }
 .qactions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; border-top: 1px solid var(--line); padding-top: 16px; }
 .qactions .spacer { flex: 1; }
 .lockhint { font-size: .85rem; color: var(--muted); }
@@ -518,6 +533,28 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
     toastTimer = setTimeout(() => el.remove(), 3200);
   }
 
+  /* ---------- lembar Excel ---------- */
+  const COLS = "ABCDEFGHIJ";
+  function viewSheet(xl) {
+    const width = Math.max(...xl.g.map((r) => r.length), 1);
+    const isNum = (v) => /^-?[\d.,]+%?$/.test(v);
+    const body = xl.g.map((row, r) => {
+      const cells = Array.from({ length: width }, (_, c) => {
+        const v = row[c];
+        if (v && typeof v === "object") return `<td class="fx"><code>${esc(v.f)}</code><span>${esc(v.v)}</span></td>`;
+        const t = v == null ? "" : String(v);
+        return `<td${isNum(t) ? ' class="n"' : ""}>${esc(t)}</td>`;
+      }).join("");
+      return `<tr><th scope="row">${r + 1}</th>${cells}</tr>`;
+    }).join("");
+    const head = `<tr><th></th>${Array.from({ length: width }, (_, c) => `<th scope="col">${COLS[c]}</th>`).join("")}</tr>`;
+    return `<div class="xlbox"><h3>Cara di Excel</h3>
+      <ol class="xlsteps">${xl.s.map((t) => `<li>${esc(t)}</li>`).join("")}</ol>
+      <div class="sheet"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>
+      <p class="xlnote">Sel biru berisi rumus; angka di bawah rumus adalah hasilnya. Excel dengan pengaturan regional Indonesia memakai titik koma (;) sebagai pemisah argumen dan koma untuk desimal. Kalau Excel kamu memakai koma sebagai pemisah (pengaturan regional Inggris/AS), ganti ; dengan , dan koma desimal dengan titik. Tanda $ (misalnya $B$1) mengunci sel supaya tidak bergeser saat rumus ditarik ke sel lain.</p>
+    </div>`;
+  }
+
   /* ---------- views ---------- */
   function render() {
     const app = document.getElementById("app");
@@ -659,7 +696,7 @@ td.score { font-family: var(--font-mono); font-weight: 700; }
         : ans === q.a
           ? `<div class="verdict ok">Benar <span>· ${correctLetter}</span></div>`
           : `<div class="verdict bad">Kurang tepat. <span>Kamu memilih ${LETTERS[perm.indexOf(ans)]}, jawaban benar ${correctLetter}.</span></div>`;
-      feedback = `<div id="feedback" style="display:grid;gap:12px">${verdict}<div class="explain"><h3>Pembahasan</h3><p>${esc(q.x)}</p></div></div>`;
+      feedback = `<div id="feedback" style="display:grid;gap:12px">${verdict}<div class="explain"><h3>Pembahasan</h3><p>${esc(q.x)}</p></div>${q.xl ? viewSheet(q.xl) : ""}</div>`;
     }
 
     const vis = visibleIndexes();
