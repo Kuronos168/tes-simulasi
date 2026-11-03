@@ -1,10 +1,17 @@
 // Validasi bank soal: struktur + bias panjang jawaban.
-// Jalankan: node tools/check-questions.js
+// Jalankan: node tools/check-questions.js        (Digital Leadership, folder root)
+//           node tools/check-questions.js mkl    (Manajemen Keuangan Lanjutan)
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 
-const src = fs.readFileSync(path.join(__dirname, "..", "questions.js"), "utf8");
+const folder = process.argv[2] || "";
+const CONFIG = {
+  "": { topics: [1, 2, 3, 4, 5, 6, 7], expect: null },
+  mkl: { topics: [1, 2, 3], expect: { e1: 10, e2: 15, e3: 15, h1: 10, h2: 15, h3: 15 } }
+}[folder];
+if (!CONFIG) { console.log("Folder tidak dikenal:", folder); process.exit(1); }
+const src = fs.readFileSync(path.join(__dirname, "..", folder, "questions.js"), "utf8");
 const ctx = { window: {} };
 vm.runInNewContext(src, ctx);
 const Q = ctx.window.QUESTIONS;
@@ -15,7 +22,8 @@ const counts = {};
 Q.forEach((q, i) => {
   const tag = `#${i} (t${q.t}${q.d})`;
   const bad = (m) => { errors++; console.log("ERROR", tag, m); };
-  if (![1, 2, 3, 4, 5, 6, 7].includes(q.t)) bad("t tidak valid");
+  if (!CONFIG.topics.includes(q.t)) bad("t tidak valid");
+  if (q.tb && !(Array.isArray(q.tb) && q.tb.every((r) => Array.isArray(r) && r.length === q.tb[0].length))) bad("tb tidak valid");
   if (!["e", "h"].includes(q.d)) bad("d tidak valid");
   if (!q.q || !q.x) bad("q/x kosong");
   if (!Array.isArray(q.o) || q.o.length !== 4) bad("opsi harus 4");
@@ -41,4 +49,9 @@ console.log(`Jawaban benar = opsi TERPANJANG : ${longest}/${n} (${(100 * longest
 console.log(`Jawaban benar = opsi TERPENDEK  : ${shortest}/${n} (${(100 * shortest / n).toFixed(1)}%)`);
 console.log(`Rata-rata rasio panjang benar / rata-rata pengecoh: ${(ratioSum / n).toFixed(3)}`);
 if (flagged.length) { console.log("\nJawaban benar jauh lebih panjang dari semua pengecoh:"); flagged.forEach((f) => console.log("  " + f)); }
+if (CONFIG.expect) {
+  Object.entries(CONFIG.expect).forEach(([k, v]) => {
+    if ((counts[k] || 0) !== v) { errors++; console.log(`ERROR jumlah ${k}: ${counts[k] || 0}, seharusnya ${v}`); }
+  });
+}
 if (errors || longest / n > 0.3 || flagged.length) process.exitCode = 1;
