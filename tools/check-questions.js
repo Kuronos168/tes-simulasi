@@ -1,10 +1,11 @@
 // Validasi bank soal: struktur + bias panjang jawaban.
-// Jalankan: node tools/check-questions.js
+// Jalankan: node tools/check-questions.js <folder>   (contoh: sikbb atau digital-leadership)
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 
-const src = fs.readFileSync(path.join(__dirname, "..", "questions.js"), "utf8");
+const dir = process.argv[2] || "sikbb";
+const src = fs.readFileSync(path.join(__dirname, "..", dir, "questions.js"), "utf8");
 const ctx = { window: {} };
 vm.runInNewContext(src, ctx);
 const Q = ctx.window.QUESTIONS;
@@ -15,7 +16,7 @@ const counts = {};
 Q.forEach((q, i) => {
   const tag = `#${i} (t${q.t}${q.d})`;
   const bad = (m) => { errors++; console.log("ERROR", tag, m); };
-  if (![1, 2, 3, 4, 5, 6, 7].includes(q.t)) bad("t tidak valid");
+  if (!(Number.isInteger(q.t) && q.t >= 1 && q.t <= 14)) bad("t tidak valid");
   if (!["e", "h"].includes(q.d)) bad("d tidak valid");
   if (!q.q || !q.x) bad("q/x kosong");
   if (!Array.isArray(q.o) || q.o.length !== 4) bad("opsi harus 4");
