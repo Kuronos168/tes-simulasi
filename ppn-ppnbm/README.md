@@ -23,3 +23,7 @@ Materi: 1 Pengantar PPN & PPnBM · 2 Pengusaha Kena Pajak · 3 Objek PPN & penye
 ## Kunci jawaban UTS
 
 - `kunci-uts/Kunci-Jawaban-UTS-PPN-PPnBM.pdf`: kunci 40 soal UTS: teks soal lengkap (diketik ulang dari scan, `kunci-uts/soal.py`) diikuti jawaban, yang berisi penjelasan, perhitungan, dasar hukum, dan alasan opsi lain salah. Isi ada di `kunci-uts/data.py`; bangun ulang dengan `python3 kunci-uts/build.py`, lalu cetak HTML-nya ke PDF.
+
+## Link unduh peraturan
+
+- `peraturan/Link-Unduh-Peraturan-PPN.pdf`: daftar tautan unduh (bisa diklik) untuk semua peraturan yang dikutip di cheatsheet re-test. Sumber: `peraturan/build.py`.
