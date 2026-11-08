@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Cheatsheet Re-test PPN &amp; PPnBM</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&display=swap">
+<style>
+/* Edisi re-test (9 Nov 2026): open PPT + peraturan, jawaban wajib berisi penjelasan, perhitungan, dasar hukum.
+   Tiap baris tabel: kata kunci di soal → aturan yang ditulis → dasar hukum yang dikutip. Dokumen mengalir; Playwright yang memberi nomor halaman. */
+@page { size: A4; margin: 12mm 12mm 14mm; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; color: #111; }
+body { font-family: "IBM Plex Sans", Arial, sans-serif; font-size: 9.4pt; line-height: 1.4; }
+h1 { font-size: 17pt; margin: 0 0 1mm; letter-spacing: -0.01em; }
+.sub { color: #444; margin: 0 0 4mm; }
+h2 { font-size: 11.5pt; margin: 5mm 0 1.6mm; padding-bottom: 0.8mm; border-bottom: 1.2pt solid #111; break-after: avoid; }
+h2 .u { font-weight: 500; font-size: 8.8pt; color: #555; margin-left: 2mm; }
+h2.pb { break-before: page; margin-top: 0; }
+h3 { font-size: 9.8pt; margin: 3mm 0 1.2mm; break-after: avoid; }
+p { margin: 0 0 1.6mm; }
+ul, ol { margin: 0 0 2mm; padding-left: 5mm; }
+li { margin: 0 0 0.8mm; }
+b { font-weight: 600; }
+table { width: 100%; border-collapse: collapse; margin: 0 0 2.4mm; font-family: "IBM Plex Sans Condensed", "Arial Narrow", Arial, sans-serif; font-size: 9.1pt; line-height: 1.33; }
+thead { display: table-header-group; }
+th { text-align: left; font-size: 8.4pt; font-weight: 700; border-bottom: 1pt solid #111; padding: 1mm 1.6mm; }
+td { vertical-align: top; padding: 1.2mm 1.6mm; border-bottom: 0.5pt solid #C9CED3; }
+tr { break-inside: avoid; }
+tbody tr:nth-child(even) td { background: #F4F6F8; }
+td.k { width: 25%; font-weight: 600; }
+td.r { width: 49%; }
+td.d { width: 26%; font-size: 8.6pt; color: #222; }
+.uts { display: inline-block; font-size: 7.6pt; font-weight: 700; border: 0.6pt solid #555; color: #333; border-radius: 0.8mm; padding: 0 1mm; margin-left: 1mm; white-space: nowrap; }
+.box { border: 0.9pt solid #111; padding: 2.6mm 3.4mm; margin: 0 0 3mm; break-inside: avoid; }
+.box > :last-child { margin-bottom: 0; }
+.soft { background: #F4F6F8; border: none; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+.eg { font-size: 8.9pt; border-top: 0.5pt dashed #777; padding-top: 1.6mm; margin-top: 1.6mm; }
+.mono { font-variant-numeric: tabular-nums; }
+.warn { border-left: 2pt solid #8A2D1C; background: #FBEFEC; padding: 1.8mm 3mm; margin: 0 0 2.6mm; break-inside: avoid; }
+.warn b.h { display: block; font-size: 8pt; letter-spacing: 0.06em; text-transform: uppercase; color: #8A2D1C; margin-bottom: 0.6mm; }
+.small { font-size: 8.6pt; color: #444; }
+</style>
+</head>
+<body>
+
+<h1>Cheatsheet Re-test UTS PPN &amp; PPnBM</h1>
+<p class="sub">Edisi re-test, Senin 9 November 2026: open PPT &amp; peraturan, 40 soal pilihan ganda, 120 menit, jawaban ditulis tangan dan <b>wajib</b> memuat penjelasan, perhitungan, dan dasar hukum. Aturan per Oktober 2026 mengikuti PPT dosen. Label <span class="uts">UTS 7</span> menunjuk nomor soal UTS lalu yang memakai aturan tersebut (lihat PDF kunci jawaban).</p>
+
+<h2>1 · Cara menjawab dalam 3 menit per soal</h2>
+<div class="two">
+  <div class="box">
+    <p><b>Tulis 4 baris ini di setiap soal</b></p>
+    <ol>
+      <li><b>Jawaban</b>: huruf + angka/pernyataan.</li>
+      <li><b>Dasar hukum</b>: peraturan + pasal (ambil dari kolom kanan tabel di cheatsheet ini).</li>
+      <li><b>Penjelasan</b>: 1–2 kalimat (ambil dari kolom tengah), lalu kaitkan dengan fakta soal.</li>
+      <li><b>Perhitungan</b>: rumus → angka → hasil. Soal teori: "tidak ada perhitungan".</li>
+    </ol>
+    <div class="eg"><b>Contoh soal hitung.</b> B, Rp64.350.000. Dasar: UU PPN Ps 1 angka 18; PMK 131/2024 Ps 3. Penjelasan: ongkir yang ditagih penjual masuk Harga Jual, potongan di FP dikurangkan, barang nonmewah sehingga DPP 11/12. Hitung: HJ 600 − 30 + 15 = 585 jt; PPN = 11/12 × 585 jt × 12% = Rp64.350.000.</div>
+    <div class="eg"><b>Contoh soal teori.</b> B (II dan III). Dasar: UU PPN Ps 2 ayat (2). Penjelasan: penguasaan yang sama = hubungan istimewa; mertua–menantu = semenda lurus 1 derajat; 24% &lt; 25%; kakek–cucu = 2 derajat. Tidak ada perhitungan.</div>
+  </div>
+  <div>
+    <div class="box soft">
+      <p><b>Pembagian waktu (120 menit)</b></p>
+      <ul>
+        <li>0–5 menit: unduh soal, cek jumlah halaman, buka folder peraturan.</li>
+        <li>Putaran 1 (± 60 menit): kerjakan semua soal teori dan hitungan pendek. Lewati soal yang butuh lebih dari 4 menit.</li>
+        <li>Putaran 2 (± 45 menit): soal kasus/tabel yang dilewati.</li>
+        <li>10 menit terakhir: pastikan tiap jawaban punya 4 baris, terutama <b>dasar hukum</b>.</li>
+      </ul>
+    </div>
+    <div class="box soft">
+      <p><b>Cara cepat menulis dasar hukum</b></p>
+      <ul>
+        <li>Singkat boleh: "UU PPN Ps 16D; Ps 9(8)b".</li>
+        <li>Soal hitungan nonmewah: selalu tambah "PMK 131/2024 Ps 3".</li>
+        <li>Soal besaran tertentu: tulis PMK sektornya + "jo. PMK 11/2025".</li>
+        <li>Kalau ragu nomor pasal, tulis peraturannya + isi aturannya, misalnya "PP 44/2022 tentang saat terutang". Itu tetap dasar hukum.</li>
+      </ul>
+    </div>
+    <div class="warn"><b class="h">7 langkah sebelum menghitung</b>Objek? → Fasilitas (0%, tidak dipungut, dibebaskan)? → Skema (biasa 11/12, mewah, nilai lain, besaran tertentu)? → Dasar (HJ + biaya ditagih − potongan FP)? → Siapa memungut &amp; kode FP? → Kapan (peristiwa paling awal) &amp; tenggat? → PM boleh dikreditkan?</div>
+  </div>
+</div>
+
+
+<h2>Pola soal UTS lalu <span class="u">re-test: materi &amp; tingkat kesulitan sama persis</span></h2>
+<table>
+  <thead><tr><th style="width:34%">Jenis soal</th><th style="width:30%">Nomor soal UTS</th><th>Buka bagian</th></tr></thead>
+  <tbody>
+    <tr><td><b>Hitung DPP &amp; PPN</b> (HJ, impor, ekspor, valas, nilai lain, harga pasar wajar)</td><td>1, 2, 3, 13, 29, 35</td><td>3 · Rumus inti &amp; DPP</td></tr>
+    <tr><td><b>Hitung setoran PK − PM</b> (retur, pemusatan, barang modal)</td><td>14, 26, 38</td><td>3 · Rumus inti &amp; DPP</td></tr>
+    <tr><td><b>Klasifikasi objek &amp; penyerahan</b> (I/II/III)</td><td>16, 25, 27, 28, 30, 32, 33, 37</td><td>4 · Objek &amp; penyerahan</td></tr>
+    <tr><td><b>Hubungan istimewa, PKP, KSO</b></td><td>34, 36, 39, 40</td><td>3 dan 5</td></tr>
+    <tr><td><b>Saat &amp; tempat terutang</b> (tanggal)</td><td>21, 22, 23, 24, 31</td><td>6 · Saat &amp; tempat</td></tr>
+    <tr><td><b>Faktur Pajak &amp; SPT</b></td><td>17, 18, 19</td><td>7 · Faktur &amp; SPT</td></tr>
+    <tr><td><b>Besaran tertentu</b> (paket, wisata, freight, emas)</td><td>7, 8, 9, 10</td><td>8 · Besaran tertentu</td></tr>
+    <tr><td><b>KMS &amp; aktiva 16D</b></td><td>5, 6, 15</td><td>9 · KMS &amp; aktiva</td></tr>
+    <tr><td><b>Pemungut</b> (instansi, BUMN, PMSE)</td><td>4, 11, 12, 20</td><td>10 · Pemungut</td></tr>
+  </tbody>
+</table>
+<div class="box soft"><b>Kalender tenggat (contoh transaksi Oktober 2026):</b> FP gabungan 31 Okt · setor jasa LN &amp; KMS <b>16 Nov</b> (15 Nov hari Minggu) · upload/persetujuan FP <b>20 Nov</b> · setor kurang bayar &amp; lapor SPT Masa (juga pemungut) <b>30 Nov</b>, setor sebelum lapor · kredit PM paling lambat Masa Januari 2027.</div>
+
+<h2>2 · Peraturan yang wajib diunduh &amp; disimpan offline <span class="u">unduh malam ini, tes buka satu per satu tanpa internet</span></h2>
+<p class="small">Sumber resmi: <b>jdih.kemenkeu.go.id</b> (PMK), <b>pajak.go.id</b> (PER Dirjen), <b>peraturan.bpk.go.id</b> (UU/PP). Ortax (<b>datacenter.ortax.org</b>) menyediakan naskah UU PPN yang sudah digabung dengan semua perubahannya; ini paling praktis. Simpan sebagai PDF, beri nama file dengan nomor peraturan + topik (contoh <i>PMK 71-2022 paket wisata freight.pdf</i>), dan cari isinya dengan Ctrl+F.</p>
+<table>
+  <thead><tr><th style="width:4%">✓</th><th style="width:30%">Peraturan</th><th style="width:30%">Dipakai untuk</th><th>Pasal yang paling sering dikutip</th></tr></thead>
+  <tbody>
+    <tr><td>☐</td><td><b>UU PPN</b>: UU 8/1983 s.t.d.t.d. UU 7/2021 (HPP) &amp; UU 6/2023, versi gabungan</td><td>hampir semua soal</td><td>1 (angka 18, 19, 20, 26), 1A, 2, 3A, 4, 4A, 5A, 7, 8A, 9, 9A, 11, 12, 13, 15A, 16A, 16B, 16C, 16D</td></tr>
+    <tr><td>☐</td><td><b>UU KUP</b></td><td>kewajiban SPT, sanksi faktur</td><td>3; 14 ayat (4)</td></tr>
+    <tr><td>☐</td><td><b>PP 44/2022</b></td><td>penyerahan, saat &amp; tempat terutang, konsinyasi, JLN, kurs FP</td><td>bab saat/tempat terutang; Ps 21 (kurs)</td></tr>
+    <tr><td>☐</td><td><b>PP 49/2022</b></td><td>fasilitas dibebaskan / tidak dipungut</td><td>daftar BKP/JKP dibebaskan (beras, jasa kesehatan medis, pendidikan)</td></tr>
+    <tr><td>☐</td><td><b>PMK 131/2024</b></td><td>tarif 12%, DPP 11/12, barang mewah</td><td>Ps 2 (mewah), Ps 3 (nonmewah 11/12)</td></tr>
+    <tr><td>☐</td><td><b>PMK 11/2025</b> s.t.d.d. <b>PMK 53/2025</b></td><td>payung DPP nilai lain &amp; besaran tertentu</td><td>Ps 4 (nilai lain), Ps 11 (KSO), Ps 14–19 (besaran tertentu)</td></tr>
+    <tr><td>☐</td><td>PMK 75/2010 jo. 121/2015</td><td>nilai lain: pemakaian sendiri, cuma-cuma, pembubaran, lelang</td><td>Ps 2</td></tr>
+    <tr><td>☐</td><td><b>PMK 71/2022</b></td><td>paket, biro wisata, freight forwarding, ibadah + wisata, voucer</td><td>Ps 2 ayat (2) a–e, Ps 3, Ps 5</td></tr>
+    <tr><td>☐</td><td>PMK 92/2020</td><td>jasa keagamaan (umrah/haji)</td><td>Ps 2, 7</td></tr>
+    <tr><td>☐</td><td><b>PMK 48/2023</b>; PMK 41/2023; PMK 64/2022; PMK 65/2022; PMK 62/2022</td><td>emas perhiasan; agunan; hasil pertanian; mobil bekas; LPG</td><td>PMK 48: Ps 14; PMK 41: Ps 2–4</td></tr>
+    <tr><td>☐</td><td>PMK 32/2019</td><td>ekspor JKP 0%</td><td>Ps 3–4 (daftar jasa)</td></tr>
+    <tr><td>☐</td><td><b>PMK 81/2024</b> s.t.d.t.d. PMK 1/2026</td><td>Coretax: tenggat, retur, BUMN, migas, asuransi, KMS, PMSE</td><td>94 (tenggat), 286–290 (retur), 291–296 (BUMN), 312–320 (asuransi), 323–331 (KMS), 332–339 (PMSE)</td></tr>
+    <tr><td>☐</td><td><b>PMK 231/2019 jo. PMK 59/2022</b>; PMK 58/2022</td><td>instansi pemerintah; Pihak Lain dalam SIP</td><td>Ps 16–19 (18 ayat (1) a–h pengecualian)</td></tr>
+    <tr><td>☐</td><td>PMK 79/2024</td><td>KSO</td><td>NPWP/PKP KSO, dua lapis penyerahan</td></tr>
+    <tr><td>☐</td><td>PMK 197/2013 s.t.d.d. PMK 164/2023</td><td>batas pengusaha kecil Rp4,8 M</td><td>batas lapor akhir tahun buku</td></tr>
+    <tr><td>☐</td><td>PMK 50/2025</td><td>aset kripto</td><td>Ps 2, 5, 8</td></tr>
+    <tr><td>☐</td><td><b>PER-11/PJ/2025</b> s.t.d.d. <b>PER-12/PJ/2026</b></td><td>Faktur Pajak &amp; SPT Masa PPN</td><td>29A (urutan SPT), 36 (kurs), 44 (tgl 20), 48–50 (pengganti/batal), 51–55 (eceran), Lampiran D (kode)</td></tr>
+    <tr><td>☐</td><td>PER-12/PJ/2025</td><td>PMSE</td><td>Ps 9–14; Ps 11 (bukti pungut)</td></tr>
+    <tr><td>☐</td><td>PER-11/PJ/2020</td><td>pemusatan tempat PPN terutang</td><td>syarat &amp; pengecualian lokasi</td></tr>
+    <tr><td>☐</td><td>7 file PPT dosen</td><td>contoh hitung dan simulasi</td><td>Simulasi 01–25 di PPT 7 mirip sekali dengan soal UTS</td></tr>
+  </tbody>
+</table>
+
+<h2>3 · Rumus inti, DPP &amp; Pajak Masukan</h2>
+<table>
+  <thead><tr><th>Kata kunci di soal</th><th>Aturan / rumus yang ditulis</th><th>Dasar hukum</th></tr></thead>
+  <tbody>
+    <tr><td class="k">Barang/jasa biasa (nonmewah)</td><td class="r">DPP = 11/12 × harga; PPN = 12% × DPP = <b>11% × harga</b>.</td><td class="d">UU PPN Ps 7(1)b; PMK 131/2024 Ps 3</td></tr>
+    <tr><td class="k">Barang mewah</td><td class="r">PPN = 12% × harga penuh; PPnBM = tarif × DPP, dipungut sekali (pabrikan/impor), tidak dapat dikreditkan.</td><td class="d">PMK 131/2024 Ps 2; UU PPN Ps 5, 10</td></tr>
+    <tr><td class="k">Harga sudah termasuk PPN</td><td class="r">Nonmewah: PPN = 11/111 × total. Mewah: 12/112 × total.</td><td class="d">PMK 131/2024 Ps 3</td></tr>
+    <tr><td class="k">Diskon, ongkir, biaya lain <span class="uts">UTS 1</span></td><td class="r">Harga Jual = semua yang <b>diminta penjual</b> (termasuk ongkir yang ditagih penjual) − potongan yang dicantumkan di FP. Biaya yang dibayar pembeli langsung ke pihak lain tidak dihitung.</td><td class="d">UU PPN Ps 1 angka 18</td></tr>
+    <tr><td class="k">Jasa, pengepakan, premi <span class="uts">UTS 10</span></td><td class="r">Penggantian = imbalan + biaya yang ditagih pemberi jasa − potongan. Premi yang dibayar langsung ke asuradur bukan Penggantian.</td><td class="d">UU PPN Ps 1 angka 19</td></tr>
+    <tr><td class="k">Impor <span class="uts">UTS 2</span></td><td class="r">Nilai Impor = nilai pabean + bea masuk + BMT/pungutan kepabeanan. <b>PPh 22 tidak</b> ikut. Nonmewah: × 11/12 × 12%.</td><td class="d">UU PPN Ps 1 angka 20; Ps 4(1)b; PMK 131/2024 Ps 3</td></tr>
+    <tr><td class="k">Ekspor BKP / JKP <span class="uts">UTS 3</span></td><td class="r">Nilai Ekspor = semua yang diminta eksportir (ongkos yang dibayar pembeli langsung ke pengangkut tidak). Ekspor JKP = imbalan + penggantian biaya × kurs KMK. Tarif 0%, <b>tanpa</b> 11/12.</td><td class="d">UU PPN Ps 1 angka 26; Ps 4(1)f–h; Ps 7(2); PMK 32/2019</td></tr>
+    <tr><td class="k">Valas, kurs <span class="uts">UTS 13</span></td><td class="r">Kurs Menteri Keuangan saat FP <b>seharusnya</b> dibuat. Bukan kurs pembukuan atau bank. FP pengganti memakai kurs FP asal.</td><td class="d">PP 44/2022 Ps 21; PER-11/PJ/2025 Ps 36</td></tr>
+    <tr><td class="k">Hubungan istimewa <span class="uts">UTS 35, 36</span></td><td class="r">Harga dipengaruhi hubungan istimewa → DPP = <b>harga pasar wajar</b>. Kriteria: penyertaan ≥ 25% (24% belum); penguasaan/di bawah penguasaan sama; keluarga sedarah/semenda garis lurus atau ke samping <b>1 derajat</b> (mertua–menantu ya; kakek–cucu tidak).</td><td class="d">UU PPN Ps 2 ayat (1)–(2) huruf a–c</td></tr>
+    <tr><td class="k">Pemakaian sendiri, cuma-cuma <span class="uts">UTS 29</span></td><td class="r">Termasuk penyerahan, juga untuk pribadi pengurus. DPP = 11/12 × (HJ/Penggantian − <b>laba kotor</b>).</td><td class="d">UU PPN Ps 1A(1)d; Ps 8A; PMK 75/2010 Ps 2 jo. PMK 11/2025 Ps 4</td></tr>
+    <tr><td class="k">Pembubaran, aktiva diberikan</td><td class="r">DPP = 11/12 × harga pasar wajar (bukan nilai buku).</td><td class="d">PMK 75/2010 Ps 2 jo. PMK 11/2025 Ps 4</td></tr>
+    <tr><td class="k">Juru lelang / pedagang perantara</td><td class="r">DPP = 11/12 × harga lelang / harga perantara–pembeli. FP lelang dibuat pemilik barang.</td><td class="d">UU PPN Ps 1A(1)c; PMK 75/2010 Ps 2 jo. PMK 11/2025 Ps 4</td></tr>
+    <tr><td class="k">Retur, ditukar, jasa dibatalkan <span class="uts">UTS 14</span></td><td class="r">Nota retur / nota pembatalan mengurangi PK (penjual) dan PM (pembeli) pada <b>masa retur</b>. Ditukar barang sama jenis, jumlah, harga = bukan retur.</td><td class="d">UU PPN Ps 5A; PMK 81/2024 Ps 286–290</td></tr>
+    <tr><td class="k">Setoran bulanan <span class="uts">UTS 26, 38</span></td><td class="r">Kurang bayar = PK − PM. PM barang modal dikreditkan <b>sekaligus</b> pada masa perolehan (masa manfaat hanya untuk penyusutan).</td><td class="d">UU PPN Ps 9 ayat (2)–(3)</td></tr>
+    <tr><td class="k">PM tidak dapat dikreditkan</td><td class="r">Tidak berhubungan langsung dengan usaha (aset pribadi pengurus); sedan/station wagon; FP tanpa identitas pembeli (eceran); besaran tertentu; dibebaskan; bahan KMS.</td><td class="d">UU PPN Ps 9(8) huruf b, c, f; Ps 9A; PMK 81/2024 Ps 331</td></tr>
+    <tr><td class="k">Kapan PM boleh dikredit</td><td class="r">Masa yang sama atau paling lama 3 masa berikutnya. PKP yang belum melakukan penyerahan boleh mengkreditkan PM (dibayar kembali bila tidak jadi menyerahkan dalam jangka waktu yang ditentukan).</td><td class="d">UU PPN Ps 9(9); Ps 9(2a) <span class="uts">UTS 40</span></td></tr>
+  </tbody>
+</table>
+<div class="warn"><b class="h">Jebakan angka</b>11/12 dipakai sekali saja. Besaran tertentu (1,1%; 2,2%; 0,55%) tidak dikali 11/12 lagi. Ekspor tidak dikali 11/12. PPh yang dipotong tidak mengurangi DPP. Cek: total yang dibayar = DPP/harga + PPN.</div>
+
+<h2>4 · Objek, bukan objek &amp; penyerahan</h2>
+<table>
+  <thead><tr><th>Kata kunci di soal</th><th>Aturan yang ditulis</th><th>Dasar hukum</th></tr></thead>
+  <tbody>
+    <tr><td class="k">Objek PPN <span class="uts">UTS 32</span></td><td class="r">Penyerahan BKP/JKP di dalam Daerah Pabean oleh pengusaha; impor BKP (siapa pun importirnya, juga orang pribadi non-PKP); pemanfaatan BKP TB/JKP dari LN; ekspor BKP berwujud, BKP TB, JKP <b>oleh PKP</b> (non-PKP mengekspor = bukan objek).</td><td class="d">UU PPN Ps 4 ayat (1) huruf a–h</td></tr>
+    <tr><td class="k">Restoran, uang, emas devisa <span class="uts">UTS 27</span></td><td class="r">Tidak dikenai PPN: makanan/minuman di restoran, hotel, warung, katering yang merupakan objek pajak daerah (termasuk dibawa pulang); uang, emas batangan untuk cadangan devisa, surat berharga.</td><td class="d">UU PPN Ps 4A ayat (2)</td></tr>
+    <tr><td class="k">Jasa bukan objek</td><td class="r">Jasa keagamaan, kesenian &amp; hiburan, perhotelan, jasa pemerintah umum, parkir, boga/katering.</td><td class="d">UU PPN Ps 4A ayat (3)</td></tr>
+    <tr><td class="k">Beras, kesehatan medis, pendidikan <span class="uts">UTS 27</span></td><td class="r">Sejak UU HPP ini <b>objek</b> yang diberi fasilitas <b>dibebaskan</b> (bukan "tidak dikenai PPN"). PM tidak dapat dikreditkan; FP kode 08.</td><td class="d">UU PPN Ps 16B; PP 49/2022</td></tr>
+    <tr><td class="k">0% vs tidak dipungut vs dibebaskan</td><td class="r">0% (ekspor) &amp; tidak dipungut/DTP (kode 07): PM boleh dikredit. Dibebaskan (kode 08): PM tidak boleh.</td><td class="d">UU PPN Ps 7(2), 16B ayat (2)–(3)</td></tr>
+    <tr><td class="k">Ekspor jasa <span class="uts">UTS 16, 33</span></td><td class="r">0% hanya untuk jasa dalam daftar: (1) melekat pada barang yang <b>dikeluarkan</b> &amp; dimanfaatkan di LN: maklon, perbaikan, freight forwarding ekspor, konsultansi konstruksi untuk bangunan <b>di LN</b>; (2) hasil dimanfaatkan di LN: TI, litbang, konsultansi bisnis/hukum/arsitek/SDM/insinyur/pemasaran, akuntansi, audit, pajak, dll. Perbaikan mesin yang tetap di Indonesia atau desain gedung di Surabaya = penyerahan dalam negeri. Jasa yang dihasilkan &amp; dimanfaatkan di LN = tidak dikenai PPN.</td><td class="d">PMK 32/2019 Ps 3–4; UU PPN Ps 4(1)c &amp; h, Ps 7(2)</td></tr>
+    <tr><td class="k">Termasuk penyerahan <span class="uts">UTS 28, 30</span></td><td class="r">Jual beli, tukar-menukar, <b>jual beli angsuran</b>; sewa beli/leasing; ke pedagang perantara/juru lelang; pemakaian sendiri &amp; cuma-cuma; persediaan/aktiva tersisa saat <b>pembubaran</b>; konsinyasi.</td><td class="d">UU PPN Ps 1A ayat (1) huruf a–e, g (+ penjelasan huruf a)</td></tr>
+    <tr><td class="k">Bukan penyerahan <span class="uts">UTS 25, 28, 30</span></td><td class="r">(a) ke makelar KUHD; (b) jaminan utang-piutang; (c) pusat ↔ cabang &amp; antarcabang <b>dalam pemusatan</b>; (d) penggabungan, peleburan, pemekaran, pengambilalihan, setoran modal pengganti saham, <b>bila kedua pihak PKP</b> (penerima belum PKP → tetap penyerahan).</td><td class="d">UU PPN Ps 1A ayat (2) huruf a–d</td></tr>
+    <tr><td class="k">Anak usaha 99%</td><td class="r">Badan hukum terpisah: penjualan = penyerahan. Kepemilikan hanya memengaruhi DPP (hubungan istimewa).</td><td class="d">UU PPN Ps 1A(1)a; Ps 2</td></tr>
+    <tr><td class="k">Karakteristik PPN <span class="uts">UTS 37</span></td><td class="r">Pajak tidak langsung; objektif (tidak melihat penghasilan pembeli); multi-stage; non-kumulatif lewat kredit PM (PPN tahap sebelumnya <b>bukan</b> ditambahkan ke DPP); terutang saat penyerahan, tidak menunggu pembayaran.</td><td class="d">Penjelasan Umum UU PPN; Ps 9(2); Ps 11(1)</td></tr>
+  </tbody>
+</table>
+
+<h2>5 · Pengusaha Kena Pajak &amp; KSO</h2>
+<table>
+  <thead><tr><th>Kata kunci di soal</th><th>Aturan yang ditulis</th><th>Dasar hukum</th></tr></thead>
+  <tbody>
+    <tr><td class="k">Omzet lewat Rp4,8 M <span class="uts">UTS 39</span></td><td class="r">Pengusaha kecil: peredaran bruto ≤ Rp4,8 M setahun buku (tepat 4,8 M masih kecil). Lewat → wajib lapor dikukuhkan paling lambat <b>akhir tahun buku</b>; kewajiban mulai Masa Pajak pertama <b>tahun buku berikutnya</b> (kecuali memilih lebih awal). Tahun buku Jul–Jun → lapor 30 Jun, mulai Juli.</td><td class="d">UU PPN Ps 3A(1); PMK 197/2013 s.t.d.d. PMK 164/2023</td></tr>
+    <tr><td class="k">Pengusaha kecil memilih PKP <span class="uts">UTS 40</span></td><td class="r">Boleh. Setelah dikukuhkan menjalankan semua kewajiban PKP, termasuk SPT Masa <b>nihil</b>, sampai dicabut. Pengusaha yang akan menyerahkan boleh mengajukan pengukuhan sebelum penyerahan pertama.</td><td class="d">UU PPN Ps 3A(2); UU KUP Ps 3; PMK 81/2024</td></tr>
+    <tr><td class="k">Wajib PKP walau omzet kecil</td><td class="r">Pabrikan &amp; pedagang emas perhiasan, agen asuransi (punya NPWP), pialang.</td><td class="d">PMK 48/2023 Ps 13; PMK 81/2024 Ps 314, 318</td></tr>
+    <tr><td class="k">KSO <span class="uts">UTS 34</span></td><td class="r">NPWP KSO bila atas nama KSO menyerahkan/terima penghasilan/membayar (≤ 1 bulan). PKP KSO bila menyerahkan atas nama KSO <b>dan</b> (omzet &gt; Rp4,8 M <b>atau</b> ada anggota PKP). Dua lapis: anggota PKP → KSO (FP anggota, DPP 11/12 × kontribusi); KSO → pelanggan (FP KSO).</td><td class="d">PMK 79/2024 jo. PMK 11/2025 Ps 11; UU PPN Ps 3A(1)</td></tr>
+  </tbody>
+</table>
+
+<h2>6 · Saat &amp; tempat terutang</h2>
+<table>
+  <thead><tr><th>Kata kunci di soal</th><th>Aturan yang ditulis</th><th>Dasar hukum</th></tr></thead>
+  <tbody>
+    <tr><td class="k">Prinsip</td><td class="r">Ambil peristiwa <b>paling awal</b>, diuji untuk setiap bagian nilai transaksi.</td><td class="d">UU PPN Ps 11; PP 44/2022</td></tr>
+    <tr><td class="k">Uang muka <span class="uts">UTS 21, 26</span></td><td class="r">Terutang saat pembayaran diterima, sebesar yang diterima. Sisanya terutang saat penyerahan.</td><td class="d">UU PPN Ps 11(2); Ps 13(1a)</td></tr>
+    <tr><td class="k">BKP bergerak <span class="uts">UTS 21</span></td><td class="r">Diserahkan ke pembeli, <b>atau ke perusahaan angkutan/juru kirim</b>, atau diakui piutang/invoice. Tanggal barang diterima pembeli tidak menentukan.</td><td class="d">PP 44/2022</td></tr>
+    <tr><td class="k">BKP tidak bergerak</td><td class="r">Saat hak menggunakan/menguasai beralih (hukum atau nyata), bukan tanggal kontrak/akta.</td><td class="d">PP 44/2022</td></tr>
+    <tr><td class="k">JKP <span class="uts">UTS 23</span></td><td class="r">Saat Penggantian diakui piutang/penghasilan atau invoice terbit. Bila tidak diketahui: saat kontrak ditandatangani.</td><td class="d">PP 44/2022</td></tr>
+    <tr><td class="k">Cuma-cuma <span class="uts">UTS 23</span></td><td class="r">BKP: saat diserahkan. JKP: saat fasilitas/hasil jasa <b>tersedia untuk dipakai secara nyata</b>.</td><td class="d">PP 44/2022</td></tr>
+    <tr><td class="k">Konsinyasi <span class="uts">UTS 22</span></td><td class="r">Menitip bukan saat terutang. Consignor: saat penjualan diakui piutang/penghasilan atau invoice terbit (mana lebih dulu).</td><td class="d">UU PPN Ps 1A(1)g; PP 44/2022</td></tr>
+    <tr><td class="k">Jasa / lisensi dari LN <span class="uts">UTS 4, 31</span></td><td class="r">Paling awal: diakui sebagai <b>utang</b>, <b>ditagih</b>, atau dibayar (tidak diketahui: kontrak). Disetor sendiri oleh pemanfaat bila tidak lewat PMSE, paling lambat tanggal 15 bulan berikutnya.</td><td class="d">UU PPN Ps 4(1)d–e; Ps 3A(3); PP 44/2022</td></tr>
+    <tr><td class="k">Impor / ekspor</td><td class="r">Impor: saat BKP masuk Daerah Pabean. Ekspor: saat keluar.</td><td class="d">PP 44/2022</td></tr>
+    <tr><td class="k">Tempat terutang <span class="uts">UTS 24</span></td><td class="r">Penyerahan: tempat tinggal/kedudukan/kegiatan usaha; bila dipusatkan: <b>tempat pemusatan</b>. Impor: tempat pemasukan. Jasa LN: tempat pihak yang memanfaatkan (tempat terdaftar), bukan lokasi proyek. KMS: tempat tinggal/kedudukan yang membangun.</td><td class="d">UU PPN Ps 12; PP 44/2022; PER-11/PJ/2020</td></tr>
+    <tr><td class="k">Pemusatan</td><td class="r">Pemindahan barang pusat ↔ cabang bukan penyerahan; satu SPT terpusat (PK &amp; PM semua cabang). Tidak bisa dipusatkan: KB/TPB, KEK, KPBPB, KITE.</td><td class="d">UU PPN Ps 12(2); Ps 1A(2)c; PER-11/PJ/2020</td></tr>
+  </tbody>
+</table>
+
+<h2>7 · Faktur Pajak, tenggat &amp; SPT</h2>
+<table>
+  <thead><tr><th>Kata kunci di soal</th><th>Aturan yang ditulis</th><th>Dasar hukum</th></tr></thead>
+  <tbody>
+    <tr><td class="k">Kapan FP dibuat</td><td class="r">Saat penyerahan, penerimaan pembayaran sebelum penyerahan, termin, atau saat lain yang ditetapkan.</td><td class="d">UU PPN Ps 13(1a)</td></tr>
+    <tr><td class="k">FP gabungan <span class="uts">UTS 13, 19</span></td><td class="r">Satu pembeli, satu bulan, paling lambat <b>akhir bulan penyerahan</b>. Uang muka yang sudah difakturkan dikurangkan. Dipisah per kode transaksi.</td><td class="d">UU PPN Ps 13(2), (2a)</td></tr>
+    <tr><td class="k">Upload / persetujuan <span class="uts">UTS 19</span></td><td class="r">Paling lambat <b>tanggal 20</b> bulan berikutnya; lewat → tidak mendapat persetujuan = bukan FP.</td><td class="d">PER-11/PJ/2025 Ps 44</td></tr>
+    <tr><td class="k">FP terlambat</td><td class="r">Denda 1% DPP; dibuat &gt; 3 bulan dari seharusnya = dianggap tidak dibuat (PM pembeli tidak dapat dikredit).</td><td class="d">UU KUP Ps 14(4); PER-11/PJ/2025 Ps 56–59</td></tr>
+    <tr><td class="k">FP salah / hilang <span class="uts">UTS 17</span></td><td class="r">Salah harga, jumlah, uraian, kode → <b>FP pengganti</b> (status 01, dilaporkan di masa FP asal). Salah identitas pembeli/transaksi batal → <b>batalkan + FP baru</b>. PDF hilang, data benar → <b>unduh/cetak ulang</b>. Bila PM sudah dikredit pembeli → perlu persetujuan pembeli.</td><td class="d">PER-11/PJ/2025 Ps 48–50; UU PPN Ps 13(5)</td></tr>
+    <tr><td class="k">Pedagang eceran <span class="uts">UTS 18</span></td><td class="r">Struk/bon kontan boleh tanpa identitas pembeli &amp; tanda tangan; tetap FP, tetapi PM pembeli <b>tidak dapat dikreditkan</b>. Kendaraan dan tanah/bangunan tetap butuh FP lengkap.</td><td class="d">UU PPN Ps 13(5); Ps 9(8)f; PER-11/PJ/2025 Ps 51–55</td></tr>
+    <tr><td class="k">Dokumen dipersamakan FP <span class="uts">UTS 18</span></td><td class="r">PIB, PEB, SSP jasa LN &amp; KMS, tagihan listrik/telepon/tiket, bukti pungut PMSE (cukup memuat NPWP/NIK <b>atau</b> email pembeli yang terdaftar di DJP), tagihan penjualan agunan, statement agen asuransi.</td><td class="d">UU PPN Ps 13(6); PER-12/PJ/2025 Ps 11(2), (6); PMK 81/2024 Ps 315, 327</td></tr>
+    <tr><td class="k">Kode transaksi</td><td class="r">01 biasa · 02 instansi · 03 BUMN/pemungut lain · 04 DPP nilai lain · 05 besaran tertentu · 06 turis/lainnya · 07 tidak dipungut/DTP · 08 dibebaskan · 09 aktiva 16D · 10 lainnya. Urutan cek: 07/08 → 02/03 → 06/10 → 09 → 04/05.</td><td class="d">PER-11/PJ/2025 Lampiran D</td></tr>
+    <tr><td class="k">Setor &amp; lapor <span class="uts">UTS 12</span></td><td class="r">Setor kurang bayar &amp; lapor SPT Masa PPN paling lambat <b>akhir bulan berikutnya</b>, setor <b>sebelum</b> SPT disampaikan. Sama untuk pemungut (instansi, BUMN).</td><td class="d">UU PPN Ps 15A; PMK 81/2024 Ps 94</td></tr>
+    <tr><td class="k">Setor sendiri tanggal 15</td><td class="r">PPN jasa/BKP TB dari LN dan PPN KMS: paling lambat tanggal 15 bulan berikutnya (bergeser ke hari kerja berikutnya bila libur).</td><td class="d">PMK 81/2024 Ps 94, 326</td></tr>
+    <tr><td class="k">Urutan SPT <span class="uts">UTS 19</span></td><td class="r">Sejak 1 Okt 2026: SPT Masa PPN suatu masa disampaikan <b>setelah</b> SPT masa sebelumnya. Pengecualian: masa sebelumnya sedang diperiksa/diperiksa bukti permulaan secara terbuka.</td><td class="d">PER-11/PJ/2025 Ps 29A s.t.d.d. PER-12/PJ/2026</td></tr>
+    <tr><td class="k">Pembetulan SPT</td><td class="r">Mekanisme replace; perubahan lebih bayar yang sudah dikompensasi disesuaikan pada SPT normal pertama yang belum disampaikan.</td><td class="d">PER-12/PJ/2026 Ps 29B–29C</td></tr>
+  </tbody>
+</table>
+
+<h2>8 · Besaran tertentu <span class="u">PPN = persen × dasar · PM terkait tidak dapat dikreditkan · FP kode 05</span></h2>
+<table>
+  <thead><tr><th>Penyerahan</th><th>Besaran × dasar &amp; catatan</th><th>Dasar hukum</th></tr></thead>
+  <tbody>
+    <tr><td class="k">Jasa pengiriman paket <span class="uts">UTS 10, 11</span></td><td class="r"><b>1,1% × Penggantian</b> (termasuk pengepakan yang ditagih, dikurangi potongan). Ke instansi tetap 1,1% tetapi dipungut instansi (kode 02).</td><td class="d">PMK 71/2022 Ps 2(2)a, 3, 5 jo. PMK 11/2025 Ps 17</td></tr>
+    <tr><td class="k">Paket wisata milik sendiri <span class="uts">UTS 8</span></td><td class="r"><b>1,1% × Harga Jual paket</b>; harga pokok hotel/tiket tidak dikurangkan. Kalau hanya perantara dengan komisi → 11% × komisi, kode 04, PM boleh.</td><td class="d">PMK 71/2022 Ps 2(2)b, 3, 5; PMK 131/2024 Ps 3</td></tr>
+    <tr><td class="k">Freight forwarding + freight charges <span class="uts">UTS 7</span></td><td class="r"><b>1,1% × seluruh tagihan</b> (bukan fee saja). Kontrak lain yang terpisah → ketentuan umum.</td><td class="d">PMK 71/2022 Ps 2(2)c, 3c, 4–5</td></tr>
+    <tr><td class="k">Ibadah + wisata ke negara lain <span class="uts">UTS 8</span></td><td class="r">Tagihan dirinci: <b>1,1% × bagian wisata</b> (bagian ibadah bukan objek). Tidak dirinci: <b>0,55% × seluruh paket</b>.</td><td class="d">PMK 71/2022 Ps 2(2)d, 3d; PMK 92/2020; UU PPN Ps 4A(3)</td></tr>
+    <tr><td class="k">Voucer tanpa komisi &amp; margin</td><td class="r">1,1% × Harga Jual voucer. Dengan komisi/margin → nilai lain 11/12 × komisi/margin.</td><td class="d">PMK 71/2022 Ps 2(2)e; PMK 6/2021 jo. PMK 11/2025 Ps 6</td></tr>
+    <tr><td class="k">Emas perhiasan, pabrikan <span class="uts">UTS 9</span></td><td class="r">Ke pabrikan/pedagang <b>1,1%</b>; ke konsumen akhir <b>1,65%</b> × Harga Jual.</td><td class="d">PMK 48/2023 Ps 14(3) jo. PMK 11/2025 Ps 19</td></tr>
+    <tr><td class="k">Emas perhiasan, pedagang <span class="uts">UTS 9</span></td><td class="r">Punya FP perolehan sesuai Ps 13(5) <b>1,1%</b>; tanpa FP <b>1,65%</b>; ke pabrikan emas <b>0%</b> (besaran nol, bukan fasilitas).</td><td class="d">PMK 48/2023 Ps 14(4), (6)–(7) jo. PMK 11/2025 Ps 19</td></tr>
+    <tr><td class="k">Perhiasan bukan emas, jasa sepuh/perbaikan</td><td class="r">1,1%.</td><td class="d">PMK 48/2023 Ps 14(5), 15</td></tr>
+    <tr><td class="k">Penjualan agunan oleh kreditur</td><td class="r">1,1% × harga jual, dipungut saat pembayaran diterima. Pengambilalihan dari debitur: bukan penyerahan.</td><td class="d">PMK 41/2023 Ps 2–4 jo. PMK 11/2025 Ps 18</td></tr>
+    <tr><td class="k">Hasil pertanian tertentu</td><td class="r">1,1% × Harga Jual (pilihan; pindah ke skema umum mulai tahun pajak berikutnya, tidak bisa kembali).</td><td class="d">PMK 64/2022 jo. PMK 11/2025 Ps 15</td></tr>
+    <tr><td class="k">Mobil/motor bekas oleh pedagang</td><td class="r">1,1% × Harga Jual (bukan laba). Suku cadang tetap skema umum.</td><td class="d">PMK 65/2022 jo. PMK 11/2025 Ps 16</td></tr>
+    <tr><td class="k">LPG tertentu agen/pangkalan</td><td class="r">1,1/101,1 × selisih harga (PPN sudah di dalam selisih).</td><td class="d">PMK 62/2022 jo. PMK 11/2025 Ps 14</td></tr>
+    <tr><td class="k">Agen / pialang asuransi</td><td class="r">Agen 1,1% × komisi (termasuk komisi manajemen), dipungut asuradur saat komisi dibayar. Pialang 2,2% × komisi, dipungut saat premi diterima.</td><td class="d">PMK 81/2024 Ps 312–320 jo. PMK 53/2025</td></tr>
+    <tr><td class="k">Aset kripto</td><td class="r">Jual aset kripto tidak kena PPN; platform 11% × komisi; penambang 2,2% × Penggantian (termasuk block reward).</td><td class="d">PMK 50/2025 Ps 2, 5, 8</td></tr>
+    <tr><td class="k">Kegiatan Membangun Sendiri <span class="uts">UTS 5</span></td><td class="r"><b>2,2% × biaya per Masa</b> (20% × 11/12 × 12%). Lihat bagian 9.</td><td class="d">PMK 81/2024 Ps 324 jo. PMK 53/2025</td></tr>
+  </tbody>
+</table>
+
+<h2>9 · KMS &amp; aktiva Pasal 16D</h2>
+<table>
+  <thead><tr><th>Kata kunci di soal</th><th>Aturan yang ditulis</th><th>Dasar hukum</th></tr></thead>
+  <tbody>
+    <tr><td class="k">Kriteria KMS <span class="uts">UTS 15</span></td><td class="r">Membangun tidak dalam kegiatan usaha (juga orang pribadi non-PKP, rumah tinggal); konstruksi kayu/beton/bata/baja; untuk tinggal/usaha; luas <b>≥ 200 m²</b>.</td><td class="d">UU PPN Ps 16C; PMK 81/2024 Ps 323(3)–(4)</td></tr>
+    <tr><td class="k">Bertahap <span class="uts">UTS 15</span></td><td class="r">Jeda antartahap ≤ 2 tahun = satu kesatuan (luas dijumlah); &gt; 2 tahun = diuji terpisah.</td><td class="d">PMK 81/2024 Ps 323(4)–(6)</td></tr>
+    <tr><td class="k">Dibangun pihak lain <span class="uts">UTS 15</span></td><td class="r">Pihak lain tidak memungut PPN → pemilik bertanggung jawab, <b>kecuali</b> memberi data yang benar (minimal identitas &amp; alamat lengkap) pihak lain itu.</td><td class="d">PMK 81/2024 Ps 323(7)–(9)</td></tr>
+    <tr><td class="k">Biaya KMS <span class="uts">UTS 5</span></td><td class="r">Biaya yang dikeluarkan per Masa <b>termasuk PPN</b> bahan/jasa; <b>tanpa</b> tanah dan perabot lepas. PPN = 2,2% × biaya. Setor tgl 15 bulan berikutnya (NPWP + NOP, KAP 411211/KJS 103).</td><td class="d">PMK 81/2024 Ps 324(2)–(3), 326 jo. PMK 53/2025</td></tr>
+    <tr><td class="k">PM KMS</td><td class="r">PM bahan/jasa untuk KMS tidak dapat dikredit. PPN KMS yang disetor sendiri dapat dikredit bila bangunan dipakai untuk usaha terutang.</td><td class="d">PMK 81/2024 Ps 327, 331</td></tr>
+    <tr><td class="k">Jual aktiva bekas pakai <span class="uts">UTS 6</span></td><td class="r">Terutang PPN = 11/12 × Harga Jual × 12% (nilai buku tidak dipakai), FP kode 09. <b>Kecuali</b> PM perolehannya tidak dapat dikredit karena Ps 9(8)b (tidak berhubungan langsung dengan usaha) atau 9(8)c (sedan/station wagon). Dibeli dari non-PKP atau FP cacat formal <b>tetap terutang</b>.</td><td class="d">UU PPN Ps 16D; Ps 9(8)b–c; PMK 131/2024</td></tr>
+    <tr><td class="k">Aktiva dalam merger</td><td class="r">Pengalihan karena penggabungan antar-PKP = bukan penyerahan.</td><td class="d">UU PPN Ps 1A(2)d</td></tr>
+  </tbody>
+</table>
+
+<h2>10 · Pemungut PPN</h2>
+<table>
+  <thead><tr><th>Kata kunci di soal</th><th>Aturan yang ditulis</th><th>Dasar hukum</th></tr></thead>
+  <tbody>
+    <tr><td class="k">Instansi pemerintah <span class="uts">UTS 11, 20</span></td><td class="r">Rekanan membuat FP saat <b>menyampaikan tagihan</b> (kode 02); instansi memungut saat <b>pembayaran</b>. Besaran tertentu tetap berlaku (paket 1,1%).</td><td class="d">UU PPN Ps 16A; PMK 231/2019 jo. PMK 59/2022 Ps 16–17, 19(1)</td></tr>
+    <tr><td class="k">Instansi tidak memungut <span class="uts">UTS 11</span></td><td class="r">(a) ≤ Rp2 jt <b>tidak termasuk</b> PPN, tidak dipecah; (b) <b>kartu kredit pemerintah</b>; (c) pengadaan tanah; (d) BBM Pertamina; (e) telekomunikasi; (f) tiket pesawat; (g) fasilitas; (h) <b>Uang Persediaan lewat Pihak Lain SIP</b>. Rekanan memungut sendiri (kode 04), bukan dibebaskan.</td><td class="d">PMK 231/2019 jo. PMK 59/2022 Ps 18(1) huruf a–h; PMK 58/2022</td></tr>
+    <tr><td class="k">BUMN pemungut <span class="uts">UTS 12, 20</span></td><td class="r">Hanya BUMN/perusahaan yang ditetapkan. FP rekanan saat penyerahan/uang muka/termin (kode 03). BUMN memungut <b>pada saat yang sama</b>, tidak menunggu pembayaran.</td><td class="d">PMK 81/2024 Ps 292, 295–296</td></tr>
+    <tr><td class="k">BUMN tidak memungut <span class="uts">UTS 12</span></td><td class="r">≤ Rp10 jt <b>termasuk</b> PPN (bukan pecahan transaksi &gt; Rp10 jt); fasilitas; BBM Pertamina; telekomunikasi; tiket pesawat; bukan objek. Satu transaksi yang pembayarannya dipecah tetap dipungut.</td><td class="d">PMK 81/2024 Ps 294 ayat (1) huruf a–f, ayat (3)</td></tr>
+    <tr><td class="k">BUMN ≠ pemerintah</td><td class="r">Transaksi dengan BUMN bukan belanja instansi pemerintah (aturan iklan pemerintah, kode 02, tidak berlaku).</td><td class="d">PMK 231/2019 jo. PMK 59/2022 Ps 16</td></tr>
+    <tr><td class="k">Pihak Lain (SIP)</td><td class="r">Pengadaan dengan Uang Persediaan lewat Pihak Lain → Pihak Lain memungut, instansi tidak.</td><td class="d">PMK 58/2022 Ps 2–10</td></tr>
+    <tr><td class="k">PMSE luar negeri <span class="uts">UTS 4, 18</span></td><td class="r">Pemungut PMSE memungut saat pembayaran; pembeli <b>tidak setor lagi</b>. Bukti pungut (invoice/billing/receipt) dipersamakan FP. Penyedia bukan pemungut → pembeli setor sendiri tgl 15.</td><td class="d">PMK 81/2024 Ps 332–339; PER-12/PJ/2025 Ps 9–14</td></tr>
+    <tr><td class="k">Migas, panas bumi, IUPK</td><td class="r">Kontraktor/pemegang izin yang memenuhi kriteria memungut seperti BUMN (termasuk atas uang muka).</td><td class="d">PMK 81/2024 Ps 298–311</td></tr>
+  </tbody>
+</table>
+
+
+
+</body>
+</html>

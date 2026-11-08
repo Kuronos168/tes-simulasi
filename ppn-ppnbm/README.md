@@ -14,6 +14,12 @@ Materi: 1 Pengantar PPN & PPnBM · 2 Pengusaha Kena Pajak · 3 Objek PPN & penye
 
 ## Cheatsheet
 
+- `cheatsheet/Cheatsheet-Retest-PPN-PPnBM.pdf`: edisi re-test (9 Nov 2026, open PPT & peraturan). 8 halaman A4: format jawaban 4 baris, peta soal UTS, checklist peraturan untuk disimpan offline, lalu tabel kata kunci → aturan → dasar hukum per topik. Sumber: `cheatsheet/cheatsheet-retest.html`.
+
 - `cheatsheet/Cheatsheet-UTS-PPN-PPnBM.pdf`: 8 halaman A4 (4 lembar bolak-balik), satu bab per halaman, huruf ±9,5 pt. Isinya sudah dicocokkan dengan ke-126 soal simulasi. Sumber: `cheatsheet/cheatsheet.html`.
 - `cheatsheet/Cheatsheet-UTS-PPN-PPnBM-ringkas-2hal.pdf`: versi ringkas 2 halaman (1 lembar), huruf ±7 pt. Sumber: `cheatsheet/cheatsheet-2hal.html`.
 - Setelah mengedit HTML, buat ulang PDF dengan Chrome/Chromium (Print → Save as PDF, ukuran A4, margin None, background graphics aktif).
+
+## Kunci jawaban UTS
+
+- `kunci-uts/Kunci-Jawaban-UTS-PPN-PPnBM.pdf`: kunci 40 soal UTS (dari scan soal), tiap soal berisi penjelasan, perhitungan, dasar hukum, dan alasan opsi lain salah. Isi ada di `kunci-uts/data.py`; bangun ulang dengan `python3 kunci-uts/build.py`, lalu cetak HTML-nya ke PDF.
