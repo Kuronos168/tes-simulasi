@@ -1,0 +1,42 @@
+"""Data 10 file peraturan (dipakai link-peraturan.html dan cheatsheet bagian 2)."""
+J = "https://jdih.kemenkeu.go.id"
+FILES = [
+ ("01 UU PPN", "Naskah gabungan UU PPN (semua perubahan)",
+  "https://perpajakan.ddtc.co.id/sumber-hukum/peraturan-pusat/undang-undang-konsolidasi-ppn-setelah-uu-hpp",
+  "Pasal 1 (definisi), 1A, 2, 3A, 4, 4A, 5A, 7, 8A, 9, 9A, 11, 12, 13, 15A, 16A–16D",
+  "Situs DDTC: buka, lalu Ctrl+P → Save as PDF. Kalau diminta login, unduh UU HPP: " + "https://peraturan.go.id/files/uu7-2021pjl.pdf"),
+ ("02 PP 44-2022", "Saat & tempat terutang, penyerahan, konsinyasi, jasa LN, kurs",
+  "https://peraturan.bpk.go.id/Details/232656/pp-no-44-tahun-2022", "cari: konsinyasi, cuma-cuma, Pasal 21 (kurs)", "Halaman BPK: klik tombol Download."),
+ ("03 PP 49-2022", "Fasilitas dibebaskan (beras, jasa kesehatan medis)",
+  "https://peraturan.bpk.go.id/Download/280043/PP%20Nomor%2049%20Tahun%202022.pdf", "cari: beras, kesehatan", ""),
+ ("04 PMK 131-2024", "Tarif 12%, DPP 11/12, barang mewah",
+  J + "/api/download/ad276b82-94bd-4197-b409-af33e2842cd6/2024pmkeuangan131.pdf", "Pasal 2 (mewah), Pasal 3 (11/12)", ""),
+ ("05 PMK 11-2025", "Nilai lain & semua besaran tertentu (1,1%; 1,65%; 0,55%)",
+  J + "/api/download/52955502-8733-4fdd-98ce-bb03c31cda0b/2025pmkeuangan11.pdf", "Pasal 4 (pemakaian sendiri), Pasal 11 (KSO), Pasal 14–19", ""),
+ ("06 PMK 81-2024", "Coretax: tenggat, retur, BUMN, asuransi, KMS, PMSE",
+  J + "/api/download/637047be-3dba-4347-aba1-98fa7fd5ab3f/2024pmkeuangan081.pdf", "Ps 94, 286–290, 291–296, 312–320, 323–331, 332–339", "File tebal: langsung Ctrl+F nomor pasal."),
+ ("07 PMK 71-2022", "Paket, biro wisata, freight forwarding, umrah + wisata",
+  J + "/download/ac789c8c-ca29-4efc-9987-cc1d89979ba6/71_PMK.03_2022.pdf", "Pasal 2, 3, 5", ""),
+ ("08 PMK 48-2023", "Emas perhiasan",
+  J + "/api/download/a0aa02e4-837d-4236-baba-7095e2ace61a/2023pmkeuangan048.pdf.pdf", "Pasal 14", ""),
+ ("09 PMK 59-2022", "Instansi pemerintah memungut (pengecualian Rp2 jt, KKP, SIP)",
+  J + "/api/download/82d6ff76-02e8-460e-b603-7bfb24f8a855/59~PMK.03~2022Per.pdf", "Pasal 16–19", ""),
+ ("10 PER-11-PJ-2025", "Faktur Pajak & SPT Masa PPN",
+  "https://www.pajak.go.id/sites/default/files/lampiran/PER-11_PJ_2025_0.pdf", "Ps 29A, 36, 44, 48–55, Lampiran D (kode)", ""),
+]
+# topik soal -> file
+PETA = [
+ ("Hitung DPP: harga jual, ongkir, impor, ekspor, harga pasar wajar", "01", "Ps 1 angka 18–20, 26; Ps 2"),
+ ("Tarif 12% dan faktor 11/12", "04", "Pasal 3"),
+ ("Objek / bukan objek / termasuk & bukan penyerahan", "01", "Ps 1A, 4, 4A"),
+ ("Beras, jasa kesehatan dibebaskan", "03", "—"),
+ ("Saat & tempat terutang, konsinyasi, jasa LN", "02 + 01", "Ps 11, 12 UU PPN"),
+ ("Pemakaian sendiri, cuma-cuma (nilai lain)", "05", "Pasal 4"),
+ ("Besaran tertentu: paket, wisata, freight, umrah", "07 + 05", "PMK 71 Ps 2–3; PMK 11 Ps 17"),
+ ("Emas perhiasan", "08 + 05", "PMK 48 Ps 14; PMK 11 Ps 19"),
+ ("KMS (luas, tahap, 2,2%) & aktiva 16D", "06 + 01", "PMK 81 Ps 323–331; UU PPN Ps 16C, 16D"),
+ ("BUMN pemungut, retur, tenggat setor/lapor", "06", "Ps 291–296, 286–290, 94"),
+ ("Instansi pemerintah", "09", "Pasal 18–19"),
+ ("Faktur Pajak, pengganti/batal, gabungan, eceran, urutan SPT", "10 + 01", "PER-11 Ps 29A, 44, 48–55; UU PPN Ps 13"),
+ ("PKP, pengusaha kecil, PM, hubungan istimewa, karakteristik", "01", "Ps 2, 3A, 9"),
+]

@@ -14,7 +14,7 @@ Materi: 1 Pengantar PPN & PPnBM · 2 Pengusaha Kena Pajak · 3 Objek PPN & penye
 
 ## Cheatsheet
 
-- `cheatsheet/Cheatsheet-Retest-PPN-PPnBM.pdf`: edisi re-test (9 Nov 2026, open PPT & peraturan). 8 halaman A4: format jawaban 4 baris, peta soal UTS, checklist peraturan untuk disimpan offline, lalu tabel kata kunci → aturan → dasar hukum per topik. Sumber: `cheatsheet/cheatsheet-retest.html`.
+- `cheatsheet/Cheatsheet-Retest-PPN-PPnBM.pdf`: edisi re-test (9 Nov 2026, open PPT & peraturan). 7 halaman A4: format jawaban 4 baris, peta soal UTS, 10 file peraturan yang dibuka saat ujian, lalu tabel kata kunci → aturan → dasar hukum per topik. Sumber: `cheatsheet/cheatsheet-retest.html`.
 
 - `cheatsheet/Cheatsheet-UTS-PPN-PPnBM.pdf`: 8 halaman A4 (4 lembar bolak-balik), satu bab per halaman, huruf ±9,5 pt. Isinya sudah dicocokkan dengan ke-126 soal simulasi. Sumber: `cheatsheet/cheatsheet.html`.
 - `cheatsheet/Cheatsheet-UTS-PPN-PPnBM-ringkas-2hal.pdf`: versi ringkas 2 halaman (1 lembar), huruf ±7 pt. Sumber: `cheatsheet/cheatsheet-2hal.html`.
@@ -26,4 +26,4 @@ Materi: 1 Pengantar PPN & PPnBM · 2 Pengusaha Kena Pajak · 3 Objek PPN & penye
 
 ## Link unduh peraturan
 
-- `peraturan/Link-Unduh-Peraturan-PPN.pdf`: daftar tautan unduh (bisa diklik) untuk semua peraturan yang dikutip di cheatsheet re-test. Sumber: `peraturan/build.py`.
+- `peraturan/Link-Unduh-Peraturan-PPN.pdf`: daftar ringkas 10 file peraturan (satu tautan per file, bisa diklik) + peta soal → file. Data di `peraturan/ringkas.py`, bangun dengan `peraturan/build.py`.
