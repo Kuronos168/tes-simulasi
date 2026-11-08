@@ -2,8 +2,10 @@
 import html, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from data import SOAL
+from soal import TEKS
 
 assert len(SOAL) == 40 and [s["n"] for s in SOAL] == list(range(1, 41))
+assert sorted(TEKS) == list(range(1, 41)) and all(len(t["o"]) == 4 for t in TEKS.values())
 
 def grid():
     cells = "".join(
@@ -11,11 +13,20 @@ def grid():
     return f'<div class="grid">{cells}</div>'
 
 def item(s):
+    t = TEKS[s["n"]]
+    opts = "".join(
+        f'<li class="{"ok" if L.upper() == s["a"] else ""}"><span class="ol">{L}.</span> {o}{" ✓" if L.upper() == s["a"] else ""}</li>'
+        for L, o in zip("abcd", t["o"]))
     calc = "".join(f"<li>{c}</li>" for c in s["calc"])
     x = f'<p class="x"><span class="lbl">Pengecoh</span>{s["x"]}</p>' if s.get("x") else ""
     return f'''
+<section class="q">
+  <div class="qno">Soal {s["n"]}</div>
+  <div class="qtx">{t["q"]}</div>
+  <ol class="opt">{opts}</ol>
+</section>
 <section class="soal">
-  <div class="hd"><span class="no">Soal {s["n"]}</span><span class="ans">{s["a"]}</span><span class="val">{s["v"]}</span></div>
+  <div class="hd"><span class="no">Jawaban</span><span class="ans">{s["a"]}</span><span class="val">{s["v"]}</span></div>
   <div class="tp">{s["topik"]}</div>
   <p><span class="lbl">Penjelasan</span>{s["jel"]}</p>
   <div class="calc"><span class="lbl">Perhitungan</span><ul>{calc}</ul></div>
@@ -46,13 +57,24 @@ h2 {{ font-size: 11.5pt; margin: 6mm 0 2mm; border-bottom: 1pt solid #000; paddi
 .tpl ol {{ margin: 1mm 0 2mm; padding-left: 5mm; }}
 .tpl li {{ margin-bottom: 0.8mm; }}
 .tpl .eg {{ border-top: 0.5pt dashed #666; padding-top: 2mm; font-size: 9.2pt; }}
-.soal {{ break-inside: avoid; border-top: 0.8pt solid #000; padding: 2.6mm 0 3mm; }}
+.q {{ break-inside: avoid; border: 0.9pt solid #000; padding: 2.6mm 3.4mm 2mm; margin-top: 5mm; }}
+.qno {{ font-weight: 700; font-size: 11pt; margin-bottom: 1mm; }}
+.qtx {{ margin-bottom: 1.4mm; }}
+.opt {{ list-style: none; margin: 0; padding: 0; }}
+.opt li {{ display: flex; gap: 2mm; margin: 0 0 0.6mm; }}
+.opt li.ok {{ font-weight: 700; }}
+.ol {{ min-width: 4mm; }}
+table.qt {{ width: 100%; border-collapse: collapse; margin: 1.6mm 0; font-size: 9pt; }}
+table.qt th {{ text-align: left; border-bottom: 1pt solid #000; padding: 0.8mm 1.6mm; }}
+table.qt td {{ border-bottom: 0.5pt solid #999; padding: 0.8mm 1.6mm; vertical-align: top; }}
+.soal {{ break-inside: auto; border-top: none; padding: 2.4mm 3.4mm 1mm; }}
 .hd {{ display: flex; align-items: baseline; gap: 3mm; }}
 .no {{ font-weight: 700; font-size: 11pt; }}
 .ans {{ font-weight: 700; font-size: 11pt; border: 1pt solid #000; padding: 0 2mm; }}
 .val {{ font-weight: 600; }}
 .tp {{ font-size: 8.6pt; color: #444; margin: 0.6mm 0 1.6mm; text-transform: uppercase; letter-spacing: 0.04em; }}
-p {{ margin: 0 0 1.4mm; }}
+p {{ margin: 0 0 1.4mm; break-inside: avoid; }}
+.calc, .hd, .tp {{ break-inside: avoid; break-after: avoid; }}
 .lbl {{ display: inline-block; min-width: 23mm; font-weight: 700; font-size: 8.6pt; }}
 .calc {{ display: flex; margin: 0 0 1.4mm; }}
 .calc ul {{ margin: 0; padding: 0; list-style: none; }}
@@ -63,7 +85,7 @@ b {{ font-weight: 700; }}
 </style></head><body>
 
 <h1>Kunci Jawaban UTS PPN &amp; PPnBM</h1>
-<p class="sub">40 soal pilihan ganda dari scan soal UTS (halaman 2–11). Aturan per Oktober 2026 mengikuti PPT dosen: tarif 12%, DPP nonmewah 11/12, besaran tertentu PMK 11/2025 s.t.d.d. PMK 53/2025.</p>
+<p class="sub">40 soal pilihan ganda dari scan soal UTS (halaman 2–11), diketik ulang lengkap dengan opsi; opsi yang benar dicetak tebal dan diberi ✓. Aturan per Oktober 2026 mengikuti PPT dosen: tarif 12%, DPP nonmewah 11/12, besaran tertentu PMK 11/2025 s.t.d.d. PMK 53/2025.</p>
 
 <h2>Ringkasan jawaban</h2>
 {grid()}
@@ -81,7 +103,7 @@ b {{ font-weight: 700; }}
   <div class="eg"><b>Contoh (Soal 1):</b> Jawaban B, Rp64.350.000. Dasar hukum: UU PPN Pasal 1 angka 18, Pasal 7 ayat (1) huruf b; PMK 131/2024 Pasal 3. Penjelasan: Harga Jual mencakup ongkos kirim yang ditagih penjual, dikurangi potongan yang dicantumkan di FP; barang nonmewah sehingga DPP 11/12. Perhitungan: HJ = 600 − 30 + 15 = 585 jt; DPP = 11/12 × 585 jt = 536,25 jt; PPN = 12% × 536,25 jt = Rp64.350.000.</div>
 </div>
 
-<h2>Pembahasan per soal</h2>
+<h2>Soal dan pembahasan</h2>
 {"".join(item(s) for s in SOAL)}
 </body></html>'''
 
