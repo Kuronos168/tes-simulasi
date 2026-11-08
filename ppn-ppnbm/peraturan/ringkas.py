@@ -1,10 +1,14 @@
 """Data 10 file peraturan (dipakai link-peraturan.html dan cheatsheet bagian 2)."""
 J = "https://jdih.kemenkeu.go.id"
 FILES = [
- ("01 UU PPN", "Naskah gabungan UU PPN (semua perubahan)",
-  "https://perpajakan.ddtc.co.id/sumber-hukum/peraturan-pusat/undang-undang-konsolidasi-ppn-setelah-uu-hpp",
-  "Pasal 1 (definisi), 1A, 2, 3A, 4, 4A, 5A, 7, 8A, 9, 9A, 11, 12, 13, 15A, 16A–16D",
-  "Situs DDTC: buka, lalu Ctrl+P → Save as PDF. Kalau diminta login, unduh UU HPP: " + "https://peraturan.go.id/files/uu7-2021pjl.pdf"),
+ ("01a UU HPP 7-2021", "UU PPN versi TERBARU (Bab IV UU HPP = pasal-pasal PPN yang diubah 2021)",
+  "https://peraturan.go.id/files/uu7-2021pjl.pdf",
+  "Cari pasal di sini DULU: Ps 1A, 4A, 7, 9, 13, 16B, 16D, dll.",
+  "Langsung PDF resmi, tanpa login. Bagian PPN ada di BAB IV (Pasal 4 UU HPP)."),
+ ("01b UU PPN 42-2009", "UU PPN versi 2009 (pasal yang TIDAK diubah HPP tetap berlaku dari sini)",
+  J + "/api/download/7ba0c9a6-d0dd-4d7f-a8a8-b4099b3c321c/42TAHUN2009UU.pdf",
+  "Kalau pasal tidak ada di 01a, cari di sini: Ps 1 (definisi), 2, 3A, 5A, 8A, 11, 12, 15A, 16A, 16C",
+  "Langsung PDF resmi, tanpa login."),
  ("02 PP 44-2022", "Saat & tempat terutang, penyerahan, konsinyasi, jasa LN, kurs",
   "https://peraturan.bpk.go.id/Details/232656/pp-no-44-tahun-2022", "cari: konsinyasi, cuma-cuma, Pasal 21 (kurs)", "Halaman BPK: klik tombol Download."),
  ("03 PP 49-2022", "Fasilitas dibebaskan (beras, jasa kesehatan medis)",

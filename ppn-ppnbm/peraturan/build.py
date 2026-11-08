@@ -23,9 +23,10 @@ td.f {{ font-weight: 700; white-space: nowrap; }} td.cb {{ font-size: 13pt; widt
 a {{ color: #0B4F9C; font-weight: 700; white-space: nowrap; }}
 .box {{ border: .9pt solid #111; padding: 2.4mm 3.4mm; margin: 2mm 0 0; }}
 </style></head><body>
-<h1>10 file peraturan untuk re-test PPN</h1>
-<p>Cukup unduh 10 file ini. Simpan dengan <b>nama persis seperti kolom kiri</b> (01, 02, …) dalam satu folder <b>PERATURAN PPN</b>, supaya urut saat ujian. Peraturan lain yang disebut di cheatsheet cukup <b>dikutip</b> sebagai dasar hukum, tidak perlu dibuka.</p>
+<h1>File peraturan untuk re-test PPN</h1>
+<p>Cukup unduh 11 file ini (UU PPN dipecah jadi 01a dan 01b karena naskah gabungannya hanya tersedia di situs berbayar/login). Simpan dengan <b>nama persis seperti kolom kiri</b> (01, 02, …) dalam satu folder <b>PERATURAN PPN</b>, supaya urut saat ujian. Peraturan lain yang disebut di cheatsheet cukup <b>dikutip</b> sebagai dasar hukum, tidak perlu dibuka.</p>
 <table><thead><tr><th>Nama file</th><th>Isi · yang dicari dengan Ctrl+F</th><th>Tautan</th><th>✓</th></tr></thead><tbody>{rows}</tbody></table>
+<p class="g" style="margin-top:1.5mm"><b>Aturan UU PPN:</b> cari pasal di <b>01a</b> (perubahan terbaru) dulu. Kalau pasal itu tidak ada di 01a, artinya tidak diubah, jadi buka <b>01b</b>. Kolom "File 01" pada tabel di bawah berarti 01a/01b.</p>
 <div class="box"><b>Malam ini:</b> unduh semua → ganti nama file → matikan Wi-Fi → buka tiap file sekali dan coba Ctrl+F. Kalau tautan gagal, ketik nomor peraturan di <b>jdih.kemenkeu.go.id</b>.</div>
 <h2>Saat ujian: soal tentang apa → buka file mana</h2>
 <table><thead><tr><th>Soal tentang</th><th>File</th><th>Cari (Ctrl+F)</th></tr></thead><tbody>{peta}</tbody></table>
